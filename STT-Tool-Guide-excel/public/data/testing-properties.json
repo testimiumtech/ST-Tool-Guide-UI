@@ -1,0 +1,47 @@
+[
+  {
+    "title": "Testing Properties",
+    "items": [
+      {
+        "subTitle": "system.user",
+        "description": "The Windows username under which the automation tool is running. This value corresponds to the folder name in C:\\Users\\ directory. The tool uses this to dynamically resolve user-specific paths like Downloads, Documents, etc. For example, if your Windows user folder is 'C:\\Users\\Admin', then set this value to 'Admin'.",
+        "example": "system.user=Admin"
+      },
+      {
+        "subTitle": "tool.active.profile",
+        "description": "Specifies the active configuration profile that the automation tool should use during execution. Different profiles can contain different settings for various environments (development, staging, production). This allows you to switch between configurations without modifying individual properties. The profile name typically references a folder or configuration set within the project.",
+        "example": "tool.active.profile=285-master"
+      },
+      {
+        "subTitle": "locator.loading.timeout",
+        "description": "The maximum time (in seconds) the automation tool will wait for a web element to appear on the page before throwing a timeout error. If an element takes longer than this duration to load, the test will fail with a timeout exception. Increase this value for slower applications or network connections. Recommended range: 15-60 seconds depending on application performance.",
+        "example": "locator.loading.timeout=30"
+      },
+      {
+        "subTitle": "web.browser.driver.path",
+        "description": "The absolute file path to the browser driver executable (e.g., chromedriver.exe for Chrome, geckodriver.exe for Firefox). The automation tool uses this driver to communicate with and control the browser. Make sure the driver version matches your installed browser version. Download the correct driver from the official browser driver repository.",
+        "example": "web.browser.driver.path=C:/Celerant/selenium/driver/chromedriver/chromedriver-win64/chromedriver.exe"
+      },
+      {
+        "subTitle": "chrome.browser.exe.path",
+        "description": "The absolute file path to the Chrome browser executable (.exe file) on your system. This is required when using a portable or custom installation of Chrome instead of the default system installation. If Chrome is installed in the default location, this property may not be needed. Useful for testing with specific Chrome versions.",
+        "example": "chrome.browser.exe.path=C:/Celerant/selenium/driver/chromedriver/chrome-win64/chrome.exe"
+      },
+      {
+        "subTitle": "perform.test.type",
+        "description": "Defines which category of tests should be executed. You can specify a single test type, multiple types separated by commas, or use 'ALL' to run every available test category. Common test types include: SMOKE (quick validation), REGRESSION (full feature testing), SANITY (basic functionality check). This allows selective test execution based on your testing needs.",
+        "example": "perform.test.type=ALL"
+      },
+      {
+        "subTitle": "system.default.download.path",
+        "description": "The default directory path where the browser will save downloaded files during test execution. This is typically set to the Windows Downloads folder using the ${system.user} variable for dynamic path resolution. Ensure this folder exists and has write permissions. Downloaded files during tests (reports, exports, PDFs) will be saved here.",
+        "example": "system.default.download.path=C:/Users/${system.user}/Downloads"
+      },
+      {
+        "subTitle": "enable.logging.compressor",
+        "description": "Controls whether log files generated during test execution should be automatically compressed (zipped) after completion. Set to 'true' to save disk space by compressing old log files, or 'false' to keep logs in uncompressed format for easier access and debugging. Compression is recommended for long-running test suites that generate large log files.",
+        "example": "enable.logging.compressor=false"
+      }
+    ]
+  }
+]

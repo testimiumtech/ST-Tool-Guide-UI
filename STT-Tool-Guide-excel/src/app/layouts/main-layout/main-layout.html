@@ -1,0 +1,22 @@
+<!-- Search Modal -->
+<app-search-modal
+  [isOpen]="searchModalOpen"
+  (closeModal)="searchModalOpen.set(false)"
+/>
+
+<!-- Header -->
+<app-header (searchOpen)="searchModalOpen.set(true)" />
+
+<!-- Main Content Area -->
+<div class="main-layout">
+  <!-- Left Sidebar Navigation -->
+  <app-sidebar-nav [commands]="commands()" />
+
+  <!-- Main Content -->
+  <main class="flex-1 min-w-0 w-full">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- Right Sidebar Table of Contents -->
+  <app-table-of-contents />
+</div>

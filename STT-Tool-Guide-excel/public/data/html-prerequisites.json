@@ -1,0 +1,98 @@
+[
+  {
+    "title": "HTML Basics",
+    "items": [
+      {
+        "subTitle": "HTML Tags",
+        "description": "Familiarity with tags like <div>, <input>, <button>, <a>, etc."
+      },
+      {
+        "subTitle": "Attributes",
+        "description": "Understand attributes like id, class, name, value, for element identification."
+      },
+      {
+        "subTitle": "DOM (Document Object Model)",
+        "description": "Know how the DOM represents the webpage structure and how automation tools interact with it."
+      }
+    ]
+  },
+  {
+    "title": "CSS Basics",
+    "items": [
+      {
+        "subTitle": "Selectors",
+        "description": "Use CSS selectors to locate elements, such as #id, .class, input[type='text']."
+      },
+      {
+        "subTitle": "Element Visibility",
+        "description": "Understand visibility attributes like display: none and visibility: hidden."
+      }
+    ]
+  },
+  {
+    "title": "JavaScript",
+    "items": [
+      {
+        "subTitle": "Events",
+        "description": "Handle user events like click, hover, etc."
+      },
+      {
+        "subTitle": "AJAX",
+        "description": "Handle dynamically loaded content and API calls."
+      }
+    ]
+  },
+  {
+    "title": "XPath & CSS Selectors",
+    "items": [
+      {
+        "subTitle": "XPath",
+        "description": "Use for complex element locations (e.g., //div[@id='container'])."
+      },
+      {
+        "subTitle": "CSS Selectors",
+        "description": "Preferred for simpler element identification (e.g., input[type='text'])."
+      }
+    ]
+  },
+  {
+    "title": "Browser Developer Tools",
+    "items": [
+      {
+        "subTitle": "Inspect Elements",
+        "description": "Use tools like Chrome DevTools to inspect HTML, identify selectors, and debug."
+      },
+      {
+        "subTitle": "Network Monitoring",
+        "description": "Monitor network requests for API testing and ensure correct responses."
+      }
+    ]
+  },
+  {
+    "title": "Handling Dynamic Content",
+    "items": [
+      {
+        "subTitle": "Waits",
+        "description": "Use explicit or implicit waits to handle elements that load dynamically."
+      }
+    ]
+  },
+  {
+    "title": "HTTP Methods & API Basics",
+    "items": [
+      {
+        "subTitle": "API Testing",
+        "description": "Understand how to interact with APIs using methods like GET, POST for backend testing."
+      }
+    ]
+  },
+  {
+    "title": "Browser Compatibility",
+    "items": [
+      {
+        "subTitle": "Cross-Browser Testing",
+        "description": "Ensure tests work across different browsers due to potential rendering differences."
+      }
+    ]
+  }
+]

@@ -1,0 +1,67 @@
+:host {
+  @apply block w-full;
+}
+
+.prerequisites-container {
+  // Container styling from global .prereq-container
+
+  .back-navigation {
+    @apply mb-6 flex items-center;
+
+    .back-icon {
+      @apply w-4 h-4;
+    }
+  }
+
+  .prerequisites-header {
+    @apply mb-10;
+  }
+
+  // Loading state now uses global .loading-spinner
+
+  .prerequisites-content {
+    @apply space-y-8;
+  }
+
+  .prerequisite-section {
+    .section-card {
+      @apply bg-white dark:bg-slate-900 rounded-xl shadow-lg border border-gray-200 dark:border-slate-700 overflow-hidden;
+
+      .section-title {
+        @apply text-2xl font-bold text-gray-900 dark:text-white px-6 py-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-slate-800 dark:to-slate-800 border-b border-gray-200 dark:border-slate-700;
+      }
+
+      .items-list {
+        @apply divide-y divide-gray-200 dark:divide-slate-700;
+      }
+    }
+  }
+
+  .property-item {
+    @apply px-6 py-5 hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors;
+
+    .property-header {
+      @apply mb-2;
+
+      .property-key {
+        @apply text-lg font-semibold text-blue-600 dark:text-blue-400 font-mono;
+      }
+    }
+
+    .property-description {
+      @apply text-gray-700 dark:text-gray-300 leading-relaxed mb-3;
+    }
+
+    .property-example {
+      @apply flex items-start gap-2 flex-wrap;
+
+      .example-label {
+        @apply text-sm font-medium text-gray-500 dark:text-gray-400;
+      }
+
+      .example-code {
+        @apply px-3 py-1.5 bg-slate-900 dark:bg-slate-950 text-green-400 text-sm font-mono rounded-md break-all;
+      }
+    }
+  }
+}

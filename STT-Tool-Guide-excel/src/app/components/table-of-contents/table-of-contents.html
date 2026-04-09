@@ -1,0 +1,25 @@
+<div class="toc-container" *ngIf="!isHomePage()">
+  <div class="toc-header">
+    <h3 class="toc-title">On This Page</h3>
+    <span class="toc-subtitle">{{ items().length }} sections</span>
+  </div>
+
+  <div class="toc-content">
+    <div *ngIf="items().length === 0" class="toc-empty">
+      <p>No headings found</p>
+    </div>
+
+    <ul *ngIf="items().length > 0" class="toc-list">
+      <li *ngFor="let item of items(); trackBy: trackByTocItem" [style.margin-left.rem]="item.level * 0.75">
+        <a
+          [href]="'#' + item.id"
+          class="toc-link"
+          [class.active]="activeSection() === item.id"
+          (click)="scrollToSection(item.id, $event)"
+        >
+          {{ item.label }}
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

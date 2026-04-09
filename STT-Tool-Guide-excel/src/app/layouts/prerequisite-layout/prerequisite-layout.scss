@@ -1,0 +1,63 @@
+.prerequisite-layout {
+  @apply flex h-[calc(100vh-64px)] overflow-hidden bg-white dark:bg-slate-950;
+
+  .prerequisites-sidebar {
+    @apply w-64 border-r border-gray-200 dark:border-slate-800 flex flex-col overflow-hidden hidden lg:flex;
+
+    .sidebar-header {
+      @apply sticky top-0 px-6 py-6 border-b border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-950 z-10 flex-shrink-0;
+
+      .sidebar-title {
+        @apply text-lg font-bold text-gray-900 dark:text-white;
+      }
+    }
+
+    .sidebar-nav-list {
+      @apply list-none p-0 m-0 space-y-2 px-4 py-6 flex-1 overflow-y-auto;
+
+      li {
+        @apply m-0;
+
+        .nav-item {
+          @apply flex items-center gap-3 px-3 py-3 text-sm font-medium text-gray-600 dark:text-gray-400 rounded-lg transition-colors no-underline hover:bg-gray-100 dark:hover:bg-slate-800 hover:text-gray-900 dark:hover:text-white;
+
+          .nav-icon {
+            @apply w-5 h-5 flex-shrink-0;
+          }
+
+          &.active {
+            @apply bg-blue-50 dark:bg-slate-800 text-blue-600 dark:text-blue-400 border-l-2 border-blue-600 pl-2;
+          }
+        }
+      }
+    }
+  }
+
+  main {
+    @apply flex-1 overflow-y-auto overflow-x-hidden w-full;
+  }
+
+  /* Ensure content inside has proper min-height */
+  ::ng-deep {
+    .prerequisites-container {
+      @apply min-h-full;
+    }
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .prerequisite-layout {
+    .prerequisites-sidebar {
+      @apply hidden;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .prerequisite-layout {
+    .prerequisites-sidebar {
+      @apply hidden;
+    }
+  }
+}

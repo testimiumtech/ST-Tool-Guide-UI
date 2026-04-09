@@ -1,0 +1,106 @@
+<div class="home-container">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-icon">
+      <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M13 10V3L4 14h7v7l9-11h-7z"
+        />
+      </svg>
+    </div>
+    <h1 class="hero-title">Selenium Testing Tool Documentation</h1>
+    <p class="hero-description">
+      Your comprehensive guide to custom Selenium-based testing commands, prerequisites, and best practices.
+      Master automated testing with our powerful command-line interface.
+    </p>
+    <div class="hero-actions">
+      <a routerLink="/cmd/clear" class="btn btn-primary">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 10V3L4 14h7v7l9-11h-7z"
+          />
+        </svg>
+        Explore Commands
+      </a>
+      <a routerLink="/prerequisites/excel" class="btn btn-secondary">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round" 
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+          />
+        </svg>
+        Setup Guide
+      </a>
+    </div>
+  </div>
+
+  <!-- Features Section -->
+  <div class="features-section">
+    <h2 class="features-title">What's Inside</h2>
+    <div class="features-grid">
+      <div *ngFor="let feature of features; trackBy: trackByFeature" class="feature-card">
+        <div class="feature-icon">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              [attr.d]="feature.icon"
+            />
+          </svg>
+        </div>
+        <h3 class="feature-title">{{ feature.title }}</h3>
+        <p class="feature-description">{{ feature.description }}</p>
+        <a 
+          *ngIf="feature.link" 
+          [routerLink]="feature.link" 
+          class="feature-link"
+        >
+          {{ feature.linkText }}
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+        <span *ngIf="!feature.link" class="feature-hint">
+          {{ feature.linkText }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Start Section -->
+  <div class="quickstart-section">
+    <h2 class="quickstart-title">Quick Start</h2>
+    <div class="quickstart-steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3 class="step-title">Review Prerequisites</h3>
+          <p class="step-description">Set up your testing environment with Excel, HTML, and locator configurations.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3 class="step-title">Browse Commands</h3>
+          <p class="step-description">Explore available Selenium commands with detailed syntax and examples.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3 class="step-title">Start Testing</h3>
+          <p class="step-description">Apply the commands to build robust automated test suites for your applications.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

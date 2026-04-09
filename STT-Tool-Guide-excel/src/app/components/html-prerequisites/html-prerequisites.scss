@@ -1,0 +1,215 @@
+:host {
+  @apply block w-full;
+}
+
+.prerequisites-container {
+  // Container styling from global .prereq-container
+
+  .back-navigation {
+    @apply mb-6 flex items-center;
+
+    .back-icon {
+      @apply w-4 h-4;
+    }
+  }
+
+  .prerequisites-header {
+    @apply mb-12 flex justify-between items-start gap-6;
+
+    .header-content {
+      @apply flex-1;
+    }
+
+    .add-image-btn {
+      @apply flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 text-sm sm:text-base font-medium bg-purple-600 hover:bg-purple-700 text-white rounded-lg shadow-sm hover:shadow-md transition-all duration-150 cursor-pointer flex-shrink-0;
+
+      .btn-icon {
+        @apply w-5 h-5;
+      }
+
+      &:hover {
+        @apply scale-105;
+      }
+    }
+  }
+
+  .image-upload-form {
+    @apply mb-8 p-6 bg-purple-50 dark:bg-slate-800 rounded-lg border-2 border-purple-200 dark:border-slate-700 shadow-sm;
+
+    .form-content {
+      @apply flex flex-col gap-4;
+
+      .form-title {
+        @apply text-xl font-bold text-gray-900 dark:text-white;
+      }
+
+      .form-description {
+        @apply text-gray-600 dark:text-gray-400 text-sm;
+      }
+
+      .file-input-wrapper {
+        @apply relative;
+
+        .file-input {
+          @apply hidden;
+        }
+
+        .file-label {
+          @apply flex flex-col items-center justify-center p-8 border-2 border-dashed border-purple-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-900 hover:bg-purple-50 dark:hover:bg-slate-800 transition-colors cursor-pointer;
+
+          .upload-icon {
+            @apply w-12 h-12 text-purple-600 dark:text-purple-400 mb-2;
+          }
+
+          @apply text-purple-600 dark:text-purple-400 font-medium;
+
+          &:hover {
+            @apply bg-purple-50 dark:bg-slate-800;
+          }
+        }
+      }
+
+      .close-btn {
+        @apply px-4 py-2 bg-gray-300 dark:bg-slate-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-400 dark:hover:bg-slate-600 transition-colors;
+      }
+    }
+  }
+
+  .uploaded-image {
+    @apply mb-8 p-4 bg-gray-50 dark:bg-slate-800 rounded-lg border border-gray-200 dark:border-slate-700 text-center relative;
+
+    img {
+      @apply max-w-full h-auto rounded-lg shadow-md mx-auto;
+    }
+
+    .remove-btn {
+      @apply mt-4 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors;
+    }
+  }
+
+  // Loading and empty states now use global .loading-spinner and .empty-state-msg
+
+  .prerequisites-content {
+    @apply space-y-8;
+
+    .prerequisite-section {
+      @apply mb-8;
+
+      .section-card {
+        @apply bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-700 overflow-hidden hover:shadow-lg dark:hover:shadow-2xl transition-shadow duration-300;
+
+        .section-title {
+          @apply text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white px-6 py-5 border-b border-gray-200 dark:border-slate-700 bg-gradient-to-r from-purple-50 dark:from-slate-800 to-transparent;
+        }
+
+        .items-grid {
+          @apply p-6 sm:p-8 grid grid-cols-1 md:grid-cols-2 gap-6;
+
+          .item {
+            @apply p-5 rounded-lg bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 transition-all duration-150 border border-transparent hover:border-gray-200 dark:hover:border-slate-600;
+
+            .item-header {
+              @apply mb-3;
+
+              .item-title {
+                @apply text-lg font-semibold text-purple-600 dark:text-purple-400 m-0;
+              }
+            }
+
+            .item-description {
+              @apply text-base text-gray-700 dark:text-gray-300 m-0 leading-relaxed;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Responsive adjustments for tablets */
+@media (max-width: 768px) {
+  .prerequisites-container {
+    @apply px-3 py-6;
+
+    .prerequisites-header {
+      @apply flex-col gap-3;
+
+      .add-image-btn {
+        @apply w-full justify-center;
+      }
+    }
+
+    .prerequisites-content {
+      .prerequisite-section {
+        .section-card {
+          .section-title {
+            @apply text-xl px-4 py-3;
+          }
+
+          .items-grid {
+            @apply grid-cols-1 gap-4 p-4;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 640px) {
+  .prerequisites-container {
+    @apply px-3 py-4;
+
+    .back-navigation {
+      @apply mb-4;
+    }
+
+    .prerequisites-header {
+      @apply mb-8;
+
+      .add-image-btn {
+        @apply text-xs px-3 py-2;
+
+        .btn-icon {
+          @apply w-4 h-4;
+        }
+      }
+    }
+
+    .image-upload-form {
+      @apply p-4 mb-6;
+
+      .form-content {
+        .file-label {
+          @apply p-4;
+
+          .upload-icon {
+            @apply w-8 h-8 mb-1;
+          }
+        }
+      }
+    }
+
+    .prerequisites-content {
+      .prerequisite-section {
+        .section-card {
+          .section-title {
+            @apply text-lg px-3 py-2;
+          }
+
+          .items-grid {
+            @apply gap-3 p-3;
+
+            .item {
+              @apply p-3;
+
+              .item-description {
+                @apply text-sm;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

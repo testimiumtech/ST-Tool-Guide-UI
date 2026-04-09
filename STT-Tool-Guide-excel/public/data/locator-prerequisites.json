@@ -1,0 +1,114 @@
+[
+  {
+    "title": "What is a Locator? (The Simple Version)",
+    "items": [
+      {
+        "description": "Think of a locator as a 'Digital Address.' Just as a GPS needs a street address to find a house, an automation tool needs a locator to find a specific button or text box on a website."
+      },
+      {
+        "description": "Every element on a webpage (buttons, images, search bars) has hidden labels in the code. A locator tells the computer which label to look for so it knows exactly where to click."
+      }
+    ]
+  },
+  {
+    "title": "How to Read a Locator Property",
+    "items": [
+      {
+        "description": "A locator property is a structured way to define how to find a web element in automation scripts. Each property should clearly specify the element's purpose, the method to locate it, and the exact value used for identification."
+      },
+      {
+        "subItems": [
+          {
+            "description": "Standard Format: [Variable Name] = [Locator Type], [Locator Value]",
+            "example": {
+              "code": "POS.CustomerDtl.First.row=xpath,//*[@id='gridContainer']/div[4]/div[3]/div/div[1]"
+            }
+          }
+        ]
+      }
+      
+    ]
+  },
+  {
+    "title": "Types of Locators with Examples",
+    "items": [
+      {
+        "description": "Locators are the foundation of Selenium automation. Here are the main types, their use cases, and practical examples."
+      },
+      {
+         "subItems": [
+          {
+            "title": "ID Locator",
+            "description": "Finds an element by its unique 'id'. This is the most reliable 'home address'.",
+            "example": {
+              "code": "POS.Login.SubmitBtn = id,submit-btn"
+            }
+          },
+          {
+            "title": "Name Locator",
+            "description": "Finds an element by its 'name' attribute, commonly used in input fields.",
+            "example": {
+              "code": "POS.Customer.SearchField = name,customerName"
+            }
+          },
+          {
+            "title": "Class Name Locator",
+            "description": "Finds elements by their CSS class. Useful for finding items that look a certain way.",
+            "example": {
+              "code": "POS.Menu.ActiveItem = className,menu-active"
+            }
+          },
+          {
+            "title": "Link Text Locator",
+            "description": "Finds a link by the exact text shown to the user.",
+            "example": {
+              "code": "POS.Footer.SupportLink = linkText,Contact Support"
+            }
+          },
+          {
+            "title": "CSS Selector Locator",
+            "description": "Uses style-based rules to find elements. Very fast and flexible.",
+            "example": {
+              "code": "POS.Dashboard.UserIcon = css,div.user-profile > img"
+            }
+          },
+          {
+            "title": "XPath Locator",
+            "description": "Finds elements by following a path through the website structure. Can find anything, but is sensitive to layout changes.",
+            "example": {
+              "code": "POS.CustomerDtl.First.row = xpath,//*[@id=\"gridContainer\"]/div[4]/div[3]/div/div[1]"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Visualizing the Process",
+    "id": "visual-guide",
+    "items": [
+      {
+        "description": "To a user, a button looks like a blue rectangle. To a computer, it looks like a line of code. Locators bridge that gap."
+      },
+      {
+        "subItems": [
+          {
+            "title": "Step 1: Peek behind the curtain",
+            "description": "We 'Inspect' the webpage to see the hidden labels like id='submit-btn'.",
+            "imageUrl": "/Images/locator-step-1.png"
+          },
+          
+          {
+            "title": "Step 2: Save the Address",
+            "description": "We write it down: SubmitButton = id, submit-btn, Clicks the login button.",
+            "imageUrl": "/Images/locator-step-2.png"
+          },
+          {
+            "title": "Step 3: Run the Command",
+            "description": "The computer reads the 'SubmitButton' file and knows exactly where to click."
+          }
+        ]
+      }
+    ]
+  }
+]

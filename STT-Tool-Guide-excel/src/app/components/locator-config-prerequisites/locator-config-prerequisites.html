@@ -1,0 +1,104 @@
+<div class="prerequisites-container prereq-container">
+  <!-- Back Navigation -->
+  <div class="back-navigation">
+    <button
+      (click)="goBack()"
+      class="back-btn"
+      title="Go back to previous page"
+    >
+      <svg
+        class="back-icon"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15 19l-7-7 7-7"
+        />
+      </svg>
+      Back
+    </button>
+  </div>
+
+  <div *ngIf="isLoading()" class="loading-spinner">
+    <div class="spinner"></div>
+    <p>Loading prerequisites...</p>
+  </div>
+
+  <div *ngIf="!isLoading() && configData()" class="config-content">
+    <div class="config-header">
+      <div class="header-content">
+        <h1 class="typo-page-title mb-3">🔑 {{ configData()!.title }}</h1>
+        <p class="typo-page-subtitle">{{ configData()!.description }}</p>
+      </div>
+    </div>
+
+    <!-- Featured Images -->
+    <!-- <div class="featured-images">
+      <div class="image-container">
+        <img [src]="configImage" alt="Configuration settings and property keys for automation testing" class="featured-image" />
+        <p class="image-caption">Configuring locators and property keys</p>
+      </div>
+      <div class="image-container">
+        <img [src]="settingsImage" alt="Settings and configuration options for test automation" class="featured-image" />
+        <p class="image-caption">Managing test automation settings and properties</p>
+      </div>
+    </div> -->
+
+    <div class="key-concepts">
+      <h2 class="section-title">Key Concepts</h2>
+      <div class="concepts-grid">
+        <div class="concept-card">
+          <div class="concept-icon">1</div>
+          <h3>Locator</h3>
+          <p>The method used to find an element (e.g., ID, XPath, Name).</p>
+        </div>
+        <div class="concept-card">
+          <div class="concept-icon">2</div>
+          <h3>Locator Value</h3>
+          <p>The actual value used to locate the element.</p>
+        </div>
+        <div class="concept-card">
+          <div class="concept-icon">3</div>
+          <h3>Test Step Message</h3>
+          <p>A description or message shown during the test step.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps-section">
+      <h2 class="section-title">
+        To use a Property Key in a command, follow these steps:
+      </h2>
+
+      <div class="steps-container">
+        <div
+          *ngFor="let step of configData()!.steps; let i = index; trackBy: trackByStep"
+          class="step-card"
+        >
+          <div class="step-number">{{ i + 1 }}</div>
+          <div class="step-content">
+            <h3 class="step-title">{{ step.title }}</h3>
+            <p class="step-description">{{ step.description }}</p>
+            <!-- <div *ngIf="step.code" class="code-block"> -->
+              <div class="image-container" *ngIf="step?.imageUrl">
+                      <img
+                        [src]="step.imageUrl"
+                        alt="Web browser inspector showing element locating and inspection"
+                        class="featured-image"
+                      />
+                    </div>
+            <!-- </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading() && !configData()" class="empty-state-msg">
+    No configuration data found. Please check back later.
+  </div>
+</div>

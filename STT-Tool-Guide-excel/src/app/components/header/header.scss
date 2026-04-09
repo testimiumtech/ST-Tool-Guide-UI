@@ -1,0 +1,116 @@
+.header {
+  @apply sticky top-0 z-40 bg-white/95 dark:bg-slate-950/95 border-b border-gray-200 dark:border-slate-800 backdrop-blur-md;
+  @apply transition-shadow duration-200;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+
+  .header-container {
+    @apply flex items-center justify-between h-16 px-6 lg:px-8;
+
+    .logo-section {
+      @apply flex items-center gap-3;
+
+      .logo-icon {
+        @apply w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center;
+      }
+
+      .product-name {
+        @apply text-lg font-bold text-gray-900 dark:text-white;
+      }
+
+      .product-tagline {
+        @apply text-xs text-gray-500 dark:text-gray-400;
+      }
+    }
+
+    .search-section {
+      @apply hidden md:flex flex-1 mx-12;
+
+      .search-bar {
+        @apply w-full max-w-sm px-4 py-2 bg-gray-100 dark:bg-slate-900 border border-gray-300 dark:border-slate-700 rounded-lg text-gray-600 dark:text-gray-400 text-sm hover:bg-gray-200 dark:hover:bg-slate-800 transition-colors flex items-center gap-3;
+
+        .keyboard-hint {
+          @apply ml-auto text-xs px-2 py-1 bg-white dark:bg-slate-800 rounded border border-gray-300 dark:border-slate-600;
+        }
+      }
+    }
+
+    .actions-section {
+      @apply flex items-center gap-4;
+
+      .home-btn {
+        @apply p-2 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors flex items-center justify-center;
+      }
+
+      .mobile-search-btn {
+        @apply md:hidden p-2 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors;
+      }
+
+      .settings-dropdown {
+        @apply relative;
+
+        .settings-btn {
+          @apply text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-150 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800;
+        }
+
+        .settings-menu {
+          @apply absolute right-0 mt-2 w-56 bg-white dark:bg-slate-800 rounded-lg shadow-lg dark:shadow-2xl border border-gray-200 dark:border-slate-700 z-50 overflow-hidden;
+
+          .settings-menu-item {
+            @apply w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors duration-150 no-underline;
+
+            &:hover {
+              @apply text-gray-900 dark:text-white;
+            }
+
+            svg {
+              @apply flex-shrink-0;
+            }
+
+            &.theme-item {
+              @apply font-medium;
+            }
+          }
+
+          .settings-menu-divider {
+            @apply h-px bg-gray-200 dark:bg-slate-700;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .header {
+    .header-container {
+      @apply px-4;
+
+      .logo-section {
+        .logo-icon {
+          @apply w-7 h-7;
+        }
+
+        .product-name {
+          @apply text-base;
+        }
+
+        .product-tagline {
+          @apply hidden;
+        }
+      }
+
+      .search-section {
+        @apply mx-4;
+      }
+
+      .actions-section {
+        .settings-dropdown {
+          .settings-menu {
+            @apply w-48;
+          }
+        }
+      }
+    }
+  }
+}

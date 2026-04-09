@@ -1,0 +1,46 @@
+<div class="prerequisites-container prereq-container">
+  <!-- Back Navigation -->
+  <div class="back-navigation">
+    <button (click)="goBack()" class="btn-back" title="Go back to previous page">
+      <svg class="back-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+      Back
+    </button>
+  </div>
+
+  <div class="prerequisites-header">
+    <h1 class="typo-page-title mb-3">👤 User Profile Configuration</h1>
+    <p class="typo-page-subtitle">User-specific properties for configuring test execution environment, paths, and application settings</p>
+  </div>
+
+  <div *ngIf="isLoading()" class="loading-spinner">
+    <div class="spinner"></div>
+    <p>Loading user profile properties...</p>
+  </div>
+
+  <div *ngIf="!isLoading() && prerequisites().length > 0" class="prerequisites-content">
+    <div *ngFor="let section of prerequisites(); let i = index; trackBy: trackBySection" class="prerequisite-section">
+      <div class="section-card">
+        <h2 class="section-title">{{ section.title }}</h2>
+        
+        <div class="items-list">
+          <div *ngFor="let item of section.items; trackBy: trackByItem" class="property-item">
+            <div class="property-header">
+              <h3 class="property-key">{{ item.subTitle }}</h3>
+            </div>
+            <p class="property-description">{{ item.description }}</p>
+            <div class="property-example">
+              <span class="example-label">Example:</span>
+              <code class="example-code">{{ item.example }}</code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading() && prerequisites().length === 0" class="empty-state-msg">
+    No user profile properties found. Please check back later.
+  </div>
+</div>

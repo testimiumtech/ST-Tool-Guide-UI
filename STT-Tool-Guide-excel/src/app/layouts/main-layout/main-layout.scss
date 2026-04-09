@@ -1,0 +1,39 @@
+.main-layout {
+  @apply flex h-[calc(100vh-64px)] bg-white dark:bg-slate-950 gap-0;
+
+  /* Left sidebar - fixed width, scrollable independently */
+  app-sidebar-nav {
+    @apply flex-shrink-0;
+  }
+
+  /* Center content - flex and scrollable */
+  main {
+    @apply flex-1 overflow-y-auto overflow-x-hidden;
+  }
+
+  /* Right TOC - fixed width, scrollable independently */
+  app-table-of-contents {
+    @apply flex-shrink-0;
+  }
+
+  /* Hide sidebar and TOC on mobile, show on larger screens */
+  @media (max-width: 1024px) {
+    /* On tablet: hide right TOC */
+    app-table-of-contents {
+      @apply hidden;
+    }
+  }
+
+  @media (max-width: 768px) {
+    /* On mobile: hide left sidebar and right TOC */
+    app-sidebar-nav {
+      @apply hidden;
+    }
+  }
+}
+
+/* Ensure command page and home page take full space */
+:deep(.command-page-container),
+:deep(.home-container) {
+  @apply w-full min-h-full;
+}

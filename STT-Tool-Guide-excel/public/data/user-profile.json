@@ -1,0 +1,135 @@
+[{
+    "title": "User Profile",
+    "items": [
+      {
+        "subTitle": "web.app.url",
+        "description": "The base URL of the web application under test. This is the initial URL that the browser will navigate to when starting test execution. It should include the protocol (http/https), hostname, port (if non-standard), and the application context path. Example: For a local development server running on port 8080 with BackOffice app, use 'http://localhost:8080/backoffice'.",
+        "example": "web.app.url=http://localhost:8080/backoffice"
+      },
+      {
+        "subTitle": "web.browser.driver",
+        "description": "Specifies which web browser should be used for test automation. Supported values include: 'chrome' (Google Chrome), 'firefox' (Mozilla Firefox), 'edge' (Microsoft Edge). The corresponding browser driver must be installed and configured. Chrome is recommended for most automation scenarios due to its stability and developer tools support.",
+        "example": "web.browser.driver=chrome"
+      },
+      {
+        "subTitle": "enable.datasource.connection",
+        "description": "Controls whether the automation tool should establish a database connection during test execution. Set to 'true' if your tests need to verify data directly in the database, execute SQL queries, or perform database validations. Set to 'false' if tests only interact with the UI and don't require database access. Enabling this requires valid database connection configuration.",
+        "example": "enable.datasource.connection=true"
+      },
+      {
+        "subTitle": "main.datasource.service.name",
+        "description": "The name identifier for the primary database service used by the automation tool. This references a pre-configured database connection in the system. The service name is used to look up connection details like host, port, database name, and credentials from the configuration. Ensure this service is properly defined in your datasource configuration file.",
+        "example": "main.datasource.service.name=kashif"
+      },
+      {
+        "subTitle": "main.datasource.connector.name",
+        "description": "The name of the database connector configuration that defines how to connect to the database. This includes the database type (SQL Server, Oracle, MySQL, etc.) and connection parameters. Different connectors may have different driver requirements and connection string formats. Common values: 'sql.server.dev' for SQL Server development, 'oracle.prod' for Oracle production.",
+        "example": "main.datasource.connector.name=sql.server.dev"
+      },
+      {
+        "subTitle": "test.logger.path",
+        "description": "The directory path where test execution log files will be stored. These logs contain detailed information about each test step, including timestamps, actions performed, assertions made, and any errors encountered. Logs are essential for debugging failed tests and understanding test behavior. Ensure the directory exists and has sufficient disk space for log files.",
+        "example": "test.logger.path=C:/Celerant/Stratus/Testing/logs"
+      },
+      {
+        "subTitle": "testcases.path",
+        "description": "The relative or absolute path to the folder containing your test case files (typically Excel spreadsheets). All test suites and test scenarios should be organized within this directory. The path can be relative to the project root or an absolute path. Subdirectories can be used to organize tests by module, feature, or team member.",
+        "example": "testcases.path=testcases/POSRegression/Arpit"
+      },
+      {
+        "subTitle": "external.files.directory.path",
+        "description": "The directory path where external test data files are stored. This includes data import files, expected result files, configuration files, and any other supporting files needed during test execution. The automation tool will look in this directory when commands reference external files. Keep test data organized and version-controlled in this location.",
+        "example": "external.files.directory.path=testfiles"
+      },
+      {
+        "subTitle": "enable.multi.testsuite.execution",
+        "description": "Controls whether the automation tool should execute multiple test suite files in sequence. When set to 'true', all test suite files found in the testcases path will be executed one after another. When set to 'false', only the specific test suite defined in 'testsuite.file.name' will be executed. Use 'true' for full regression runs and 'false' for targeted testing.",
+        "example": "enable.multi.testsuite.execution=false"
+      },
+      {
+        "subTitle": "enable.all.testcase.execution",
+        "description": "Determines whether disabled test cases should be executed. When set to 'true', ALL test cases will run regardless of their enabled/disabled status in the Excel file. When set to 'false', only test cases marked as enabled will be executed, and disabled tests will be skipped. Use 'true' for complete test coverage validation.",
+        "example": "enable.all.testcase.execution=true"
+      },
+      {
+        "subTitle": "enable.fail.over.execution",
+        "description": "Controls test execution behavior when a test case fails. When set to 'true', the automation will continue executing remaining test cases even after encountering failures (fail-over mode). When set to 'false', execution stops immediately after the first failure. Use 'true' for regression testing to get complete results, 'false' for critical path testing where failures must be addressed immediately.",
+        "example": "enable.fail.over.execution=true"
+      },
+      {
+        "subTitle": "testsuite.file.name",
+        "description": "The filename of the specific test suite Excel file to execute. This is used when 'enable.multi.testsuite.execution' is set to 'false'. The file should be located in the directory specified by 'testcases.path'. Include the file extension (.xlsx). Example: 'Batch-Quote.xlsx' for batch quote testing, 'Login-Tests.xlsx' for authentication tests.",
+        "example": "testsuite.file.name=Batch-Quote.xlsx"
+      },
+      {
+        "subTitle": "testsuite.sheet.name",
+        "description": "The specific Excel sheet name within the test suite file to execute. A single test suite file can contain multiple sheets for different test scenarios or JIRA tickets. Leave empty to execute all sheets, or specify a sheet name to run only that particular set of tests. Useful for running tests related to a specific feature or bug fix (e.g., 'STRAT-26210' for a JIRA ticket).",
+        "example": "testsuite.sheet.name=STRAT-26210"
+      },
+      {
+        "subTitle": "start.with.testsuite",
+        "description": "When running multiple test suites, this specifies which test suite file to start execution from. All test suites alphabetically before this file will be skipped. Useful for resuming interrupted test runs or starting from a specific point in the test sequence. The file must exist in the testcases path. Leave empty to start from the first test suite.",
+        "example": "start.with.testsuite=BO-Login.xlsx"
+      },
+      {
+        "subTitle": "end.with.testsuite",
+        "description": "When running multiple test suites, this specifies which test suite file to stop execution after. All test suites after this file will be skipped. Combined with 'start.with.testsuite', you can define a specific range of test suites to execute. Useful for partial regression runs or testing specific application modules.",
+        "example": "end.with.testsuite=POS-1.xlsx"
+      },
+      {
+        "subTitle": "project.properties.path",
+        "description": "The directory path where project configuration (.properties) files are stored. These files contain key-value pairs for various settings like locators, URLs, credentials, and environment-specific configurations. The path is typically relative to the project root. Common folder names: 'config', 'properties', 'settings'.",
+        "example": "project.properties.path=config"
+      },
+      {
+        "subTitle": "enable.sikuli.api.execution",
+        "description": "Enables or disables Sikuli image recognition library for handling native Windows elements that cannot be automated through standard web automation. When set to 'true', the tool can interact with Windows dialogs, file explorers, print dialogs, and other desktop elements using image matching. Requires Sikuli library installation. Set to 'false' if only testing web elements.",
+        "example": "enable.sikuli.api.execution=true"
+      },
+      {
+        "subTitle": "celerant.stratus.path",
+        "description": "The root installation directory of the Celerant Stratus application on your system. This is a base path used by other properties to construct derived paths (downloads, printing, etc.) using variable substitution like ${celerant.stratus.path}/Testing. Centralizing this path makes it easy to adapt configurations for different environments.",
+        "example": "celerant.stratus.path=C:/Celerant/Stratus"
+      },
+      {
+        "subTitle": "project.path",
+        "description": "The root directory path where the automation test project is located. This is the main project folder containing test files, configurations, libraries, and resources. Used for resolving relative paths and accessing project resources. Update this when moving the project to a different location or machine.",
+        "example": "project.path=F:/tool/31-10/stratus_testing_tool-slickgrid"
+      },
+      {
+        "subTitle": "tomcat.path",
+        "description": "The installation directory of Apache Tomcat server on your system. Tomcat hosts the web applications being tested (BackOffice, POS, etc.). This path is used to derive other Tomcat-related paths and may be needed for deployment verification, log access, or configuration checks during testing.",
+        "example": "tomcat.path=C:/InstalledSoft/apache-tomcat-9.0.98"
+      },
+      {
+        "subTitle": "default.download.path",
+        "description": "The directory where files downloaded during test execution will be saved. This includes exported reports, downloaded documents, CSV exports, and any other file downloads triggered during testing. Uses variable substitution to reference the Stratus path. Ensure adequate disk space and proper permissions for this directory.",
+        "example": "default.download.path=${celerant.stratus.path}/Testing/downloads"
+      },
+      {
+        "subTitle": "receipt.print.path",
+        "description": "The directory path where receipt and print output files are saved during test execution. When tests involve printing operations (receipts, invoices, reports), the output files are stored in this location for verification. The automation tool can then compare these files against expected outputs to validate print functionality.",
+        "example": "receipt.print.path=${celerant.stratus.path}/printing"
+      },
+      {
+        "subTitle": "tomcat.webapp.path",
+        "description": "The webapps directory inside the Tomcat installation where web applications are deployed. This is where the WAR files are extracted and application files reside. Uses variable substitution referencing tomcat.path. Standard Tomcat installations use 'webapps' folder. Used for deployment verification and direct file access during testing.",
+        "example": "tomcat.webapp.path=${tomcat.path}/webapps"
+      },
+      {
+        "subTitle": "tomcat.pos.path",
+        "description": "The deployment directory for the POS (Point of Sale) application within Tomcat webapps. This is where POS application files are located after deployment. Used when tests need to access POS configuration files, verify deployments, or modify application settings. Derived from tomcat.webapp.path with '/pos' context.",
+        "example": "tomcat.pos.path=${tomcat.webapp.path}/pos"
+      },
+      {
+        "subTitle": "tomcat.backoffice.path",
+        "description": "The deployment directory for the BackOffice application within Tomcat webapps. Similar to POS path, this points to where BackOffice application files are deployed. Used for accessing BackOffice configurations, verifying deployments, or performing file-based operations during testing. Derived from tomcat.webapp.path with '/backoffice' context.",
+        "example": "tomcat.backoffice.path=${tomcat.webapp.path}/backoffice"
+      },
+      {
+        "subTitle": "origin.file.path",
+        "description": "The directory path where original/source files are stored. These are master copies or template files that may be copied or compared during test execution. Useful for reset operations, file comparison tests, or when tests need pristine copies of data files. Derived from celerant.stratus.path with '/OriginFiles' subfolder.",
+        "example": "origin.file.path=${celerant.stratus.path}/OriginFiles"
+      }
+    ]
+  }]

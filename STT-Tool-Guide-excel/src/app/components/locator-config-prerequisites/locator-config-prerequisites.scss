@@ -1,0 +1,309 @@
+:host {
+  @apply block w-full;
+}
+
+.prerequisites-container {
+  // Container styling from global .prereq-container
+
+  .back-navigation {
+    @apply mb-6 flex items-center;
+
+    .back-icon {
+      @apply w-4 h-4;
+    }
+  }
+
+  // Loading state now uses global .loading-spinner
+
+  .config-content {
+    @apply space-y-10;
+
+    .config-header {
+      @apply mb-12 flex justify-between items-start gap-6;
+
+      .header-content {
+        @apply flex-1;
+      }
+
+      .add-image-btn {
+        @apply flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 text-sm sm:text-base font-medium bg-orange-600 hover:bg-orange-700 text-white rounded-lg shadow-sm hover:shadow-md transition-all duration-150 cursor-pointer flex-shrink-0;
+
+        .btn-icon {
+          @apply w-5 h-5;
+        }
+
+        &:hover {
+          @apply scale-105;
+        }
+      }
+    }
+
+    .image-upload-form {
+      @apply mb-8 p-6 bg-orange-50 dark:bg-slate-800 rounded-lg border-2 border-orange-200 dark:border-slate-700 shadow-sm;
+
+      .form-content {
+        @apply flex flex-col gap-4;
+
+        .form-title {
+          @apply text-xl font-bold text-gray-900 dark:text-white;
+        }
+
+        .form-description {
+          @apply text-gray-600 dark:text-gray-400 text-sm;
+        }
+
+        .file-input-wrapper {
+          @apply relative;
+
+          .file-input {
+            @apply hidden;
+          }
+
+          .file-label {
+            @apply flex flex-col items-center justify-center p-8 border-2 border-dashed border-orange-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-900 hover:bg-orange-50 dark:hover:bg-slate-800 transition-colors cursor-pointer;
+
+            .upload-icon {
+              @apply w-12 h-12 text-orange-600 dark:text-orange-400 mb-2;
+            }
+
+            @apply text-orange-600 dark:text-orange-400 font-medium;
+
+            &:hover {
+              @apply bg-orange-50 dark:bg-slate-800;
+            }
+          }
+        }
+
+        .close-btn {
+          @apply px-4 py-2 bg-gray-300 dark:bg-slate-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-400 dark:hover:bg-slate-600 transition-colors;
+        }
+      }
+    }
+
+    .uploaded-image {
+      @apply mb-8 p-4 bg-gray-50 dark:bg-slate-800 rounded-lg border border-gray-200 dark:border-slate-700 text-center relative;
+
+      img {
+        @apply max-w-full h-auto rounded-lg shadow-md mx-auto;
+      }
+
+      .remove-btn {
+        @apply mt-4 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors;
+      }
+    }
+
+    .key-concepts {
+      @apply bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-700 p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow duration-300;
+
+      .section-title {
+        @apply text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6;
+      }
+
+      .concepts-grid {
+        @apply grid grid-cols-1 md:grid-cols-3 gap-6;
+
+        .concept-card {
+          @apply bg-gradient-to-br from-blue-50 dark:from-slate-800 to-blue-100/50 dark:to-slate-700/50 rounded-lg p-6 border border-blue-200 dark:border-slate-600 hover:shadow-md dark:hover:shadow-lg transition-all duration-200;
+
+          .concept-icon {
+            @apply w-12 h-12 bg-blue-600 dark:bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-xl mb-4;
+          }
+
+          h3 {
+            @apply text-lg font-semibold text-gray-900 dark:text-white mb-2;
+          }
+
+          p {
+            @apply text-gray-700 dark:text-gray-300 text-sm leading-relaxed;
+          }
+        }
+      }
+    }
+
+    .steps-section {
+      @apply bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-700 p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow duration-300;
+
+      .section-title {
+        @apply text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-8;
+      }
+
+      .steps-container {
+        @apply space-y-6;
+
+        .step-card {
+          @apply flex gap-6 p-6 bg-gray-50 dark:bg-slate-800 rounded-lg border border-gray-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-200;
+
+          .step-number {
+            @apply flex-shrink-0 w-10 h-10 bg-blue-600 dark:bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-lg;
+          }
+
+          .step-content {
+            @apply flex-1;
+
+            .step-title {
+              @apply text-lg font-semibold text-gray-900 dark:text-white mb-2;
+            }
+
+            .step-description {
+              @apply text-gray-700 dark:text-gray-300 text-sm leading-relaxed mb-3;
+            }
+
+            .code-block {
+              @apply bg-gray-900 dark:bg-gray-950 rounded-lg p-4 overflow-x-auto;
+
+              pre {
+                @apply m-0;
+
+                code {
+                  @apply text-sm text-green-400 font-mono;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Responsive adjustments for tablets */
+@media (max-width: 768px) {
+  .prerequisites-container {
+    @apply px-3 py-6;
+
+    .config-content {
+      .config-header {
+        @apply flex-col gap-3;
+
+        .add-image-btn {
+          @apply w-full justify-center;
+        }
+      }
+
+      .key-concepts {
+        .concepts-grid {
+          @apply grid-cols-1;
+        }
+      }
+
+      .steps-section {
+        .steps-container {
+          .step-card {
+            @apply flex-col;
+
+            .step-number {
+              @apply w-8 h-8 text-sm;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 640px) {
+  .prerequisites-container {
+    @apply px-3 py-4;
+
+    .back-navigation {
+      @apply mb-4;
+    }
+
+    .config-content {
+      .config-header {
+        @apply mb-8;
+
+        .add-image-btn {
+          @apply text-xs px-3 py-2;
+
+          .btn-icon {
+            @apply w-4 h-4;
+          }
+        }
+      }
+
+      .image-upload-form {
+        @apply p-4 mb-6;
+
+        .form-content {
+          .file-label {
+            @apply p-4;
+
+            .upload-icon {
+              @apply w-8 h-8 mb-1;
+            }
+          }
+        }
+      }
+
+      .key-concepts {
+        @apply p-4;
+
+        .section-title {
+          @apply text-lg;
+        }
+
+        .concepts-grid {
+          @apply gap-3;
+
+          .concept-card {
+            @apply p-4;
+
+            .concept-icon {
+              @apply w-10 h-10 text-base;
+            }
+
+            h3 {
+              @apply text-base;
+            }
+
+            p {
+              @apply text-xs;
+            }
+          }
+        }
+      }
+
+      .steps-section {
+        @apply p-4;
+
+        .section-title {
+          @apply text-lg mb-4;
+        }
+
+        .steps-container {
+          @apply space-y-4;
+
+          .step-card {
+            @apply gap-3 p-3;
+
+            .step-number {
+              @apply w-8 h-8 text-xs flex-shrink-0;
+            }
+
+            .step-content {
+              .step-title {
+                @apply text-sm;
+              }
+
+              .step-description {
+                @apply text-xs;
+              }
+
+              .code-block {
+                @apply p-2;
+
+                pre {
+                  code {
+                    @apply text-xs;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

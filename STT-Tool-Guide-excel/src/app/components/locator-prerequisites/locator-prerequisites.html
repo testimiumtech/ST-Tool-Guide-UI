@@ -1,0 +1,137 @@
+<div class="prerequisites-container prereq-container">
+  <!-- Back Navigation -->
+  <div class="back-navigation">
+    <button
+      (click)="goBack()"
+      class="btn-back"
+      title="Go back to previous page"
+    >
+      <svg
+        class="back-icon"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15 19l-7-7 7-7"
+        />
+      </svg>
+      Back
+    </button>
+  </div>
+
+  <div class="prerequisites-header">
+    <h1 class="typo-page-title mb-3">🎯 Basic Knowledge of Locators</h1>
+    <p class="typo-page-subtitle">
+      Master locator strategies for effective element identification
+    </p>
+  </div>
+
+  <!-- Featured Images
+  <div class="featured-images">
+    <div class="image-container">
+      <img
+        [src]="locatorImage"
+        alt="Web browser inspector showing element locating and inspection"
+        class="featured-image"
+      />
+      <p class="image-caption">
+        Using browser inspector to locate web elements
+      </p>
+    </div>
+    <div class="image-container">
+      <img
+        [src]="selectorImage"
+        alt="HTML code and CSS selectors for web automation"
+        class="featured-image"
+      />
+      <p class="image-caption">
+        CSS selectors and XPath strategies for element identification
+      </p>
+    </div>
+  </div> -->
+
+  <div *ngIf="isLoading()" class="loading-spinner">
+    <div class="spinner"></div>
+    <p>Loading prerequisites...</p>
+  </div>
+
+  <div
+    *ngIf="!isLoading() && prerequisites().length > 0"
+    class="prerequisites-content"
+  >
+    <div
+      *ngFor="let section of prerequisites(); let i = index; trackBy: trackBySection"
+      class="prerequisite-section"
+    >
+      <div class="section-card">
+        <h2 class="section-title">{{ section.title }}</h2>
+
+        <div class="section-items">
+          <div *ngFor="let item of section.items; let idx = index; trackBy: trackByItem" class="item">
+            <p class="item-description">{{ item.description }}</p>
+
+            <ng-container *ngIf="item.link">
+              <p class="item-link">
+                <a
+                  [href]="item.link.href"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {{ item.link.text }}
+                </a>
+              </p>
+            </ng-container>
+
+            <ng-container *ngIf="item.subItems && item.subItems.length > 0">
+              <ul class="sub-items-list">
+                <li *ngFor="let subItem of item.subItems; trackBy: trackByItem" class="sub-item">
+                  <ng-container *ngIf="typeof subItem === 'string'">
+                    {{ subItem }}
+                  </ng-container>
+                  <ng-container *ngIf="typeof subItem === 'object'">
+                    <strong>{{ subItem.title }}</strong>
+                    <p class="item-description">{{ subItem.description }}</p>
+                    <div class="image-container" *ngIf="subItem?.imageUrl">
+                      <img
+                        [src]="subItem.imageUrl"
+                        alt="Web browser inspector showing element locating and inspection"
+                        class="featured-image"
+                      />
+                    </div>
+                    <!-- Property Key Example Formatting -->
+                    <ng-container *ngIf="subItem.title && section.title && section.title.toLowerCase().includes('property')">
+                      <div class="property-example-block">
+                        <code>{{ subItem.title }}</code>
+                        <p class="item-description">{{ subItem.description }}</p>
+                      </div>
+                    </ng-container>
+                    <!-- Locator Example Formatting -->
+                    <ng-container *ngIf="subItem.example">
+                      <div class="locator-example-block">
+                        <div class="example-label">{{ subItem.example.label }}</div>
+                        <pre class="example-code"><code>{{ subItem.example.code }}</code></pre>
+                        <div class="example-label mt-2">{{ subItem.example.htmlLabel }}</div>
+                        <pre class="example-html"><code>{{ subItem.example.html }}</code></pre>
+                      </div>
+                    </ng-container>
+                    <div class="analogy-block" *ngIf="subItem.analogy">
+                      <em>Analogy:</em> {{ subItem.analogy }}
+                    </div>
+                  </ng-container>
+                </li>
+              </ul>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading() && prerequisites().length === 0" class="empty-state-msg">
+    No prerequisites found. Please check back later.
+  </div>
+</div>

@@ -1,0 +1,3289 @@
+{
+  "metadata": {
+    "version": "v5",
+    "generated": "2026-03-17T08:11:52.409Z",
+    "total_commands": 37,
+    "total_examples": 62,
+    "source_sheet": "All Commands",
+    "ex_num_format": "Order.ExampleIndex (e.g. 1.1, 4.3 — left of dot = command Order, right = example index)"
+  },
+  "commands": [
+    {
+      "order": 1,
+      "command_id": "close-browser-tab",
+      "title": "Close Browser Tab",
+      "category": "Browser",
+      "status": "Done",
+      "syntax": "CloseBrowserTab <Tab Index>",
+      "description": "Closes a browser tab during test execution.",
+      "purpose": "Used to close the currently active tab or a specific tab by its tab number. Helps manage multiple tabs opened during automation.",
+      "when_to_use": "After completing a task in a tab.\r\nWhen multiple tabs are open and you want to close a specific one.",
+      "use_cases": "Closing a report tab after verification.\r\nClosing a newly opened tab after checking data.\r\nManaging multiple tabs during testing.",
+      "options_count": 2,
+      "options": [
+        {
+          "label": "Current Tab",
+          "desc": "Closes the active tab.",
+          "cmd": "CloseBrowserTab",
+          "usage_example": "CloseBrowserTab"
+        },
+        {
+          "label": "Specific Tab",
+          "desc": "Closes a specific tab by number.",
+          "cmd": "CloseBrowserTab <TabIndex>",
+          "usage_example": "CloseBrowserTab 2"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "1.1",
+          "problem_statement": {
+            "scenario": "After verifying a report, a new tab was opened during the test flow.",
+            "problem": "The extra tab must be closed and focus must return to the main tab to continue testing.",
+            "goal": "Close the specified browser tab by index and switch back to the main tab."
+          },
+          "command": "CloseBrowserTab",
+          "description": "Closes the currently active browser tab."
+        },
+        {
+          "example_id": "1.2",
+          "problem_statement": {
+            "scenario": "During a multi-tab checkout test, the payment confirmation opens in Tab 2.",
+            "problem": "Tab 1 (cart page) is no longer needed. Keeping it open may cause element mismatch in later steps.",
+            "goal": "Close Tab 1 by index so the test can continue on the payment tab."
+          },
+          "command": "CloseBrowserTab 1",
+          "description": "Closes a specific browser tab by its index number."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Close Browser Tab executed successfully.",
+        "fail": "FAIL: Close Browser Tab could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "close",
+        "browser",
+        "tab",
+        "cleanup"
+      ],
+      "related_commands": [
+        "OpenNewBrowserTab",
+        "SwitchTab",
+        "CloseAllBrowserTab"
+      ],
+      "is_new": false,
+      "last_updated": "2026-02-17"
+    },
+    {
+      "order": 2,
+      "command_id": "close-all-browser-tab",
+      "title": "Close All Browser Tab",
+      "category": "Browser",
+      "status": "Done",
+      "syntax": "CloseAllBrowserTab",
+      "description": "Closes every open browser tab except the first (main) tab.",
+      "purpose": "Used to close all extra tabs while keeping the main tab active during test execution.",
+      "when_to_use": "When multiple tabs are opened during testing.\r\nAfter finishing work in secondary tabs.\r\nWhen you want to return to the main application tab.\r\nBefore continuing next steps in the main tab.",
+      "use_cases": "Clean up extra tabs while keeping the main application tab open.\r\nAfter checking data in multiple tabs.\r\nReturn to the main tab without closing the entire browser.",
+      "options_count": 0,
+      "options": [],
+      "examples": [
+        {
+          "example_id": "2.1",
+          "problem_statement": {
+            "scenario": "A form submission flow opens multiple popup tabs (terms, help, preview).",
+            "problem": "All extra tabs must be cleaned up after assertions to avoid interference with subsequent tests.",
+            "goal": "Close all browser tabs at once to reset the tab state."
+          },
+          "command": "CloseAllBrowserTab",
+          "description": "Closes every open browser tab except the first (main) tab."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Close All Browser Tab executed successfully.",
+        "fail": "FAIL: Close All Browser Tab could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "close all",
+        "cleanup",
+        "tabs"
+      ],
+      "related_commands": [
+        "CloseBrowserTab",
+        "SwitchTab"
+      ],
+      "is_new": false,
+      "last_updated": "2026-02-17"
+    },
+    {
+      "order": 3,
+      "command_id": "open-new-browser-tab",
+      "title": "Open New Browser Tab",
+      "category": "Browser",
+      "status": "Done",
+      "syntax": "OpenNewBrowserTab",
+      "description": "Open a new browser tab during test execution.",
+      "purpose": "Use this command to work on multiple pages within the same browser session",
+      "when_to_use": "When you need to perform a new task in a fresh tab.\r\nWhen validating data across different pages.",
+      "use_cases": "Navigating to a different URL in a separate tab.\r\nTesting multiple pages in the same browser session.",
+      "options_count": 0,
+      "options": [],
+      "examples": [
+        {
+          "example_id": "3.1",
+          "problem_statement": {
+            "scenario": "The test needs to verify data on a second page without losing current page state (e.g., a partially filled form).",
+            "problem": "Navigating away would lose the form data. A new tab is needed to check the second page.",
+            "goal": "Open a new empty browser tab so the test can navigate to the second page independently."
+          },
+          "command": "OpenNewBrowserTab",
+          "description": "Opens a new blank browser tab in the current browser session."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Open New Browser Tab executed successfully.",
+        "fail": "FAIL: Open New Browser Tab could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "open",
+        "new tab",
+        "browser"
+      ],
+      "related_commands": [
+        "SwitchTab",
+        "CloseBrowserTab"
+      ],
+      "is_new": false,
+      "last_updated": "2026-02-17"
+    },
+    {
+      "order": 4,
+      "command_id": "open-url",
+      "title": "Open URL",
+      "category": "Browser",
+      "status": "Done",
+      "syntax": "OpenUrl <PropertyKey>\r\nOpenUrl <Property key> <URL>\r\nOpenUrl <URL>",
+      "description": "Navigates the browser to a specified web address.",
+      "purpose": "Used to open a website, application page, or environment during test execution.",
+      "when_to_use": "At the start of test execution.\r\nWhen navigation to a new page is required.\r\nAfter opening a new tab.",
+      "use_cases": "Launching application under test.\r\nNavigating to a specific module page.\r\nOpening external verification links.",
+      "options_count": 3,
+      "options": [
+        {
+          "label": "PropertyKey",
+          "desc": "Opens the base URL defined in the properties or configuration file by using the given property key.",
+          "cmd": "<PropertyKey>",
+          "usage_example": "OpenUrl backoffice.url"
+        },
+        {
+          "label": "PropertyKey + URL Path",
+          "desc": "Opens the base URL from the property key and then navigates to the specified relative URL path.",
+          "cmd": "<PropertyKey> <URL>",
+          "usage_example": "OpenUrl backoffice.url /customer/list"
+        },
+        {
+          "label": "URL",
+          "desc": "Opens the complete URL directly without using any property key.",
+          "cmd": "<URL>",
+          "usage_example": "OpenUrl http://localhost:8080/login"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "4.1",
+          "problem_statement": {
+            "scenario": "Test execution begins and the automation must navigate to the backoffice application.",
+            "problem": "The URL is stored in a properties file, not hardcoded. The command must resolve it dynamically.",
+            "goal": "Open the URL by reading it from the properties file using a key reference."
+          },
+          "command": "OpenUrl backoffice.url",
+          "description": "Opens the URL configured under the property key 'backoffice.url'."
+        },
+        {
+          "example_id": "4.2",
+          "problem_statement": {
+            "scenario": "After logging in, the test needs to navigate directly to the customer list page.",
+            "problem": "The target page requires appending a relative path to the base URL, not navigating via UI.",
+            "goal": "Open the URL by combining the base URL with a relative path."
+          },
+          "command": "OpenUrl backoffice.url /customer/customerlist",
+          "description": "Opens the base URL from a property key and appends a relative path."
+        },
+        {
+          "example_id": "4.3",
+          "problem_statement": {
+            "scenario": "During debugging, the tester needs to open a specific localhost URL directly.",
+            "problem": "No configuration file lookup is needed; the URL is known and hardcoded for quick access.",
+            "goal": "Open a hardcoded URL directly without property file resolution."
+          },
+          "command": "OpenUrl http://localhost:8080/backoffice",
+          "description": "Opens a direct URL without using a property key."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Open URL executed successfully.",
+        "fail": "FAIL: Open URL could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "navigate",
+        "launch",
+        "url"
+      ],
+      "related_commands": [
+        "SwitchTab"
+      ],
+      "is_new": false,
+      "last_updated": "2026-02-18"
+    },
+    {
+      "order": 5,
+      "command_id": "switch-tab",
+      "title": "Switch Tab",
+      "category": "Browser",
+      "status": "Done",
+      "syntax": "SwitchTab <Tab Index>",
+      "description": "Moves focus to the next open browser tab in the current session.",
+      "purpose": "Helps manage multiple open tabs efficiently during automation.",
+      "when_to_use": "After opening a new tab.\r\nWhen multiple tabs are open.\r\nBefore performing actions in another tab.",
+      "use_cases": "Switching to a newly opened tab.\r\nReturning to the main application tab.\r\nValidating data in different tabs.",
+      "options_count": 1,
+      "options": [],
+      "examples": [
+        {
+          "example_id": "5.1",
+          "problem_statement": {
+            "scenario": "Clicking 'View Invoice' opened a new tab with the invoice details.",
+            "problem": "The test focus is still on the original tab. It must switch to the new tab to verify invoice data.",
+            "goal": "Switch browser focus to the newly opened tab by index."
+          },
+          "command": "SwitchTab",
+          "description": "Switches focus to the next available browser tab."
+        },
+        {
+          "example_id": "5.2",
+          "problem_statement": {
+            "scenario": "After verifying data in Tab 3, the test needs to return to Tab 1 (main application).",
+            "problem": "Focus is on Tab 3, but the next test steps require interaction with Tab 1.",
+            "goal": "Switch focus back to Tab 1 by specifying the tab index."
+          },
+          "command": "SwitchTab 1",
+          "description": "Switches focus to a specific browser tab by its index."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Switch Tab executed successfully.",
+        "fail": "FAIL: Switch Tab could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "switch",
+        "tab",
+        "browser"
+      ],
+      "related_commands": [
+        "OpenNewBrowserTab",
+        "CloseBrowserTab"
+      ],
+      "is_new": false,
+      "last_updated": "2026-02-17"
+    },
+    {
+      "order": 6,
+      "command_id": "verify-browser-tab",
+      "title": "Verify Browser Tab",
+      "category": "Browser",
+      "status": "Done",
+      "syntax": "VerifyBrowserTab -tabCount <Number>",
+      "description": "Checks if a specific browser tab is open or active.",
+      "purpose": "Ensures correct tab handling and validation in automation scripts.",
+      "when_to_use": "After switching tabs.\r\nBefore performing operations on a specific tab.\r\nDuring multi-tab validation testing.",
+      "use_cases": "Confirm tab navigation.\r\nValidate tab switching functionality.\r\nEnsure the correct tab is active before performing actions.",
+      "options_count": 1,
+      "options": [
+        {
+          "label": "Tab Count",
+          "desc": "The expected number of open tabs.",
+          "cmd": "-tabCount",
+          "usage_example": "VerifyBrowserTab -tabCount 2"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "6.1",
+          "problem_statement": {
+            "scenario": "A 'Print Preview' button should open exactly one new tab.",
+            "problem": "The test needs to confirm that exactly 2 tabs are now open before proceeding with assertions.",
+            "goal": "Verify the total number of open browser tabs matches the expected count."
+          },
+          "command": "VerifyBrowserTab -tabCount 2",
+          "description": "Verifies that the total count of open browser tabs matches the expected number."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Verify Browser Tab executed successfully.",
+        "fail": "FAIL: Verify Browser Tab could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "verify",
+        "tab count",
+        "browser"
+      ],
+      "related_commands": [
+        "SwitchTab"
+      ],
+      "is_new": false,
+      "last_updated": "2026-02-17"
+    },
+    {
+      "order": 7,
+      "command_id": "execute-js",
+      "title": "Execute JS",
+      "category": "Browser",
+      "status": "In Progress",
+      "syntax": "ExecuteJS <Property Key> <Script Key>",
+      "description": "The ExecuteJs command accepts two arguments:\r\nProperty Key – Used to identify the locator of the specific web element on which the action will be performed.\r\nJS Script Key – Used to reference the JavaScript script that will be executed in the browser.\r\nThe command uses a JSON input parameter to pass the required data for execution.\r\n\r\nInput Param JavaScript ::\r\n{\r\n  \"scripts\": {\r\n    \"scrollToElement-1\": [\r\n      {\r\n        \"script\": \"document.getElementsByClassName('slick-viewport')[3].scrollBy(100, (document.getElementsByClassName('slick-viewport')[3].scrollHeight / 100) * 100)\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "purpose": "Execute custom JavaScript in the browser to perform actions that cannot be handled by standard automation commands.\r\nInteract with complex or dynamic UI elements that are difficult to access using normal commands.\r\nDirectly manipulate the DOM to set values, update attributes, or change element behavior.\r\nTrigger browser events manually such as click, change, focus, or submit when default actions fail.\r\nHandle advanced automation scenarios like clicking hidden elements, scrolling, or forcing UI interactions.\r\nProvide flexibility for complex operations by allowing any required JavaScript logic to run during test execution.",
+      "when_to_use": "Used when standard commands fail – ExecuteJs helps perform actions when normal automation commands like Click or SetElement are unable to interact with the element.\r\nHandles dynamically rendered elements – Useful for elements created or updated dynamically by modern frameworks where traditional automation commands may not work reliably.\r\nDirect DOM interaction – Allows executing JavaScript to modify element attributes, set values, or manipulate the DOM directly.\r\nTrigger custom events – Can be used to manually trigger browser events such as click, change, focus, or submit through JavaScript.\r\nSupports complex UI operations – Enables advanced interactions like clicking hidden elements, scrolling to elements, forcing actions, or executing custom browser logic.\r\nFlexible for advanced automation – Provides the ability to run any custom JavaScript code in the browser to handle complex or unsupported automation scenarios.",
+      "use_cases": "Clicking hidden elements, scrolling, DOM manipulation.",
+      "options_count": 2,
+      "options": [
+        {
+          "label": "PropertyKey",
+          "desc": "Specifies the target element on which the JavaScript action will be performed. This should be a valid property key defined in the property file.",
+          "cmd": "<PropertyKey>",
+          "usage_example": "ExecuteJS SubmitButton clickJS"
+        },
+        {
+          "label": "ScriptKey",
+          "desc": "Specifies the JavaScript logic key that contains the script to be executed on the element.",
+          "cmd": "<ScriptKey>",
+          "usage_example": "ExecuteJS HiddenButton forceClick"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "7.1",
+          "problem_statement": {
+            "scenario": "A hidden input field cannot be set using standard SetElement.",
+            "problem": "The framework's React layer ignores direct value changes; JavaScript execution is required.",
+            "goal": "Execute a JavaScript snippet to set the field value bypassing the UI layer."
+          },
+          "command": "ExecuteJS Customer.FirstName.txt jsScriptKey1",
+          "description": "Executes the script 'jsScriptKey1' on the element identified by 'Customer.FirstName.txt' to set its value via JavaScript.",
+          "input_param": {
+            "scripts": {
+              "jsScriptKey1": [
+                {
+                  "script": "arguments[0].value='Aniseed Syrup', document.getElementById('FirstName')"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "input_param_schema": [
+        {
+          "label": "JavaScript Script Configuration",
+          "description": "Defines one or more JavaScript scripts under unique keys. Each script key maps to an array of script objects. The 'script' property contains the JavaScript code to execute on the target element.",
+          "data": {
+            "scripts": {
+              "<scriptKey>": [
+                {
+                  "script": "<JavaScript code to execute>"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Execute JS executed successfully.",
+        "fail": "FAIL: Execute JS could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "execute javascript",
+        "javascript"
+      ],
+      "related_commands": [
+        "VerifyElementByJS"
+      ],
+      "is_new": false,
+      "last_updated": "2026-02-17"
+    },
+    {
+      "order": 8,
+      "command_id": "clear",
+      "title": "Clear",
+      "category": "Browser",
+      "status": "Done",
+      "syntax": "Clear <locator-property-key>",
+      "description": "Removes any existing content from a specified input field such as a text box, text area, or editable form field to ensure the field is empty before entering new data or validation.",
+      "purpose": "Ensures input fields are empty before entering new data, preventing incorrect input, data conflicts, and automation test failures.",
+      "when_to_use": "Use whenever an input field must be emptied before entering data, validation, or automation interaction.",
+      "use_cases": "Used before entering new data, validation testing, removing default values, and ensuring consistent automation test execution.",
+      "options_count": 1,
+      "options": [
+        {
+          "label": "Clear Input Field",
+          "desc": "Removes all text or values from a targeted input element. Essential for data integrity and validation testing.",
+          "cmd": "Clear <locator-property-key>",
+          "usage_example": "Clear Customers.Name.txt"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "8.1",
+          "problem_statement": {
+            "scenario": "A search field retains the previous search query from the last test step.",
+            "problem": "Entering a new value without clearing will append to the old text, causing incorrect results.",
+            "goal": "Clear the input field completely before entering a new search term."
+          },
+          "command": "Clear Customers.Name.txt",
+          "description": "Removes all content from the text field 'Customers.Name.txt'."
+        },
+        {
+          "example_id": "8.2",
+          "problem_statement": {
+            "scenario": "The login form auto-fills the username from browser memory.",
+            "problem": "The pre-filled value will interfere with testing a different user credential.",
+            "goal": "Clear the auto-filled field so a fresh username can be entered."
+          },
+          "command": "Clear Login.Username.txt",
+          "description": "Clears the auto-filled value from the username field."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Clear executed successfully.",
+        "fail": "FAIL: Clear could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "clear",
+        "remove",
+        "empty",
+        "reset",
+        "input",
+        "field"
+      ],
+      "related_commands": [],
+      "is_new": false,
+      "last_updated": "2024-01-10"
+    },
+    {
+      "order": 9,
+      "command_id": "clear-browser-cache",
+      "title": "Clear Browser Cache",
+      "category": "Browser",
+      "status": "Done",
+      "syntax": "ClearBrowserCache",
+      "description": "Removes stored browser cache, cookies, session storage, and temporary data from the active instance.",
+      "purpose": "Prevents session conflicts, inconsistent behavior, and false test results caused by \"dirty\" browser data.",
+      "when_to_use": "Use at the very beginning of a test (Setup) or immediately after a Logout to ensure the next test doesn't inherit old session data.",
+      "use_cases": "Simulating a first-time visitor to test a promotional popup\" or \"Clearing session data to verify that a 'Remember Me' checkbox actually works.",
+      "options_count": 1,
+      "options": [
+        {
+          "command": "ClearBrowserCache",
+          "label": "Browser Cache Reset",
+          "syntax": "ClearBrowserCache <Optional: Config_Key>",
+          "keywords": [
+            "clear",
+            "cache",
+            "cookies",
+            "session",
+            "browser",
+            "reset"
+          ],
+          "examples": [
+            {
+              "scenario": "Basic Cache Clear",
+              "command": "ClearBrowserCache",
+              "description": "Standard purge of all cookies and temporary session files.",
+              "output": "PASS: Browser cache cleared successfully."
+            },
+            {
+              "scenario": "Configured Reset",
+              "command": "ClearBrowserCache Browser.Config",
+              "description": "Clears cache using specific browser settings defined in 'Browser.Config'.",
+              "output": "PASS: Cache cleared using specific configuration."
+            }
+          ],
+          "troubleshooting": "Ensure the browser instance is active before calling this command. If using a specific config key, verify the key exists in your properties file."
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "9.1",
+          "problem_statement": {
+            "scenario": "After a logout test, residual session cookies remain in the browser.",
+            "problem": "Cookies cause the next login test to skip the login screen, breaking the test flow.",
+            "goal": "Clear the browser cache and cookies to simulate a fresh session."
+          },
+          "command": "ClearBrowserCache",
+          "description": "Clears all browser cache, cookies, and session data from the active instance."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Clear Browser Cache executed successfully.",
+        "fail": "FAIL: Clear Browser Cache could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "clear",
+        "cache",
+        "cookies",
+        "session",
+        "browser",
+        "reset"
+      ],
+      "related_commands": [
+        "Clear"
+      ],
+      "is_new": false,
+      "last_updated": "2024-01-10"
+    },
+    {
+      "order": 10,
+      "command_id": "click",
+      "title": "Click",
+      "category": "Element Interaction",
+      "status": "Done",
+      "syntax": "Click <locator-property-key>",
+      "description": "Interacts with a web element (button, link, checkbox, etc.) identified by the locator key.",
+      "purpose": "Enables interaction with web elements by performing a click action using reusable locator keys, improving maintainability and reducing hardcoded locators in automation scripts.",
+      "when_to_use": "Use whenever a script needs to activate a UI component or trigger a state change (e.g., opening a modal, submitting a form, or navigating via a link).",
+      "use_cases": "Used for form submission, navigation, enabling/disabling features, selecting options, and triggering UI events during automation execution.",
+      "options_count": 4,
+      "options": [
+        {
+          "label": "Click Button",
+          "desc": "  Clicks on buttons such as Submit, Save, Login, or Cancel to trigger actions.",
+          "cmd": "Click <locator-property-key>",
+          "usage_example": "Click Login.Submit.Button"
+        },
+        {
+          "label": "Click Link",
+          "desc": "  Clicks hyperlinks to navigate between pages or sections.",
+          "cmd": "Click <locator-property-key>",
+          "usage_example": "Click Navigation.Home.Link"
+        },
+        {
+          "label": "Click Selectable Element",
+          "desc": "  Clicks selectable elements such as checkboxes, radio buttons, or toggles.",
+          "cmd": "Click <locator-property-key>",
+          "usage_example": "Click Settings.EnableFeature.Checkbox"
+        },
+        {
+          "label": "Click Menu Item",
+          "desc": "  Clicks menu options or dropdown items to open sections or trigger UI changes.",
+          "cmd": "Click <locator-property-key>",
+          "usage_example": "Click Menu.Profile.Option"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "10.1",
+          "problem_statement": {
+            "scenario": "The login form is filled in. The test must submit the form.",
+            "problem": "Without clicking the Submit button, authentication won't trigger and the dashboard won't load.",
+            "goal": "Click the Submit button to trigger form submission."
+          },
+          "command": "Click Login.Submit.Btn",
+          "description": "Clicks the Submit button to submit the login form."
+        },
+        {
+          "example_id": "10.2",
+          "problem_statement": {
+            "scenario": "The test needs to navigate from the dashboard to the Home page.",
+            "problem": "Navigation requires clicking a link in the header; there is no direct URL shortcut.",
+            "goal": "Click the Home navigation link to change the page."
+          },
+          "command": "Click Navigation.Home.Link",
+          "description": "Clicks the Home navigation link to go to the homepage."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Click executed successfully.",
+        "fail": "FAIL: Click could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "click",
+        "press",
+        "select",
+        "button",
+        "link",
+        "interact"
+      ],
+      "related_commands": [
+        "PressKey",
+        "DoubleClick"
+      ],
+      "is_new": false,
+      "last_updated": "2024-01-10"
+    },
+    {
+      "order": 11,
+      "command_id": "double-click",
+      "title": "Double Click",
+      "category": "Element Interaction",
+      "status": "Done",
+      "syntax": "DoubleClick <locator-property-key>",
+      "description": "Simulates two rapid mouse clicks on a target element to trigger specific OS-style or advanced UI interactions.",
+      "purpose": "Enables automation scripts to perform double-click interactions on elements that require double-click events, improving automation coverage for advanced UI behaviors.",
+      "when_to_use": "Use when a UI element requires a double-click action instead of a single click to trigger functionality.",
+      "use_cases": "Data Grid Interaction: Activating \"Edit Mode\" on a specific table row or expanding a collapsed tree node\r\nSearch Execution: Triggering a search or execution flow in certain specialized legacy interfaces.",
+      "options_count": 4,
+      "options": [
+        {
+          "label": "DoubleClick Element",
+          "desc": "  Performs a double-click action on the specified element.",
+          "cmd": "DoubleClick <locator-property-key>",
+          "usage_example": "DoubleClick Search.Result.Item"
+        },
+        {
+          "label": "Open Items Using DoubleClick",
+          "desc": "  Used to open files, folders, or records that require double-click interaction.",
+          "cmd": "DoubleClick <locator-property-key>",
+          "usage_example": "DoubleClick FileExplorer.Folder.Item"
+        },
+        {
+          "label": "Expand or Edit Elements",
+          "desc": "  Used to expand tree nodes, open editors, or activate edit mode.",
+          "cmd": "DoubleClick <locator-property-key>",
+          "usage_example": "DoubleClick Grid.Row.Item"
+        },
+        {
+          "label": "Trigger Special UI Actions",
+          "desc": "  Used when applications require double-click to execute specific actions such as search execution or opening detailed views.",
+          "cmd": "DoubleClick <locator-property-key>",
+          "usage_example": "DoubleClick Report.View.Entry"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "11.1",
+          "problem_statement": {
+            "scenario": "A SlickGrid row requires a double-click to enter inline edit mode.",
+            "problem": "A single click only selects the row but does not open the editor for editing.",
+            "goal": "Double-click the row cell to activate inline editing."
+          },
+          "command": "DoubleClick Search.Result.Item",
+          "description": "Double-clicks a grid row to activate inline edit mode."
+        },
+        {
+          "example_id": "11.2",
+          "problem_statement": {
+            "scenario": "In a file manager UI, double-clicking a document row opens it for preview.",
+            "problem": "The test must trigger the double-click interaction to verify the document viewer opens.",
+            "goal": "Double-click the document row to open the preview panel."
+          },
+          "command": "DoubleClick FileExplorer.Document.Row",
+          "description": "Double-clicks a document row to open it for preview."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Double Click executed successfully.",
+        "fail": "FAIL: Double Click could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "doubleclick",
+        "double-click",
+        "interact",
+        "open",
+        "expand",
+        "execute"
+      ],
+      "related_commands": [
+        "Click",
+        "PressKey"
+      ],
+      "is_new": false,
+      "last_updated": "2024-01-10"
+    },
+    {
+      "order": 12,
+      "command_id": "set-element",
+      "title": "Set Element",
+      "category": "Element Interaction",
+      "status": "Done",
+      "syntax": "SetElement <locator-property-key> <targeted-field-value>",
+      "description": "Inputs user-defined data into text boxes, textareas, email fields, and password fields.",
+      "purpose": "Allows automation scripts to input user-defined values into web form fields by using reusable locator keys, eliminating hardcoded locators and improving script maintainability.",
+      "when_to_use": "Use this command whenever an automation script needs to input data into form fields, text boxes, or editable elements during test execution.",
+      "use_cases": "Use Cases (Real-World Scenarios)\r\nUser Authentication: Entering usernames and passwords into login forms (e.g., SetElement Login.Password.Input P@ssword123).\r\nRegistration Flows: Populating multi-field forms with names, addresses, and emails.\r\nSearch Functionality: Typing keywords into a search bar to filter results.\r\nData Modification: Overwriting current field values to test \"Update\" or \"Edit\" functionality in a user profile.",
+      "options_count": 4,
+      "options": [
+        {
+          "label": "Set Value into Input Field",
+          "desc": "  Sets the specified value into the targeted input element identified by the locator-property-key.",
+          "cmd": "SetElement <locator-property-key> <targeted-field-value>",
+          "usage_example": "SetElement Login.Username.Input john.doe"
+        },
+        {
+          "label": "Populate Form Fields",
+          "desc": "  Used to populate required form fields such as name, email, address, or other user inputs.",
+          "cmd": "SetElement <locator-property-key> <targeted-field-value>",
+          "usage_example": "SetElement Registration.Email.Input user@example.com"
+        },
+        {
+          "label": "Set Password or Secure Fields",
+          "desc": "  Used to set values in password or secure input fields.",
+          "cmd": "SetElement <locator-property-key> <targeted-field-value>",
+          "usage_example": "SetElement Login.Password.Input MySecurePassword123"
+        },
+        {
+          "label": "Update or Replace Existing Value",
+          "desc": "  Replaces the current value in the input field and triggers associated input and change events.",
+          "cmd": "SetElement <locator-property-key> <targeted-field-value>",
+          "usage_example": "SetElement Profile.DisplayName.Input NewDisplayName"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "12.1",
+          "problem_statement": {
+            "scenario": "The test is automating a login flow.",
+            "problem": "The username field must be filled before clicking Submit to proceed.",
+            "goal": "Type the username value into the login input field."
+          },
+          "command": "SetElement Login.Username.Input john.doe",
+          "description": "Enters 'john.doe' into the login username field."
+        },
+        {
+          "example_id": "12.2",
+          "problem_statement": {
+            "scenario": "During a customer profile update test, the email field must be changed.",
+            "problem": "The existing email must be replaced with a new value to verify the save functionality.",
+            "goal": "Set the email input field to the new value."
+          },
+          "command": "SetElement Customer.Email.txt user@example.com",
+          "description": "Populates the email field with a test email address."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Set Element executed successfully.",
+        "fail": "FAIL: Set Element could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "setelement",
+        "input",
+        "enter value",
+        "type",
+        "textfield",
+        "form"
+      ],
+      "related_commands": [
+        "SetElementSelect",
+        "Wait"
+      ],
+      "is_new": false,
+      "last_updated": "2024-01-10"
+    },
+    {
+      "order": 13,
+      "command_id": "set-multiple-elements",
+      "title": "Set Multiple Elements",
+      "category": "Element Interaction",
+      "status": "Done",
+      "syntax": "SetElements  <JSON Map Key>",
+      "description": "Reads a structured JSON object containing multiple locators and values, executing them sequentially.",
+      "purpose": "Enables automation scripts to populate multiple input fields, checkboxes, radio buttons, and other editable elements simultaneously using a predefined JSON map, reducing the need for multiple individual commands.",
+      "when_to_use": "Use when a test case requires filling out a large form (e.g., 10+ fields) or when you want to reuse the same set of data across multiple test scenarios without rewriting individual SetElement lines.",
+      "use_cases": "Used for filling registration forms, search forms, customer profile forms, and any scenario where multiple fields need to be populated efficiently in a single step.",
+      "options_count": 4,
+      "options": [
+        {
+          "label": "Fill Multiple Form Fields",
+          "desc": "  Automatically fills multiple input fields such as name, email, address, and other form elements using a single command.",
+          "cmd": "SetElements <json-map-key>",
+          "usage_example": "SetElements RegistrationFormData"
+        },
+        {
+          "label": "Populate Complete Form Data",
+          "desc": "  Used to populate entire forms including text fields, dropdowns, checkboxes, and radio buttons from predefined JSON data.",
+          "cmd": "SetElements <json-map-key>",
+          "usage_example": "SetElements CustomerProfileData"
+        },
+        {
+          "label": "Execute JSON-Based Input Configuration",
+          "desc": "  Reads structured test data from a JSON map defined in external sources such as Excel, JSON files, or configuration repositories.",
+          "cmd": "SetElements <json-map-key>",
+          "usage_example": "SetElements CUSTBASICMultiSearch"
+        },
+        {
+          "label": "Improve Automation Efficiency",
+          "desc": "  Reduces the number of commands required by replacing multiple SetElement commands with one SetElements command.",
+          "cmd": "SetElements <json-map-key>",
+          "usage_example": "SetElements OrderFormData"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "13.1",
+          "problem_statement": {
+            "scenario": "A customer search form has 3+ fields (LastName, Email, FirstName) that all need to be filled.",
+            "problem": "Writing individual SetElement commands for each field is repetitive and hard to maintain.",
+            "goal": "Set multiple form fields at once using a single JSON map input."
+          },
+          "command": "SetElements CUSTBASICMultiSearch",
+          "description": "Reads the JSON map key 'CUSTBASICMultiSearch' and populates all defined fields (LastName, Email, FirstName) in one step.",
+          "input_param": {
+            "formElements": {
+              "CUSTBASICMultiSearch": [
+                {
+                  "TestStep": "SetElement LastNameTextField AGRAWAL"
+                },
+                {
+                  "TestStep": "SetElement EmailTextField sandeepagarwal0305@gmail.com"
+                },
+                {
+                  "TestStep": "SetElement FirstNameTextField SANDEEP"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "input_param_schema": [
+        {
+          "label": "SetElements JSON Map Key",
+          "description": "The value 'CUSTBASICMultiSearch' is a JSON Map Key used by the SetElements command. All TestStep entries under this key define the fields and values to be set. Each TestStep runs one after another to fill multiple form fields in a single action.",
+          "data": {
+            "formElements": {
+              "CUSTBASICMultiSearch": [
+                {
+                  "TestStep": "SetElement LastNameTextField AGRAWAL"
+                },
+                {
+                  "TestStep": "SetElement EmailTextField sandeepagarwal0305@gmail.com"
+                },
+                {
+                  "TestStep": "SetElement FirstNameTextField SANDEEP"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Set Multiple Elements executed successfully.",
+        "fail": "FAIL: Set Multiple Elements could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "setelements",
+        "bulk input",
+        "multiple fields",
+        "form filling",
+        "json map",
+        "automation input"
+      ],
+      "related_commands": [
+        "SetElement",
+        "Wait"
+      ],
+      "is_new": false,
+      "last_updated": "2024-01-10"
+    },
+    {
+      "order": 14,
+      "command_id": "set-element-select",
+      "title": "Set Element Select",
+      "category": "Element Interaction",
+      "status": "Done",
+      "syntax": "SetElementSelect <locator-property-key> <dropdown-option-value>",
+      "description": "The SetElementSelect command is used to select a specific option from a dropdown (<select>) element during automated UI execution. The dropdown element is identified using a locator-property-key defined in a properties file, ensuring reusable and maintainable locator management. The command supports selecting options either by their visible display text (what the user sees) or by their underlying value attribute defined in the HTML. This enables accurate simulation of real user dropdown interactions in forms, filters, search panels, and configuration screens.",
+      "purpose": "Enables automation scripts to reliably select dropdown options by visible text or value using externalized locator keys, ensuring consistent test behavior and easier maintenance when locators change.",
+      "when_to_use": "Use when automation requires selecting a value from a dropdown element to simulate user interaction or configure application state during testing.",
+      "use_cases": "Used when selecting options from dropdown menus such as customer type, date filters, categories, statuses, regions, search criteria, or any selectable list within a web application.",
+      "options_count": 4,
+      "options": [
+        {
+          "label": "Select Option by Visible Text",
+          "desc": "  Selects the dropdown option based on the exact text displayed in the UI. This is the most common method and closely mimics real user interaction.",
+          "cmd": "SetElementSelect <locator-property-key> <visible-text>",
+          "usage_example": "SetElementSelect Customer.Status.Dropdown Active"
+        },
+        {
+          "label": "Select Option by Value Attribute",
+          "desc": "  Selects the dropdown option using the underlying 'value' attribute defined in the HTML option tag.",
+          "cmd": "SetElementSelect <locator-property-key> <option-value>",
+          "usage_example": "SetElementSelect Customer.Status.Dropdown ACTIVE"
+        },
+        {
+          "label": "Data-Driven Dropdown Selection",
+          "desc": "  Supports dynamic values retrieved from external sources such as Excel files, JSON configurations, or test data repositories.",
+          "cmd": "SetElementSelect <locator-property-key> <dynamic-value>",
+          "usage_example": "SetElementSelect Filter.Type.Dropdown Option1"
+        },
+        {
+          "label": "Form Configuration Selection",
+          "desc": "  Used in multi-step forms or configuration screens where selecting specific dropdown values determines application behavior.",
+          "cmd": "SetElementSelect <locator-property-key> <option>",
+          "usage_example": "SetElementSelect Order.Category.Dropdown Electronics"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "14.1",
+          "problem_statement": {
+            "scenario": "A date filter dropdown on the sales report page needs to be changed.",
+            "problem": "The dropdown must be set to 'Today' to filter results before verifying the report data.",
+            "goal": "Select the 'Today' option from the dropdown element."
+          },
+          "command": "SetElementSelect LastSaleDatePropertyKey Today",
+          "description": "Selects 'Today' from the date filter dropdown."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Set Element Select executed successfully.",
+        "fail": "FAIL: Set Element Select could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "dropdown",
+        "select",
+        "option selection",
+        "setelementselect",
+        "form interaction",
+        "choose value"
+      ],
+      "related_commands": [
+        "SetElement",
+        "Wait"
+      ],
+      "is_new": false,
+      "last_updated": "2024-01-10"
+    },
+    {
+      "order": 15,
+      "command_id": "press-key",
+      "title": "Press Key",
+      "category": "Keyboard Interaction",
+      "status": "Done",
+      "syntax": "PressKey <locator-property-key> <keyboard-button-name>",
+      "description": "This command is a heavy-lifter for keyboard-driven navigation and accessibility testing. By consolidating the 30+ individual keys into a single technical reference, we make the documentation much more readable and maintainable.",
+      "purpose": "Allows automation scripts to simulate keyboard-based interactions such as form submission, navigation, shortcut execution, focus movement, closing dialogs, and triggering application-level functions.",
+      "when_to_use": "Use when mouse clicks are insufficient or when testing keyboard-only workflows, such as form tabbing, submitting via Enter, or using functional shortcuts (F1-F12).\r\nSupported Key Categories (Use Cases)\r\nNavigation: Using TAB to move focus, or ARROW keys to navigate custom dropdowns and sliders.\r\nForm Control: Using ENTER to submit, SPACE to toggle checkboxes, or BACK_SPACE/DELETE to modify input.\r\nSystem Actions: Using ESCAPE to close modals, or F5 to refresh the session.\r\nAccessibility: Verifying that a user can navigate the entire application without a mouse.",
+      "use_cases": "Simulates keyboard key presses such as Enter, Arrow keys, Tab, Escape, Delete, and Function keys to submit forms, navigate elements, move focus, close dialogs, clear content, and trigger application functions",
+      "options_count": 30,
+      "options": [
+        {
+          "label": "Press ARROW_DOWN Key",
+          "desc": "  Simulates pressing the Arrow Down key on the specified element.",
+          "cmd": "PressKey <locator-property-key> ARROW_DOWN",
+          "usage_example": "PressKey Dropdown.Menu ARROW_DOWN"
+        },
+        {
+          "label": "Press ARROW_UP Key",
+          "desc": "  Simulates pressing the Arrow Up key on the specified element.",
+          "cmd": "PressKey <locator-property-key> ARROW_UP",
+          "usage_example": "PressKey Dropdown.Menu ARROW_UP"
+        },
+        {
+          "label": "Press ARROW_LEFT Key",
+          "desc": "  Simulates pressing the Arrow Left key on the specified element.",
+          "cmd": "PressKey <locator-property-key> ARROW_LEFT",
+          "usage_example": "PressKey Slider.Control ARROW_LEFT"
+        },
+        {
+          "label": "Press ARROW_RIGHT Key",
+          "desc": "  Simulates pressing the Arrow Right key on the specified element.",
+          "cmd": "PressKey <locator-property-key> ARROW_RIGHT",
+          "usage_example": "PressKey Slider.Control ARROW_RIGHT"
+        },
+        {
+          "label": "Press BACK_SPACE Key",
+          "desc": "  Simulates pressing the Backspace key to delete characters.",
+          "cmd": "PressKey <locator-property-key> BACK_SPACE",
+          "usage_example": "PressKey Form.Input BACK_SPACE"
+        },
+        {
+          "label": "Press CONTROL Key",
+          "desc": "  Simulates pressing the Control (Ctrl) key.",
+          "cmd": "PressKey <locator-property-key> CONTROL",
+          "usage_example": "PressKey Editor.Field CONTROL"
+        },
+        {
+          "label": "Press ALT Key",
+          "desc": "  Simulates pressing the Alt key.",
+          "cmd": "PressKey <locator-property-key> ALT",
+          "usage_example": "PressKey Application.Window ALT"
+        },
+        {
+          "label": "Press DELETE Key",
+          "desc": "  Simulates pressing the Delete key to remove selected content.",
+          "cmd": "PressKey <locator-property-key> DELETE",
+          "usage_example": "PressKey Form.Input DELETE"
+        },
+        {
+          "label": "Press ENTER Key",
+          "desc": "  Simulates pressing the Enter key to submit or confirm actions.",
+          "cmd": "PressKey <locator-property-key> ENTER",
+          "usage_example": "PressKey Login.Submit.Button ENTER"
+        },
+        {
+          "label": "Press SHIFT Key",
+          "desc": "  Simulates pressing the Shift key.",
+          "cmd": "PressKey <locator-property-key> SHIFT",
+          "usage_example": "PressKey Editor.Field SHIFT"
+        },
+        {
+          "label": "Press SPACE Key",
+          "desc": "  Simulates pressing the Spacebar key.",
+          "cmd": "PressKey <locator-property-key> SPACE",
+          "usage_example": "PressKey Checkbox.Option SPACE"
+        },
+        {
+          "label": "Press TAB Key",
+          "desc": "  Simulates pressing the Tab key to move to the next field.",
+          "cmd": "PressKey <locator-property-key> TAB",
+          "usage_example": "PressKey Form.Input TAB"
+        },
+        {
+          "label": "Press EQUALS Key",
+          "desc": "  Simulates pressing the Equals key.",
+          "cmd": "PressKey <locator-property-key> EQUALS",
+          "usage_example": "PressKey Calculator.Input EQUALS"
+        },
+        {
+          "label": "Press ESCAPE Key",
+          "desc": "  Simulates pressing the Escape key to cancel or close dialogs.",
+          "cmd": "PressKey <locator-property-key> ESCAPE",
+          "usage_example": "PressKey Modal.Dialog ESCAPE"
+        },
+        {
+          "label": "Press HOME Key",
+          "desc": "  Simulates pressing the Home key to move to the beginning.",
+          "cmd": "PressKey <locator-property-key> HOME",
+          "usage_example": "PressKey TextArea.Field HOME"
+        },
+        {
+          "label": "Press INSERT Key",
+          "desc": "  Simulates pressing the Insert key.",
+          "cmd": "PressKey <locator-property-key> INSERT",
+          "usage_example": "PressKey Editor.Field INSERT"
+        },
+        {
+          "label": "Press PAGE_UP Key",
+          "desc": "  Simulates pressing the Page Up key.",
+          "cmd": "PressKey <locator-property-key> PAGE_UP",
+          "usage_example": "PressKey Document.View PAGE_UP"
+        },
+        {
+          "label": "Press PAGE_DOWN Key",
+          "desc": "  Simulates pressing the Page Down key.",
+          "cmd": "PressKey <locator-property-key> PAGE_DOWN",
+          "usage_example": "PressKey Document.View PAGE_DOWN"
+        },
+        {
+          "label": "Press F1 Key",
+          "desc": "  Simulates pressing the F1 function key.",
+          "cmd": "PressKey <locator-property-key> F1",
+          "usage_example": "PressKey Application.Window F1"
+        },
+        {
+          "label": "Press F2 Key",
+          "desc": "  Simulates pressing the F2 function key.",
+          "cmd": "PressKey <locator-property-key> F2",
+          "usage_example": "PressKey Application.Window F2"
+        },
+        {
+          "label": "Press F3 Key",
+          "desc": "  Simulates pressing the F3 function key.",
+          "cmd": "PressKey <locator-property-key> F3",
+          "usage_example": "PressKey Application.Window F3"
+        },
+        {
+          "label": "Press F4 Key",
+          "desc": "  Simulates pressing the F4 function key.",
+          "cmd": "PressKey <locator-property-key> F4",
+          "usage_example": "PressKey Application.Window F4"
+        },
+        {
+          "label": "Press F5 Key",
+          "desc": "  Simulates pressing the F5 function key (commonly refresh).",
+          "cmd": "PressKey <locator-property-key> F5",
+          "usage_example": "PressKey Browser.Window F5"
+        },
+        {
+          "label": "Press F6 Key",
+          "desc": "  Simulates pressing the F6 function key.",
+          "cmd": "PressKey <locator-property-key> F6",
+          "usage_example": "PressKey Application.Window F6"
+        },
+        {
+          "label": "Press F7 Key",
+          "desc": "  Simulates pressing the F7 function key.",
+          "cmd": "PressKey <locator-property-key> F7",
+          "usage_example": "PressKey Application.Window F7"
+        },
+        {
+          "label": "Press F8 Key",
+          "desc": "  Simulates pressing the F8 function key.",
+          "cmd": "PressKey <locator-property-key> F8",
+          "usage_example": "PressKey Application.Window F8"
+        },
+        {
+          "label": "Press F9 Key",
+          "desc": "  Simulates pressing the F9 function key.",
+          "cmd": "PressKey <locator-property-key> F9",
+          "usage_example": "PressKey Application.Window F9"
+        },
+        {
+          "label": "Press F10 Key",
+          "desc": "  Simulates pressing the F10 function key.",
+          "cmd": "PressKey <locator-property-key> F10",
+          "usage_example": "PressKey Application.Window F10"
+        },
+        {
+          "label": "Press F11 Key",
+          "desc": "  Simulates pressing the F11 function key.",
+          "cmd": "PressKey <locator-property-key> F11",
+          "usage_example": "PressKey Browser.Window F11"
+        },
+        {
+          "label": "Press F12 Key",
+          "desc": "  Simulates pressing the F12 function key.",
+          "cmd": "PressKey <locator-property-key> F12",
+          "usage_example": "PressKey Browser.Window F12"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "15.1",
+          "problem_statement": {
+            "scenario": "After typing a customer name into a search box, the search must be triggered.",
+            "problem": "The application requires pressing ENTER to search instead of clicking a button.",
+            "goal": "Send the ENTER key press to the search field to trigger the search."
+          },
+          "command": "PressKey Customer.name.txt ENTER",
+          "description": "Presses ENTER on the customer name field to trigger the search."
+        },
+        {
+          "example_id": "15.2",
+          "problem_statement": {
+            "scenario": "A dropdown list is open and the test needs to select the third option.",
+            "problem": "Arrow key navigation is required to reach the desired option in the dropdown.",
+            "goal": "Press the DOWN arrow key multiple times to navigate to the target option."
+          },
+          "command": "PressKey Dropdown.Menu ARROW_DOWN",
+          "description": "Presses Arrow Down to navigate within the dropdown."
+        },
+        {
+          "example_id": "15.3",
+          "problem_statement": {
+            "scenario": "A modal dialog appeared unexpectedly and blocks the test workflow.",
+            "problem": "The dialog must be dismissed before the test can continue with the next step.",
+            "goal": "Send the ESCAPE key press to close the modal dialog."
+          },
+          "command": "PressKey Modal.Dialog ESCAPE",
+          "description": "Presses Escape to close the modal dialog."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Press Key executed successfully.",
+        "fail": "FAIL: Press Key could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "presskey",
+        "keyboard",
+        "enter",
+        "function key",
+        "shortcut",
+        "control key"
+      ],
+      "related_commands": [
+        "Click",
+        "DoubleClick"
+      ],
+      "is_new": false,
+      "last_updated": "2024-01-10"
+    },
+    {
+      "order": 16,
+      "command_id": "verify-element",
+      "title": "Verify Element",
+      "category": "Verification",
+      "status": "Done",
+      "syntax": "VerifyElement <PropertyKey> <ExpectedValue> <Attribute>",
+      "description": "Checks whether the value or attribute of an HTML element on the web page matches the expected value.",
+      "purpose": "Checks whether the value or attribute of an HTML element on the web page matches the expected value. Used to validate UI updates, form submissions, success messages, or data in fields during test automation.",
+      "when_to_use": "After switching tabs or performing actions that update the UI.\r\nTo confirm form submissions, success messages, or data population in fields.\r\nDuring multi-step validation in test scripts.",
+      "use_cases": "Displayed text in elements.\r\nSpecific attribute values (e.g., value, textContent, innerText).\r\nForm field values, including disabled fields.",
+      "options_count": 2,
+      "options": [
+        {
+          "label": "PropertyKey",
+          "desc": "The element locator key defined in property file.",
+          "cmd": "<PropertyKey>",
+          "usage_example": "VerifyElement Username.txt Admin"
+        },
+        {
+          "label": "Attribute (Optional)",
+          "desc": "Specific HTML attribute like value, textContent, innerText.",
+          "cmd": "<Attribute>",
+          "usage_example": "VerifyElement Msg.lbl Success textContent"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "16.1",
+          "problem_statement": {
+            "scenario": "After creating a new customer, the test needs to confirm the FirstName field value.",
+            "problem": "The displayed name must match exactly what was entered during creation.",
+            "goal": "Verify the element's value attribute matches the expected customer name."
+          },
+          "command": "VerifyElement Customer.FirstName.txt Christopher",
+          "description": "Verifies that the FirstName field contains 'Christopher'."
+        },
+        {
+          "example_id": "16.2",
+          "problem_statement": {
+            "scenario": "After saving a customer record, a success toast message appears.",
+            "problem": "The test needs to confirm the toast text using the 'textContent' attribute, not the default value.",
+            "goal": "Verify the element's textContent attribute matches the expected success message."
+          },
+          "command": "VerifyElement Customer.New.Response.msg Customer$$created$$Successfully textContent",
+          "description": "Verifies the success message text using the 'textContent' attribute. The '$$' delimiter represents spaces."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Verify Element executed successfully.",
+        "fail": "FAIL: Verify Element could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "verify",
+        "validate",
+        "element"
+      ],
+      "related_commands": [
+        "VerifyElements",
+        "VerifyElementByJS"
+      ],
+      "is_new": false,
+      "last_updated": "2026-02-17"
+    },
+    {
+      "order": 17,
+      "command_id": "verify-elements",
+      "title": "Verify Elements",
+      "category": "Verification",
+      "status": "Done",
+      "syntax": "VerifyElements <Script Key>",
+      "description": "Verifies that multiple HTML elements are present on the screen and exist in the DOM.",
+      "purpose": "Checks that multiple HTML elements are present on the screen and exist in the DOM. Used to validate that several UI components (fields, buttons, links, etc.) are loaded and available after navigation, form submission, or workflow transitions.",
+      "when_to_use": "When you need to validate multiple fields or UI components at once.\r\nAfter navigation, form submission, or any workflow that changes the UI.",
+      "use_cases": "Presence and visibility of multiple elements.\r\nCorrectness of values for each element.",
+      "options_count": 1,
+      "options": [
+        {
+          "label": "JSON Key",
+          "desc": "The key in your configuration JSON that contains a list of verification steps.",
+          "cmd": "<JSONKey>",
+          "usage_example": "VerifyElements VerifyElementsKey"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "17.1",
+          "problem_statement": {
+            "scenario": "After navigating to a customer profile page, multiple fields must be validated.",
+            "problem": "Checking each field one by one with individual commands is repetitive and slow.",
+            "goal": "Verify multiple elements (LastName, Email, FirstName) at once using a JSON assertion map."
+          },
+          "command": "VerifyElements VerifyElementsKey",
+          "description": "Executes all verification steps defined under the JSON key 'VerifyElementsKey' — checks display state and values for multiple fields.",
+          "input_param": [
+            {
+              "FormElements": {
+                "VerifyElementsKey": [
+                  {
+                    "TestStep": "VerifyElementIfDisplayed LastName"
+                  },
+                  {
+                    "TestStep": "VerifyElementIfDisplayed Email"
+                  },
+                  {
+                    "TestStep": "VerifyElementIfDisplayed FirstName"
+                  },
+                  {
+                    "TestStep": "VerifyElementValue LastName AGRAHAL"
+                  },
+                  {
+                    "TestStep": "VerifyElementValue Email sandeepargawal0305@gmail.com"
+                  },
+                  {
+                    "TestStep": "VerifyElementValue FirstName SANDEEP"
+                  }
+                ]
+              }
+            }
+          ],
+          "assert_params": {
+            "FormElements": {
+              "VerifyElementsKey": [
+                {
+                  "TestStep": "VerifyElementIfDisplayed LastName"
+                },
+                {
+                  "TestStep": "VerifyElementIfDisplayed Email"
+                },
+                {
+                  "TestStep": "VerifyElementIfDisplayed FirstName"
+                },
+                {
+                  "TestStep": "VerifyElementValue LastName AGRAHAL"
+                },
+                {
+                  "TestStep": "VerifyElementValue Email sandeepargawal0305@gmail.com"
+                },
+                {
+                  "TestStep": "VerifyElementValue FirstName SANDEEP"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": [
+        {
+          "label": "FormElements Verification JSON",
+          "description": "This JSON contains a group of verification steps under 'VerifyElementsKey'. It first checks if the fields (LastName, Email, FirstName) are visible. Then it checks if their values match the expected data (AGRAHAL, sandeepargawal0305@gmail.com, SANDEEP). All steps inside this key run one after another.",
+          "data": {
+            "FormElements": {
+              "VerifyElementsKey": [
+                {
+                  "TestStep": "VerifyElementIfDisplayed LastName"
+                },
+                {
+                  "TestStep": "VerifyElementIfDisplayed Email"
+                },
+                {
+                  "TestStep": "VerifyElementIfDisplayed FirstName"
+                },
+                {
+                  "TestStep": "VerifyElementValue LastName AGRAHAL"
+                },
+                {
+                  "TestStep": "VerifyElementValue Email sandeepargawal0305@gmail.com"
+                },
+                {
+                  "TestStep": "VerifyElementValue FirstName SANDEEP"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Verify Elements executed successfully.",
+        "fail": "FAIL: Verify Elements could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "verify",
+        "multiple",
+        "json",
+        "bulk validation"
+      ],
+      "related_commands": [
+        "VerifyElement"
+      ],
+      "is_new": false,
+      "last_updated": "2026-02-17"
+    },
+    {
+      "order": 18,
+      "command_id": "verify-element-by-js",
+      "title": "Verify Element by JS",
+      "category": "Verification",
+      "status": "Done",
+      "syntax": "VerifyElementByJS <Property Key> <Script Key> <HTML Attribute> \r\n \r\n VerifyElementByJS <Script Key>",
+      "description": "Verifies element value using JavaScript logic.",
+      "purpose": "Performs advanced or dynamic validation using custom JavaScript logic. Use this command when expected values are generated at runtime, for calculations, date logic, or when standard element verification is not sufficient.",
+      "when_to_use": "When expected values are generated at runtime.\r\nWhen validating calculations, date logic, or dynamic content.\r\nWhen standard element verification is not sufficient.",
+      "use_cases": "Values or attributes of elements using custom JavaScript.\r\nResults of JavaScript logic (e.g., date is today, total is correct).",
+      "options_count": 3,
+      "options": [
+        {
+          "label": "PropertyKey",
+          "desc": "Specifies the element on which JavaScript verification will be performed. This should be a valid property key defined in the property file.",
+          "cmd": "<PropertyKey>",
+          "usage_example": "VerifyElementByJS DateField isToday value"
+        },
+        {
+          "label": "ScriptKey",
+          "desc": "Specifies the JavaScript logic key that contains the custom validation script to be executed.",
+          "cmd": "<ScriptKey>",
+          "usage_example": "VerifyElementByJS DateField validateCurrentDate value"
+        },
+        {
+          "label": "HTML Attribute (Optional)",
+          "desc": "Specifies the HTML attribute (like value, textContent, innerText) to verify after JavaScript execution.",
+          "cmd": "<Attribute>",
+          "usage_example": "VerifyElementByJS TotalAmount calculateTotal textContent"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "18.1",
+          "problem_statement": {
+            "scenario": "A date picker field must contain today's date, but the expected value changes daily.",
+            "problem": "Standard VerifyElement can't compute dynamic expected values at runtime.",
+            "goal": "Run a JavaScript snippet that returns the expected value, then compare it against the field."
+          },
+          "command": "VerifyElementByJS isDateToday",
+          "description": "Runs a JavaScript script that checks whether the date field value equals today's date.",
+          "input_param": {
+            "scripts": {
+              "isDateToday": [
+                {
+                  "script": "new Date(Date.parse(document.getElementById('txtDateandTime').value)).toDateString() == new Date().toDateString();"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "example_id": "18.2",
+          "problem_statement": {
+            "scenario": "A calculated total field uses complex frontend logic for its value.",
+            "problem": "The test needs to compare the displayed value against a JavaScript computation, not a static string.",
+            "goal": "Execute a JavaScript expression to compute the expected value and verify against the element."
+          },
+          "command": "VerifyElementByJS Customer.FirstName.txt jsScriptKey-1 value",
+          "description": "Verifies the element value by comparing it with the result of a custom JavaScript script."
+        }
+      ],
+      "input_param_schema": [
+        {
+          "label": "JavaScript Verification Script",
+          "description": "Defines a JavaScript script that returns a boolean or value for verification. The script key is referenced in the command and the script runs in the browser context.",
+          "data": {
+            "scripts": {
+              "<scriptKey>": [
+                {
+                  "script": "<JavaScript expression that returns a value or boolean>"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Verify Element by JS executed successfully.",
+        "fail": "FAIL: Verify Element by JS could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "verify",
+        "javascript"
+      ],
+      "related_commands": [
+        "ExecuteJS"
+      ],
+      "is_new": false,
+      "last_updated": "2026-02-17"
+    },
+    {
+      "order": 19,
+      "command_id": "verify-element-is-present",
+      "title": "Verify Element Is Present",
+      "category": "Verification",
+      "status": "Done",
+      "syntax": "VerifyElementIsPresent <locator-property-key>",
+      "description": "Verifies that a specific HTML element is present on the screen and exists in the DOM.",
+      "purpose": "Ensures that a specific UI element such as a button, field, section, or label exists in the DOM after page loads, actions, or system events.",
+      "when_to_use": "Use after page loads or actions to confirm that essential elements exist before interacting with them or performing further validations.",
+      "use_cases": "Used to confirm that required UI components are loaded into the DOM after navigation, form submission, page refresh, or workflow transitions.",
+      "options_count": 1,
+      "options": [
+        {
+          "label": "Locator Property Key",
+          "desc": "Identifies the locator of the web element using a property key defined in the properties file.",
+          "cmd": "<locator-property-key>",
+          "usage_example": "Dashboard.User.Profile.Section"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "19.1",
+          "problem_statement": {
+            "scenario": "After login, the test must confirm the user profile section exists in the DOM.",
+            "problem": "The element may exist but be hidden; the test only cares about DOM presence, not visibility.",
+            "goal": "Verify the element is present in the DOM (regardless of visibility)."
+          },
+          "command": "VerifyElementIsPresent Dashboard.User.Profile.txt",
+          "description": "Verifies that the user profile element exists in the page DOM."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Verify Element Is Present executed successfully.",
+        "fail": "FAIL: Verify Element Is Present could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "verify",
+        "present"
+      ],
+      "related_commands": [
+        "VerifyElement"
+      ],
+      "is_new": false,
+      "last_updated": "2026-02-17"
+    },
+    {
+      "order": 20,
+      "command_id": "verify-element-is-not-present",
+      "title": "Verify Element Is Not Present",
+      "category": "Verification",
+      "status": "Done",
+      "syntax": "VerifyElementIsNotPresent <locator-property-key>",
+      "description": "Verifies that a specific HTML element is not present in the DOM.",
+      "purpose": "Ensures that a specific UI element has been completely removed from the DOM or is not rendered under certain conditions such as role-based access, state changes, or dynamic updates.",
+      "when_to_use": "Use after delete actions, form submissions, page transitions, or role-based rendering checks where elements should be completely removed from the DOM.",
+      "use_cases": "Used to validate scenarios where elements should no longer exist, such as popups disappearing, deleted records being removed from the UI, or conditional rendering preventing element creation.",
+      "options_count": 1,
+      "options": [
+        {
+          "label": "Locator Property Key",
+          "desc": "  Identifies the locator of the web element using a property key defined in the properties file.",
+          "cmd": "<locator-property-key>",
+          "usage_example": "Popup.Confirmation.Dialog"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "20.1",
+          "problem_statement": {
+            "scenario": "After deleting a customer record, a confirmation dialog should be removed from the DOM.",
+            "problem": "The dialog might be just hidden (display:none) instead of fully removed. The test must confirm actual DOM removal.",
+            "goal": "Verify the element is completely absent from the DOM."
+          },
+          "command": "VerifyElementIsNotPresent Dashboard.User.Profile.txt",
+          "description": "Verifies that the element does not exist in the page DOM."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Verify Element Is Not Present executed successfully.",
+        "fail": "FAIL: Verify Element Is Not Present could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "verify",
+        "Not present"
+      ],
+      "related_commands": [
+        "VerifyElement"
+      ],
+      "is_new": false,
+      "last_updated": "2026-02-17"
+    },
+    {
+      "order": 21,
+      "command_id": "verify-element-is-enabled",
+      "title": "Verify Element Is Enabled",
+      "category": "Verification",
+      "status": "Done",
+      "syntax": "VerifyElementIsEnabled <locator-property-key>",
+      "description": "Verifies whether a specific HTML element is enabled for user interaction.",
+      "purpose": "Checks whether a specific HTML element is enabled for user interaction. Use this to ensure that buttons, textboxes, dropdowns, or other interactive elements are active and ready before performing actions.",
+      "when_to_use": "Before executing actions such as Click, SetText, or SelectDropdown.\r\nTo ensure the element is interactable and not disabled.",
+      "use_cases": "Enabled state of UI elements (buttons, fields, dropdowns, etc.).",
+      "options_count": 1,
+      "options": [
+        {
+          "label": "Locator Property Key",
+          "desc": "The property key that identifies the web element in your properties/config file.",
+          "cmd": "<locator-property-key>",
+          "usage_example": "VerifyElementIsEnabled Login.Submit.Btn"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "21.1",
+          "problem_statement": {
+            "scenario": "After filling all required fields on a form, the Submit button should become enabled.",
+            "problem": "The test must confirm the button is interactable before attempting to click it.",
+            "goal": "Verify the element's enabled state is true."
+          },
+          "command": "VerifyElementIsEnabled Login.Submit.Btn",
+          "description": "Verifies that the Submit button is enabled and clickable."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Verify Element Is Enabled executed successfully.",
+        "fail": "FAIL: Verify Element Is Enabled could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "verify",
+        "enabled",
+        "ui state"
+      ],
+      "related_commands": [
+        "VerifyElement"
+      ],
+      "is_new": false,
+      "last_updated": "2026-02-17"
+    },
+    {
+      "order": 22,
+      "command_id": "verify-element-is-not-enabled",
+      "title": "Verify Element Is Not Enabled",
+      "category": "Verification",
+      "status": "Done",
+      "syntax": "VerifyElementIsNotEnabled <locator-property-key>",
+      "description": "Verifies whether a specific HTML element is disabled and cannot be interacted with.",
+      "purpose": "Ensures that interactive UI elements such as buttons, input fields, or controls are correctly disabled under restricted, read-only, or conditional states.",
+      "when_to_use": "Use when validating access control, permission-based UI behavior, or conditional enable/disable logic in applications.",
+      "use_cases": "Used to confirm that UI elements remain disabled in read-only views, restricted access modes, or until prerequisite conditions are met.",
+      "options_count": 1,
+      "options": [
+        {
+          "label": "Locator Property Key",
+          "desc": " Identifies the locator of the web element using a property key defined in the properties file.",
+          "cmd": "<locator-property-key>",
+          "usage_example": "User.Profile.Edit.Btn"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "22.1",
+          "problem_statement": {
+            "scenario": "On a read-only customer view, the Edit button should be disabled for non-admin users.",
+            "problem": "The test must confirm the button is not clickable to validate permission enforcement.",
+            "goal": "Verify the element's enabled state is false (disabled)."
+          },
+          "command": "VerifyElementIsNotEnabled User.Profile.Edit.Btn",
+          "description": "Verifies that the Edit button is disabled and not clickable."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Verify Element Is Not Enabled executed successfully.",
+        "fail": "FAIL: Verify Element Is Not Enabled could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "verify",
+        "not enabled",
+        "ui state"
+      ],
+      "related_commands": [
+        "VerifyElement"
+      ],
+      "is_new": false,
+      "last_updated": "2026-02-17"
+    },
+    {
+      "order": 23,
+      "command_id": "verify-element-is-displayed",
+      "title": "Verify Element Is Displayed",
+      "category": "Verification",
+      "status": "Done",
+      "syntax": "VerifyElementIsDisplayed <locator-property-key>",
+      "description": "Checks whether a specific HTML element is visible on the screen.",
+      "purpose": "Verifies that a UI element is present in the DOM and visibly displayed on the screen during test execution.",
+      "when_to_use": "Use after page navigation, form submission, or triggering UI events to confirm that required elements are visible before proceeding.",
+      "use_cases": "Used to confirm that UI components such as input fields, buttons, labels, popups, or modals are visible after navigation, submission, or state changes.",
+      "options_count": 1,
+      "options": [
+        {
+          "label": "Locator Property Key",
+          "desc": "Identifies the locator of the web element using a property key defined in the properties file.",
+          "cmd": "<locator-property-key>",
+          "usage_example": "Login.Error.Message.Lbl"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "23.1",
+          "problem_statement": {
+            "scenario": "After entering invalid credentials, a login error message should be shown.",
+            "problem": "The error label must be visually visible on screen, not just present in the DOM.",
+            "goal": "Verify the element is displayed (visible) on the screen."
+          },
+          "command": "VerifyElementIsDisplayed Login.Error.Message.lbl",
+          "description": "Verifies that the error message element is visible on the screen."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Verify Element Is Displayed executed successfully.",
+        "fail": "FAIL: Verify Element Is Displayed could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "verify",
+        "displayed",
+        "visible"
+      ],
+      "related_commands": [
+        "VerifyElement"
+      ],
+      "is_new": false,
+      "last_updated": "2026-02-17"
+    },
+    {
+      "order": 24,
+      "command_id": "verify-element-is-not-displayed",
+      "title": "Verify Element Is Not Displayed",
+      "category": "Verification",
+      "status": "Done",
+      "syntax": "VerifyElementIsNotDisplayed <locator-property-key>",
+      "description": "Confirms that a specific HTML element is not visible on the screen.",
+      "purpose": "Ensures that a UI element is hidden or not visible on the screen during specific test scenarios such as role-based access, conditional rendering, or negative validations.",
+      "when_to_use": "Use when validating conditional UI behavior, role-based restrictions, post-action element removal, or hidden component states.",
+      "use_cases": "Used in negative test cases to confirm that certain UI elements such as confirmation messages, restricted sections, or hidden fields are not visible under defined conditions.",
+      "options_count": 1,
+      "options": [
+        {
+          "label": "Locator Property Key",
+          "desc": "Identifies the locator of the web element using a property key defined in the properties file.",
+          "cmd": "<locator-property-key>",
+          "usage_example": "Admin.Panel.Section"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "24.1",
+          "problem_statement": {
+            "scenario": "When a standard user (non-admin) logs in, the admin panel section should be hidden.",
+            "problem": "The element may still exist in the DOM but must not be visible to the user.",
+            "goal": "Verify the element is not displayed (hidden) on the screen."
+          },
+          "command": "VerifyElementIsNotDisplayed Login.Error.Message.lbl",
+          "description": "Verifies that the element is not visible on the screen."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Verify Element Is Not Displayed executed successfully.",
+        "fail": "FAIL: Verify Element Is Not Displayed could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "verify",
+        "not displayed",
+        "not visible"
+      ],
+      "related_commands": [
+        "VerifyElement"
+      ],
+      "is_new": false,
+      "last_updated": "2026-02-17"
+    },
+    {
+      "order": 25,
+      "command_id": "verify-element-is-selected",
+      "title": "Verify Element Is Selected",
+      "category": "Verification",
+      "status": "Done",
+      "syntax": "VerifyElementIsSelected <locator-property-key>",
+      "description": "Verifies whether a specific HTML element such as a checkbox, radio button, or dropdown option is selected.",
+      "purpose": "Ensures that selectable UI elements like checkboxes, radio buttons are selected as expected after user interaction or form submission.",
+      "when_to_use": "Use after selecting checkboxes, radio buttons to confirm that the correct selection state is maintained.",
+      "use_cases": "Used to validate that checkboxes, radio buttons remain selected after performing actions such as clicks, form submissions, or configuration changes.",
+      "options_count": 1,
+      "options": [
+        {
+          "label": "Locator Property Key",
+          "desc": " Identifies the locator of the web element using a property key defined in the properties file.",
+          "cmd": "<locator-property-key>",
+          "usage_example": "Customers.isEnabled.chkbox"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "25.1",
+          "problem_statement": {
+            "scenario": "After importing customer preferences, the 'Active Customer' checkbox should be pre-selected.",
+            "problem": "The test must confirm the checkbox state before proceeding to the next verification step.",
+            "goal": "Verify that the checkbox element is in a selected (checked) state."
+          },
+          "command": "VerifyElementIsSelected Customers.isSelected.chk",
+          "description": "Verifies that the checkbox is in a selected (checked) state."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Verify Element Is Selected executed successfully.",
+        "fail": "FAIL: Verify Element Is Selected could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "verify",
+        "selected",
+        "checked",
+        "dropdown"
+      ],
+      "related_commands": [
+        "VerifyElement"
+      ],
+      "is_new": false,
+      "last_updated": "2026-02-17"
+    },
+    {
+      "order": 26,
+      "command_id": "verify-element-is-not-selected",
+      "title": "Verify Element Is Not Selected",
+      "category": "Verification",
+      "status": "Done",
+      "syntax": "VerifyElementIsNotSelected <locator-property-key>",
+      "description": "Verifies that a specific HTML element such as a checkbox, radio button, or dropdown option is not selected.",
+      "purpose": "Ensures that selectable UI elements such as checkboxes, radio buttons, or dropdown options remain unselected as expected during default states, reset actions, or conditional workflows.",
+      "when_to_use": "Use when validating default values, reset actions, conditional deselection logic, or negative test scenarios involving selectable elements.",
+      "use_cases": "Used to validate default UI states, confirm reset functionality, or ensure that specific options remain unselected under defined conditions.",
+      "options_count": 1,
+      "options": [
+        {
+          "label": "Locator Property Key",
+          "desc": "Identifies the locator of the web element using a property key defined in the properties file.",
+          "cmd": "<locator-property-key>",
+          "usage_example": "Customers.isEnabled.chkbox"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "26.1",
+          "problem_statement": {
+            "scenario": "After resetting a filter form, all previously checked filter checkboxes should be unchecked.",
+            "problem": "The test must verify the reset operation actually cleared all checkbox selections.",
+            "goal": "Verify that the checkbox element is in an unselected (unchecked) state."
+          },
+          "command": "VerifyElementIsNotSelected Customers.IsNotSelected.chk",
+          "description": "Verifies that the checkbox is in an unselected (unchecked) state."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Verify Element Is Not Selected executed successfully.",
+        "fail": "FAIL: Verify Element Is Not Selected could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "verify",
+        "not selected",
+        "unchecked"
+      ],
+      "related_commands": [
+        "VerifyElement"
+      ],
+      "is_new": false,
+      "last_updated": "2026-02-17"
+    },
+    {
+      "order": 27,
+      "command_id": "verify-html-table",
+      "title": "Verify HTML Table",
+      "category": "Verification",
+      "status": "Done",
+      "syntax": "VerifyHtmlTable <Row-Property-Key> <Column-Property-Key> [Options]",
+      "description": "Validates specific rows and columns within an HTML or JavaScript-based table, ensuring displayed data matches expected values.",
+      "purpose": "Validates structured table data by verifying specific rows and columns against expected results. Supports JqGrid, SlickGrid, and standard HTML tables to ensure displayed information aligns with predefined expectations.",
+      "when_to_use": "Use after performing search operations, applying filters, loading dashboards, or validating data-driven UI screens where tabular information must match expected values.",
+      "use_cases": "Used to validate dynamic table entries, barcode search results, filtered records (e.g., date range filters), and data grids rendered using JqGrid, SlickGrid, or HTML tables.",
+      "options_count": 4,
+      "options": [
+        {
+          "label": "Row Property Key",
+          "desc": "Specifies the row locator property key used to identify table rows.",
+          "cmd": "<Row-Property-Key>",
+          "usage_example": "Common.TableJqGridRows"
+        },
+        {
+          "label": "Column Property Key",
+          "desc": "Specifies the column locator property key used to identify table columns.",
+          "cmd": "<Column-Property-Key>",
+          "usage_example": "Common.TableJqGridColumns"
+        },
+        {
+          "label": "-skipFirstRow",
+          "desc": "Optional parameter that excludes the first row from verification for selective validation (commonly used when header rows are included).",
+          "cmd": "-skipFirstRow",
+          "usage_example": "VerifyHtmlTable Common.TableJqGridRows Common.TableJqGridColumns -skipFirstRow"
+        },
+        {
+          "label": "Assert Parameters",
+          "desc": "Defines expected results directly in assert configuration or sources them from a CSV file specified in the external.files.directory.path property.",
+          "cmd": "<assert-configuration>",
+          "usage_example": "CSV-based or inline assert values"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "27.1",
+          "problem_statement": {
+            "scenario": "After searching for a customer in a SlickGrid table, the results must be validated.",
+            "problem": "Multiple columns (Company, Contact, City) need to match expected values in the result row.",
+            "goal": "Verify the HTML table row data matches expected values using inline assertParams."
+          },
+          "command": "VerifyHtmlTable Common.TableSlickGrid.Rows Common.TableSlickGrid.Columns -skipFirstRow",
+          "description": "Verifies SlickGrid table data by comparing actual row values against expected assert parameters.",
+          "assert_params": {
+            "assertParams": {
+              "verifyExpected-1": {
+                "totalRowCount": 1,
+                "expectedParams": {
+                  "Company": "COMPANY_101",
+                  "Primary Contact": "123456789",
+                  "Email": "xyz@gmail.com"
+                }
+              }
+            }
+          }
+        },
+        {
+          "example_id": "27.2",
+          "problem_statement": {
+            "scenario": "A JqGrid-based customer list shows filtered results after applying a filter.",
+            "problem": "The displayed data must match expected values for the filtered record.",
+            "goal": "Verify the HTML table data matches expected values using JqGrid table type."
+          },
+          "command": "VerifyHtmlTable Common.TableJqGridRows Common.TableJqGridColumns -skipFirstRow",
+          "description": "Verifies JqGrid table data using row and column property keys.",
+          "assert_params": {
+            "assertParams": {
+              "verifyExpected-1": {
+                "totalRowCount": 1,
+                "expectedParams": {
+                  "Company": "COMPANY_101",
+                  "Primary Contact": "123456789",
+                  "Email": "xyz@gmail.com"
+                }
+              }
+            }
+          }
+        },
+        {
+          "example_id": "27.3",
+          "problem_statement": {
+            "scenario": "A React-based data grid displays inventory items after a search.",
+            "problem": "The grid rows must contain correct product information for validation.",
+            "goal": "Verify the HTML table data matches expected values loaded from an external CSV file."
+          },
+          "command": "VerifyHtmlTable WebTable.Rows WebTable.Columns -skipFirstRow",
+          "description": "Verifies React grid table data against expected values.",
+          "assert_params": {
+            "assertParams": {
+              "verifyExpected-1": {
+                "totalRowCount": 1,
+                "expectedParams": {
+                  "Company": "COMPANY_101",
+                  "Primary Contact": "123456789",
+                  "Email": "xyz@gmail.com"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": [
+        {
+          "label": "Inline Expected Params",
+          "description": "Expected table values defined directly inside assertParams. Each verifyExpected block specifies a row to validate with column-value pairs.",
+          "data": {
+            "assertParams": {
+              "verifyExpected-1": {
+                "totalRowCount": 1,
+                "expectedParams": {
+                  "LAST_NAME": "AGRAWAL",
+                  "FIRST_NAME": "SANDEEP"
+                }
+              }
+            }
+          }
+        },
+        {
+          "label": "CSV-Based Expected Params",
+          "description": "Expected values stored in an external CSV file. The file must be in the directory configured under external.files.directory.path.",
+          "data": {
+            "assertParams": {
+              "verifyExpected-1": {
+                "expectedParamType": "CSV",
+                "fileName": "Customers.csv"
+              }
+            }
+          }
+        }
+      ],
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Verify HTML Table executed successfully.",
+        "fail": "FAIL: Verify HTML Table could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "verify",
+        "html table",
+        "jqgrid",
+        "slickgrid",
+        "table validation",
+        "HTML Table"
+      ],
+      "related_commands": [
+        "VerifyElement"
+      ],
+      "is_new": false,
+      "last_updated": "2026-02-17"
+    },
+    {
+      "order": 28,
+      "command_id": "verify-element-select",
+      "title": "Verify Element Select",
+      "category": "Verification",
+      "status": "In Progress",
+      "syntax": "VerifyElementSelect <PropertyKey> <ExpectedValue>",
+      "description": "Verifies or compares dropdown (select) HTML elements using a user-defined JSON key for single or batch validation.",
+      "purpose": "Validates selected dropdown values or complete dropdown option lists against predefined expected values using flexible matching strategies such as exact match, match-any, global variables, or assertion keys.",
+      "when_to_use": "Use when validating dropdown selections after user interaction, confirming default values, enforcing strict option lists, or validating dynamically assigned values.",
+      "use_cases": "Used to validate dropdown selections, confirm available option lists, compare values with global variables, and enforce strict UI compliance using assertion keys.",
+      "options_count": 2,
+      "options": [
+        {
+          "label": "PropertyKey",
+          "desc": "Specifies the dropdown element to be verified. This should be a valid property key defined in the property file.",
+          "cmd": "<PropertyKey>",
+          "usage_example": "VerifyElementSelect CountryDropdown India"
+        },
+        {
+          "label": "ExpectedValue",
+          "desc": "Specifies the expected selected value in the dropdown that will be compared with the actual selected option.",
+          "cmd": "<ExpectedValue>",
+          "usage_example": "VerifyElementSelect CountryDropdown India"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "28.1",
+          "problem_statement": {
+            "scenario": "After loading a product detail page, a dropdown should have a specific product pre-selected.",
+            "problem": "The test must confirm the correct product is selected without manually checking the dropdown.",
+            "goal": "Verify the currently selected option in the dropdown matches the expected value."
+          },
+          "command": "VerifyElementSelect Products.Product.ddl product11",
+          "description": "Verifies that the dropdown has 'product11' as the currently selected value."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Verify Element Select executed successfully.",
+        "fail": "FAIL: Verify Element Select could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "verify",
+        "dropdown",
+        "select"
+      ],
+      "related_commands": [
+        "VerifyElement"
+      ],
+      "is_new": false,
+      "last_updated": "2026-02-17"
+    },
+    {
+      "order": 29,
+      "command_id": "wait",
+      "title": "Wait",
+      "category": "Synchronization",
+      "status": "Done",
+      "syntax": "Wait <Time Unit in Millisecond>",
+      "description": "Pauses the execution of the automation script for a specified duration in milliseconds before proceeding to the next command. This command is commonly used to synchronize test execution with application behavior, such as waiting for pages to load, elements to appear, or background processes to complete.",
+      "purpose": "Introduces a fixed delay to ensure pages, elements, or background processes complete before the next automation step executes.",
+      "when_to_use": "Use when application responses, page loads, or dynamic elements require additional time before performing the next action.",
+      "use_cases": "Used for page load synchronization, handling dynamic content, preventing rapid execution issues, and debugging automation scripts.",
+      "options_count": 4,
+      "options": [
+        {
+          "label": "Wait for Page Load",
+          "desc": "  Adds delay after navigation or refresh to allow full page rendering.",
+          "cmd": "Wait <Time Unit in Millisecond>",
+          "usage_example": "Wait 5000"
+        },
+        {
+          "label": "Wait for Dynamic Content",
+          "desc": "  Allows time for AJAX calls or asynchronously loaded elements to become available.",
+          "cmd": "Wait <Time Unit in Millisecond>",
+          "usage_example": "Wait 3000"
+        },
+        {
+          "label": "Stabilize Fast Executions",
+          "desc": "  Prevents automation from executing too quickly by introducing a controlled delay between actions.",
+          "cmd": "Wait <Time Unit in Millisecond>",
+          "usage_example": "Wait 1000"
+        },
+        {
+          "label": "Debugging Pause",
+          "desc": "  Temporarily pauses execution to observe application behavior during testing or troubleshooting.",
+          "cmd": "Wait <Time Unit in Millisecond>",
+          "usage_example": "Wait 3000"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "29.1",
+          "problem_statement": {
+            "scenario": "After clicking 'Generate Report', the application makes an async API call.",
+            "problem": "The API response takes a few seconds; checking too early will fail the test.",
+            "goal": "Wait for a specified duration to allow the async operation to complete."
+          },
+          "command": "Wait 10000",
+          "description": "Pauses execution for 10 seconds (10000 milliseconds) before proceeding."
+        },
+        {
+          "example_id": "29.2",
+          "problem_statement": {
+            "scenario": "A page redirect happens after form submission but the new page takes time to render.",
+            "problem": "Element verification will fail if executed before the page is fully loaded.",
+            "goal": "Add a short wait to stabilize the test before verifying elements on the new page."
+          },
+          "command": "Wait 3000",
+          "description": "Pauses execution for 3 seconds to allow the page to stabilize."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Wait executed successfully.",
+        "fail": "FAIL: Wait could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "wait",
+        "pause",
+        "delay",
+        "sleep",
+        "synchronization",
+        "timeout"
+      ],
+      "related_commands": [
+        "SetElement",
+        "SetElementSelect"
+      ],
+      "is_new": false,
+      "last_updated": "2024-01-10"
+    },
+    {
+      "order": 30,
+      "command_id": "if_condition",
+      "title": "IF-Condition-Sample",
+      "category": "Conditional",
+      "status": "In Progress",
+      "syntax": "1. IF -ELSEIF - ELSE - ENDIF Syntax :-\r\n \r\n IF ElementValue(<PropertyKey>, <Attribute>) == <Value> THEN\r\n  LogMessage PASS <Message>;\r\n ELSEIF ElementValue(<PropertyKey>, <Attribute>) == <Value> THEN\r\n  LogMessage PASS <Message>;\r\n ELSE\r\n  LogMessage FAIL <Message>;\r\n ENDIF\r\n \r\n 2. IF - ELSE - ENDIF Syntax :-\r\n \r\n IF ElementValue(<PropertyKey>, <Attribute>) == <Value> THEN\r\n  LogMessage PASS <Message>;\r\n ELSE\r\n  LogMessage FAIL <Message>;\r\n ENDIF",
+      "description": "Checks a value and decides whether to mark the step as PASS or FAIL. You can check one value (IF), check another value if needed (ELSEIF), or mark it as FAIL if none match (ELSE).",
+      "purpose": "To perform runtime decision-making and log specific PASS/FAIL results based on dynamic UI values.",
+      "when_to_use": "When the application behavior changes dynamically or when multiple valid outcomes exist for a single check.",
+      "use_cases": "Checking if a 'Discount Applied' message appears only for users with a specific coupon\" or \"Validating that tax is $0.00 for tax-exempt states.",
+      "options_count": 8,
+      "options": [
+        {
+          "label": "ElementValue",
+          "desc": "Retrieves the actual value of an element using the specified property key and HTML attribute.",
+          "cmd": "ElementValue(<PropertyKey>, <Attribute>)",
+          "usage_example": "ElementValue(POS.HomePage.FooterPanel.TotalDue, textContent)"
+        },
+        {
+          "label": "Comparison Operator",
+          "desc": "Compares the actual value with the expected value.",
+          "cmd": "==",
+          "usage_example": "== 57.50"
+        },
+        {
+          "label": "ExpectedValue",
+          "desc": "The value you expect the element to have.",
+          "cmd": "<ExpectedValue>",
+          "usage_example": "57.50"
+        },
+        {
+          "label": "LogMessage PASS",
+          "desc": "Logs a PASS message in the execution report when the condition is true.",
+          "cmd": "LogMessage PASS <Message>;",
+          "usage_example": "LogMessage PASS Correct Total Due is Showing;"
+        },
+        {
+          "label": "LogMessage FAIL",
+          "desc": "Logs a FAIL message in the execution report when the condition is false.",
+          "cmd": "LogMessage FAIL <Message>;",
+          "usage_example": "LogMessage FAIL Incorrect Total Due is showing;"
+        },
+        {
+          "label": "ELSEIF (Optional)",
+          "desc": "Adds an additional condition to check if the first IF condition fails.",
+          "cmd": "ELSEIF <Condition> THEN",
+          "usage_example": "ELSEIF ElementValue(Field, textContent)==56.50 THEN"
+        },
+        {
+          "label": "ELSE (Optional)",
+          "desc": "Executes when none of the IF or ELSEIF conditions are true.",
+          "cmd": "ELSE",
+          "usage_example": "ELSE LogMessage FAIL Incorrect value;"
+        },
+        {
+          "label": "ENDIF",
+          "desc": "Marks the end of the IF condition block.",
+          "cmd": "ENDIF",
+          "usage_example": "ENDIF"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "30.1",
+          "problem_statement": {
+            "scenario": "The application may show a Total Due of either $57.50 or $56.50 depending on a promotional discount.",
+            "problem": "Both values are valid, but the test must only proceed with the workflow matching the displayed value.",
+            "goal": "Evaluate the condition and branch the test execution to the correct workflow."
+          },
+          "command": "IF ElementValue(POS.HomePage.FooterPanel.TotalDue, textContent) == 57.50 THEN/n  LogMessage PASS Correct Total Due is Showing;/nELSEIF ElementValue(POS.HomePage.FooterPanel.TotalDue, textContent) == 56.50 THEN/n  LogMessage PASS Correct Total Due is Showing;\r\nELSE\r\n  LogMessage FAIL Incorrect Total Due is showing;\r\nENDIF",
+          "description": "Checks the Total Due value against two acceptable values and logs PASS/FAIL accordingly."
+        },
+        { 
+          "example_id": "30.2",
+          "problem_statement": {
+            "scenario": "After applying tax rules, the Sales Tax field must show exactly $7.50.",
+            "problem": "If the value is anything other than $7.50, the test should fail immediately with a clear message.",
+            "goal": "Check the condition and fail the test if the expected value does not match."
+          },
+          "command": "IF ElementValue(POS.HomePage.FooterPanel.SalesTax, textContent) == 7.50 THEN/n  LogMessage PASS Correct Sales Tax is Showing;/nELSE/n  LogMessage FAIL Incorrect Sales Tax is showing;/nENDIF",
+          "description": "Checks the Sales Tax value against the single expected value using IF-ELSE."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: IF-Condition-Sample executed successfully.",
+        "fail": "FAIL: IF-Condition-Sample could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "condition",
+        "PASS-FAIL",
+        "IF",
+        "ELSE"
+      ],
+      "related_commands": [
+        "VerifyElement",
+        "LogMessage",
+        "VerifyElementIsDisplayed"
+      ],
+      "is_new": false,
+      "last_updated": "2026-02-18"
+    },
+    {
+      "order": 31,
+      "command_id": "execute-test",
+      "title": "Execute Test",
+      "category": "Execution",
+      "status": "In Progress",
+      "syntax": "ExecuteTest <Suite Path> <Sheet Name>",
+      "description": "Executes either the entire test suite file or a specific sheet within the suite based on the provided parameters.",
+      "purpose": "To trigger the automation engine to process an entire Excel-based test suite or a specific subset (sheet) for granular validation.",
+      "when_to_use": "Use during batch execution, regression cycles, or module validation where a structured data source (Excel) drives the test steps.",
+      "use_cases": "Running full nightly regression suites.\r\nExecuting focused module-level test cases during active development.\r\nDebugging specific functional sheets without running the entire file.",
+      "options_count": 2,
+      "options": [
+        {
+          "label": "Suite Path",
+          "desc": "",
+          "cmd": "",
+          "usage_example": "testcases/RegressionSuite.xlsx"
+        },
+        {
+          "label": "Sheet Name",
+          "desc": "",
+          "cmd": "",
+          "usage_example": "CreateNewCustomer"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "31.1",
+          "problem_statement": {
+            "scenario": "The nightly regression suite needs to run all test cases defined in an Excel file.",
+            "problem": "All sheets in the file must be executed; no specific sheet targeting is needed.",
+            "goal": "Execute all test sheets from the specified Excel workbook."
+          },
+          "command": "ExecuteTest SampleTest.xlsx",
+          "description": "Executes all test cases defined in the 'SampleTest.xlsx' suite file."
+        },
+        {
+          "example_id": "31.2",
+          "problem_statement": {
+            "scenario": "During debugging, only the BackOffice login flow needs to be tested.",
+            "problem": "Running the entire suite is wasteful; a specific sheet must be targeted.",
+            "goal": "Execute a specific test sheet from the Excel workbook."
+          },
+          "command": "ExecuteTest AllLogin.xlsx BOLogin",
+          "description": "Executes only the 'BOLogin' sheet from the 'AllLogin.xlsx' suite file."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Execute Test executed successfully.",
+        "fail": "FAIL: Execute Test could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "execute",
+        "test suite",
+        "test sheet"
+      ],
+      "related_commands": [
+        "HandleFailOver",
+        "OpenUrl"
+      ],
+      "is_new": false,
+      "last_updated": "2026-02-17"
+    },
+    {
+      "order": 32,
+      "command_id": "execute-sql",
+      "title": "Execute SQL",
+      "category": "Database",
+      "status": "Done",
+      "syntax": "ExecuteSQL <Parameter>",
+      "description": "Executes Data Manipulation Language (DML) SQL statements such as INSERT, UPDATE, DELETE, or SELECT directly against a configured relational database using SQL queries defined in the input JSON.",
+      "purpose": "Allows automation scripts to directly run database queries for data setup, validation, cleanup, or backend verification during test execution.",
+      "when_to_use": "Use when test execution requires direct database interaction for data preparation, verification, or cleanup independent of UI operations.",
+      "use_cases": "Used for inserting test data, updating records, deleting entries, validating backend data, or preparing database state before and after automation scenarios.",
+      "options_count": 4,
+      "options": [
+        {
+          "label": "Run Single SQL Query",
+          "desc": "  Executes a single SQL statement defined by a specific key in the input JSON.",
+          "cmd": "ExecuteSQL <SQL-query-key>",
+          "usage_example": "ExecuteSQL sqlQuery"
+        },
+        {
+          "label": "Execute Multiple SQL Statements",
+          "desc": "  Executes different SQL queries individually by referencing their unique keys from the JSON input.",
+          "cmd": "ExecuteSQL <SQL-query-key>",
+          "usage_example": "ExecuteSQL sqlQuery1"
+        },
+        {
+          "label": "Database Data Setup",
+          "desc": "  Prepares or modifies test data in the database before running UI automation scenarios.",
+          "cmd": "ExecuteSQL <SQL-query-key>",
+          "usage_example": "ExecuteSQL setupUserData"
+        },
+        {
+          "label": "Database Cleanup or Validation",
+          "desc": "  Updates, deletes, or verifies records in the database as part of automation validation or teardown steps.",
+          "cmd": "ExecuteSQL <SQL-query-key>",
+          "usage_example": "ExecuteSQL cleanupModuleData"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "32.1",
+          "problem_statement": {
+            "scenario": "Before running a UI test, the FIREARMS module must be disabled in the database.",
+            "problem": "The test pre-condition requires updating a database flag (IS_USED='N') before the UI test starts.",
+            "goal": "Execute a SQL DML statement (UPDATE) to set the database pre-condition."
+          },
+          "command": "ExecuteSQL",
+          "description": "Executes the SQL UPDATE statement defined in the dbScript JSON block.",
+          "input_param": {
+            "dbScript": {
+              "SQLQuery": "UPDATE TB_MODULE SET IS_USED='N' WHERE MODULE_NAME='FIREARMS'"
+            }
+          }
+        },
+        {
+          "example_id": "32.2",
+          "problem_statement": {
+            "scenario": "The test suite has multiple pre-condition SQL statements (setup user, update config, clean data).",
+            "problem": "Each SQL is defined with a unique key and must be executed by referencing that key.",
+            "goal": "Execute a specific SQL statement by its key from the input parameters."
+          },
+          "command": "ExecuteSQL sqlQuery1",
+          "description": "Executes the specific SQL statement identified by the key 'sqlQuery1'.",
+          "input_param": {
+            "dbScript": {
+              "sqlQuery1": {
+                "SQLQuery": "UPDATE TB_CUSTOMERS SET PRICE_CODE = 'AB' WHERE CUSTOMER_ID = 2"
+              }
+            }
+          }
+        }
+      ],
+      "input_param_schema": [
+        {
+          "label": "ExecuteSQL JSON Configuration",
+          "description": "ExecuteSQL is used to run DML SQL statements (like INSERT, UPDATE, DELETE) in a relational database. The SQL query must be defined inside the 'dbScript' section. The attribute names 'dbScript' and 'SQLQuery' are fixed and should not be changed. Only the SQLQuery value can be modified.",
+          "data": {
+            "dbScript": {
+              "SQLQuery": "UPDATE TB_CUSTOMERS SET PRICE_CODE = 'AB' WHERE CUSTOMER_ID = 2"
+            }
+          }
+        },
+        {
+          "label": "ExecuteSQL Using SQL Key",
+          "description": "Multiple SQL statements can be defined with unique keys. The required SQL key is passed with the command to execute that specific database statement.",
+          "data": {
+            "dbScript": {
+              "sqlQuery1": {
+                "SQLQuery": "UPDATE TB_CUSTOMERS SET PRICE_CODE = 'AB' WHERE CUSTOMER_ID = 2"
+              },
+              "sqlQuery2": {
+                "SQLQuery": "DELETE FROM TB_CUSTOMERS WHERE CUSTOMER_ID = 5"
+              }
+            }
+          }
+        }
+      ],
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Execute SQL executed successfully.",
+        "fail": "FAIL: Execute SQL could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "database",
+        "sql",
+        "execute",
+        "query",
+        "dml",
+        "insert",
+        "update",
+        "delete",
+        "select"
+      ],
+      "related_commands": [
+        "VerifySQLResponse"
+      ],
+      "is_new": false,
+      "last_updated": "2024-01-10"
+    },
+    {
+      "order": 33,
+      "command_id": "verify-sql-response",
+      "title": "Verify SQL Response",
+      "category": "Database",
+      "status": "Done",
+      "syntax": "VerifySQLResponse <parameter> <parameter>",
+      "description": "Executes a database query or stored procedure and verifies that the returned results match the expected values defined in assert parameters, CSV files, or JSON files to ensure database accuracy and data integrity during automation.",
+      "purpose": "Ensures database query results match expected values, allowing automation scripts to validate backend data correctness and integrity.",
+      "when_to_use": "Use when automation requires verification of backend database values after performing UI actions, database updates, or stored procedure execution.",
+      "use_cases": "Used to validate database records, confirm backend updates, verify stored procedure results, and ensure correct data after automation actions.",
+      "options_count": 4,
+      "options": [
+        {
+          "label": "Verify Using Assert Parameters",
+          "desc": "  Compares SQL query results directly against expected values defined in the assert parameter JSON.",
+          "cmd": "VerifySQLResponse <SQL-query-key> <assert-key>",
+          "usage_example": "VerifySQLResponse sqlQuery verifyExpected-1"
+        },
+        {
+          "label": "Verify Using CSV File",
+          "desc": "  Validates SQL query results against expected values stored in an external CSV file.",
+          "cmd": "VerifySQLResponse <SQL-query-key> <assert-key>",
+          "usage_example": "VerifySQLResponse sqlQuery verifyExpectedCSV"
+        },
+        {
+          "label": "Verify Using JSON File",
+          "desc": "  Validates SQL query results against expected values stored in an external JSON file.",
+          "cmd": "VerifySQLResponse <SQL-query-key> <assert-key>",
+          "usage_example": "VerifySQLResponse sqlQuery verifyExpectedJSON"
+        },
+        {
+          "label": "Verify Using Custom Query Keys",
+          "desc": "  Allows verification using custom-defined query keys and expected result keys for flexible database validation.",
+          "cmd": "VerifySQLResponse Customer verifyExpected-1",
+          "usage_example": "VerifySQLResponse Customer verifyExpected-1"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "33.1",
+          "problem_statement": {
+            "scenario": "After updating a customer's price code via the UI, the database must be validated.",
+            "problem": "The PRICE_CODE column must reflect the new value 'DERA'; this confirms the UI action persisted.",
+            "goal": "Run a SQL SELECT query and verify the result matches the expected value in assertParams."
+          },
+          "command": "VerifySQLResponse",
+          "description": "Runs the SQL query from dbScript and compares results against expected values in assertParams.",
+          "input_param": {
+            "dbScript": {
+              "SQLQuery": "SELECT CUSTOMER_ID, PRICE_CODE FROM TB_CUSTOMERS WHERE CUSTOMER_ID = 2"
+            }
+          },
+          "assert_params": {
+            "assertParams": {
+              "verifyExpected-1": {
+                "expectedParams": {
+                  "CUSTOMER_ID": "2",
+                  "PRICE_CODE": "AB"
+                }
+              }
+            }
+          }
+        },
+        {
+          "example_id": "33.2",
+          "problem_statement": {
+            "scenario": "A bulk data import test generates hundreds of records.",
+            "problem": "Expected results are maintained in a CSV file rather than inline JSON to keep test data manageable.",
+            "goal": "Run a SQL query and verify the results match expected values from an external CSV file."
+          },
+          "command": "VerifySQLResponse sqlQuery verifyExpectedCSV",
+          "description": "Validates SQL results against expected values stored in an external CSV file.",
+          "input_param": {
+            "dbScript": {
+              "SQLQuery": "SELECT * FROM TB_CUSTOMERS"
+            }
+          },
+          "assert_params": {
+            "assertParams": {
+              "verifyExpected-1": {
+                "expectedParamType": "CSV",
+                "fileName": "ExpectedSQLResults.csv"
+              }
+            }
+          }
+        }
+      ],
+      "input_param_schema": [
+        {
+          "label": "Input Params",
+          "description": "The SQL SELECT query or stored procedure is provided as input. The command executes this query and captures the database response for verification.",
+          "data": {
+            "dbScript": {
+              "SQLQuery": "SELECT CUSTOMER_ID, PRICE_CODE FROM TB_CUSTOMERS WHERE CUSTOMER_ID = 2"
+            }
+          }
+        }
+      ],
+      "assert_param_schema": [
+        {
+          "label": "Assert Params (Direct Expected Values)",
+          "description": "Expected database results are defined directly inside 'expectedParams'. The system runs the SQL SELECT query or stored procedure and compares the database response with these expected values.",
+          "data": {
+            "assertParams": {
+              "verifyExpected-1": {
+                "expectedParams": {
+                  "CUSTOMER_ID": "2",
+                  "PRICE_CODE": "AB"
+                }
+              },
+              "verifyExpected-2": {
+                "expectedParams": {
+                  "CUSTOMER_ID": "5",
+                  "PRICE_CODE": "CD"
+                }
+              }
+            }
+          }
+        },
+        {
+          "label": "Assert Params (Using CSV File)",
+          "description": "Instead of defining expected results inside JSON, you can store expected database results in a CSV file. The file must be placed in the directory configured under 'external.files.directory.path'. The system compares the database response with values from the CSV file.",
+          "data": {
+            "assertParams": {
+              "verifyExpected-1": {
+                "expectedParamType": "CSV",
+                "fileName": "ExpectedSQLResults.csv"
+              }
+            }
+          }
+        }
+      ],
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Verify SQL Response executed successfully.",
+        "fail": "FAIL: Verify SQL Response could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "database",
+        "sql",
+        "verify",
+        "assert",
+        "validation",
+        "response",
+        "query",
+        "database-validation"
+      ],
+      "related_commands": [
+        "ExecuteSQL"
+      ],
+      "is_new": false,
+      "last_updated": "2024-01-10"
+    },
+    {
+      "order": 34,
+      "command_id": "compare-file",
+      "title": "Compare File",
+      "category": "File Validation",
+      "status": "Done",
+      "syntax": "CompareFile  -options <actualFile>  <expectedFile>  <fileType>  <mode>",
+      "description": "Compares actual and expected files such as EXCEL, PDF, TEXT, IMAGE, or CSV using different comparison modes like EXACT, PARTIAL, or SEARCHWORD to validate file content accuracy during automation.",
+      "purpose": "Ensures generated or downloaded files match expected content, structure, or contain required keywords for validation and verification.",
+      "when_to_use": "Use when automation requires verification of file content, file structure, or keyword presence in generated or downloaded files.",
+      "use_cases": "Used to validate downloaded reports, exported files, generated documents, invoices, or any file-based output in automation testing.",
+      "options_count": 5,
+      "options": [
+        {
+          "label": "<actualFile>",
+          "desc": "Specifies the generated output file to compare. This is usually the file created during test execution and picked from the default downloads folder.",
+          "cmd": "CompareFile -actualFile -expectedFile -fileType EXACT",
+          "usage_example": "CompareFile ReportActual.pdf ReportExpected.pdf PDF EXACT"
+        },
+        {
+          "label": "<expectedFile>",
+          "desc": "Specifies the baseline file used as the reference for validation. This file is typically stored in the external test files directory.",
+          "cmd": "CompareFile -actualFile -expectedFile -fileType PARTIAL",
+          "usage_example": "CompareFile ExportActual.csv ExportExpected.csv CSV PARTIAL"
+        },
+        {
+          "label": "<fileType>",
+          "desc": "Defines the format of both files. Comparison behavior depends on this value. Supported types: EXCEL, PDF, TEXT, IMAGE, and CSV.",
+          "cmd": "CompareFile -actualFile -expectedFile -fileType <EXCEL|PDF|TEXT|IMAGE|CSV> -mode <comparisonMode>",
+          "usage_example": "CompareFile ReportActual.pdf ReportExpected.pdf PDF EXACT"
+        },
+        {
+          "label": "<mode>",
+          "desc": "Defines how the files are compared. Common modes: EXACT (strict match), PARTIAL (ignores allowed dynamic values), and SEARCHWORD (validates required keywords).",
+          "cmd": "CompareFile -actualFile -expectedFile -fileType SEARCHWORD",
+          "usage_example": "CompareFile InvoiceActual.txt InvoiceExpected.txt TEXT SEARCHWORD"
+        },
+        {
+          "label": "-pickLatestFile",
+          "desc": "Special option to automatically pick the most recently downloaded matching file from the target folder, instead of resolving a date-based filename.",
+          "cmd": "CompareFile -pickLatestFile -folderPath -fileType EXACT",
+          "usage_example": "CompareFile -pickLatestFile ${default.download.path} EXCEL EXACT"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "34.1",
+          "problem_statement": {
+            "scenario": "After exporting a customer pricing report as PDF, it must be validated.",
+            "problem": "The generated file must match a known-good baseline file to ensure report correctness.",
+            "goal": "Compare the generated file against the baseline file using EXACT comparison mode."
+          },
+          "command": "CompareFile CustomerPriceCodeDetailActual.pdf CustomerPriceCodeDetailExpected.pdf PDF EXACT",
+          "description": "Compares two PDF files using strict EXACT mode — passes only when both match completely."
+        },
+        {
+          "example_id": "34.2",
+          "problem_statement": {
+            "scenario": "An exported text file contains dynamic timestamps that change every run.",
+            "problem": "Only critical keywords ('Customer', 'Total') need to be verified, not the full content.",
+            "goal": "Compare the file using SEARCHWORD mode to verify only specific keywords exist."
+          },
+          "command": "CompareFile CustomerPriceCodeDetailActual.txt verifyExpected-1 TEXT SEARCHWORD",
+          "description": "Validates that specific keywords exist in the actual text file using SEARCHWORD mode.",
+          "assert_params": {
+            "verifyExpected-1": {
+              "wordsToSearch": [
+                "Customer",
+                "Invoice"
+              ]
+            }
+          }
+        },
+        {
+          "example_id": "34.3",
+          "problem_statement": {
+            "scenario": "A CSV export contains mostly static data but includes today's date and a timestamp.",
+            "problem": "Dynamic values must be excluded from comparison to avoid false failures.",
+            "goal": "Compare the file using PARTIAL mode with exclude patterns to skip dynamic content."
+          },
+          "command": "CompareFile CustomerPriceCodeDetailActual.csv CustomerPriceCodeDetailExpected.csv CSV PARTIAL",
+          "description": "Compares CSV files with PARTIAL mode, ignoring configured dynamic values like dates.",
+          "assert_params": {
+            "verifyExpected-1": {
+              "excludePattern": [
+                "8/20/2021",
+                "08/19/2021 10:45:58"
+              ],
+              "excludeDatePattern": [
+                {
+                  "dateFormat": "YYYY-MM-dd",
+                  "numberOfDays": 0,
+                  "isPastOrFutureDate": "PAST"
+                }
+              ],
+              "wordsToSearch": [
+                "Sandeep",
+                "Invoice"
+              ],
+              "startPage": 1,
+              "endPage": 1
+            }
+          }
+        },
+        {
+          "example_id": "34.4",
+          "problem_statement": {
+            "scenario": "The exported file name includes a date suffix (e.g., CustomerPricing-2-09_17_2021.csv).",
+            "problem": "The file name changes daily, so it must be resolved dynamically using a pattern.",
+            "goal": "Resolve the actual file using a date-pattern, then compare against the baseline."
+          },
+          "command": "CompareFile CustomerPricing-2-.csv ExportCustomerPricingDetailExpected.csv CSV EXACT -dateAsSuffix ACTUAL,MM_dd_YYYY",
+          "description": "Compares a date-suffixed actual file against the expected file.",
+          "assert_params": {
+            "verifyExpected-1": {
+              "excludePattern": [
+                "8/20/2021",
+                "08/19/2021 10:45:58"
+              ],
+              "excludeDatePattern": [
+                {
+                  "dateFormat": "YYYY-MM-dd",
+                  "numberOfDays": 0,
+                  "isPastOrFutureDate": "PAST"
+                }
+              ],
+              "wordsToSearch": [
+                "Sandeep",
+                "Invoice"
+              ],
+              "startPage": 1,
+              "endPage": 1
+            }
+          }
+        },
+        {
+          "example_id": "34.5",
+          "problem_statement": {
+            "scenario": "Multiple files are downloaded into a folder during a batch export.",
+            "problem": "The test must pick the latest file from the folder for comparison.",
+            "goal": "Select the latest file from the download folder and compare it against the expected baseline."
+          },
+          "command": "CompareFile -pickLatestFile ${directory.path} EXCEL EXACT",
+          "description": "Picks the most recently generated file in the folder and compares it with the expected Excel file.",
+          "assert_params": {
+            "verifyExpected-1": {
+              "excludePattern": [
+                "8/20/2021",
+                "08/19/2021 10:45:58"
+              ],
+              "excludeDatePattern": [
+                {
+                  "dateFormat": "YYYY-MM-dd",
+                  "numberOfDays": 0,
+                  "isPastOrFutureDate": "PAST"
+                }
+              ],
+              "wordsToSearch": [
+                "Sandeep",
+                "Invoice"
+              ],
+              "startPage": 1,
+              "endPage": 1
+            }
+          }
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": {
+        "excludePattern": {
+          "description": "Pattern rule or list of rules used to ignore selected text during comparison.",
+          "purpose": "Removes unstable values such as random identifiers, tokens, counters, or generated references.",
+          "applicableModes": [
+            "PARTIAL"
+          ],
+          "validationNotes": "Patterns are typically regex-like. Keep scope narrow to avoid masking true mismatches."
+        },
+        "excludeDatePattern": {
+          "description": "Date/time-focused exclusion rules used to ignore temporal values that naturally change between runs.",
+          "purpose": "Prevents failures caused only by current date, timestamp, timezone text, or generated run time fields.",
+          "applicableModes": [
+            "PARTIAL"
+          ],
+          "validationNotes": "Use targeted date/time patterns to avoid accidentally excluding non-date business values."
+        },
+        "wordsToSearch": {
+          "description": "List of mandatory words or phrases that must appear in the content for keyword-based validation.",
+          "purpose": "Confirms presence of critical text signals such as statuses, headings, or compliance statements.",
+          "applicableModes": [
+            "SEARCHWORD"
+          ],
+          "validationNotes": "Define terms clearly; ambiguous short words can create false positives."
+        },
+        "startPage": {
+          "description": "First page index of the validation window.",
+          "purpose": "Limits processing to a specific starting page in multi-page files.",
+          "validationNotes": "Must be less than or equal to endPage and within available page count."
+        },
+        "endPage": {
+          "description": "Last page index of the validation window.",
+          "purpose": "Defines where page-limited validation stops.",
+          "validationNotes": "Must be greater than or equal to startPage and within available page count."
+        }
+      },
+      "comparison_modes": {
+        "EXACT": {
+          "description": "Performs a strict full-content comparison between expected and actual output.",
+          "purpose": "Use when output is deterministic and every character matters.",
+          "behavior": "Validation passes only when expected and actual content are identical after applying any global pre-processing configured by the engine.",
+          "validationNotes": "Any mismatch in text, spacing, order, punctuation, or line breaks can cause failure."
+        },
+        "PARTIAL": {
+          "description": "Performs full comparison while allowing configured exclusions for dynamic or irrelevant segments.",
+          "purpose": "Use when most content must match, but known variable values should not fail validation.",
+          "behavior": "Before comparison, exclusion patterns can remove or ignore matching fragments from expected/actual content according to engine rules.",
+          "validationNotes": "Too-broad exclusions can hide real defects; patterns should be precise and minimal."
+        },
+        "SEARCHWORD": {
+          "description": "Validates keyword or phrase presence instead of full document equality.",
+          "purpose": "Use when confirmation of critical text markers is more important than exact formatting.",
+          "behavior": "The engine checks whether required terms are found in the selected content scope.",
+          "validationNotes": "Matching sensitivity (case, whole-word, ordering) depends on implementation settings."
+        }
+      },
+      "expected_output": {
+        "pass": "PASS: Compare File executed successfully.",
+        "fail": "FAIL: Compare File could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "compare",
+        "file",
+        "validation",
+        "pdf",
+        "excel",
+        "csv",
+        "text",
+        "image",
+        "file-compare"
+      ],
+      "related_commands": [
+        "CopyFile",
+        "UploadFile"
+      ],
+      "is_new": false,
+      "last_updated": "2024-01-10"
+    },
+    {
+      "order": 35,
+      "command_id": "copy-file",
+      "title": "Copy File",
+      "category": "File Validation",
+      "status": "In Progress",
+      "syntax": "CopyFile <PropertyKeyName>\r\nCopyFile <PropertyKeyName> <option>",
+      "description": "Extracts a value from a web element or its attribute and stores it in a reusable key. The stored key can later be used to paste the value into other elements, enabling dynamic data transfer between UI fields during automation.",
+      "purpose": "To capture values from web elements and store them for reuse in later automation steps.",
+      "when_to_use": "Use when you need to capture dynamic text from the UI and reuse it in later steps.",
+      "use_cases": "Extracts text or attribute values from web elements, stores them as reusable keys, and allows those values to be pasted into other elements during automation.",
+      "options_count": 1,
+      "options": [
+        {
+          "option": "-paste",
+          "description": "Indicates that the value stored in the provided key should be pasted into the specified element instead of being typed manually.",
+          "type": "Flag",
+          "required": false,
+          "behavior": "When this option is used, the automation framework retrieves the stored value associated with the key and performs a paste action into the targeted element."
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "35.1",
+          "problem_statement": {
+            "scenario": "A dynamically generated receipt number must be used on another screen.",
+            "problem": "The value needs to be captured from one element and pasted into a return form field.",
+            "goal": "Copy the element's value to a variable for reuse in a later test step."
+          },
+          "command": "CopyFile POS.ReceiptList.ReceiptNum.dtl ReceiptNum",
+          "description": "Extracts the visible text from the receipt number element and stores it under the key 'ReceiptNum'."
+        },
+        {
+          "example_id": "35.2",
+          "problem_statement": {
+            "scenario": "A receipt number element renders via JavaScript; visible text is empty.",
+            "problem": "The actual value is stored in the 'textContent' attribute, not the default 'value'.",
+            "goal": "Copy the element's textContent attribute value to a variable."
+          },
+          "command": "CopyFile POS.ReceiptList.ReceiptNum.dtl ReceiptNum textContent",
+          "description": "Extracts the 'textContent' attribute value and stores it under the key 'ReceiptNum'."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Copy File executed successfully.",
+        "fail": "FAIL: Copy File could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "copy",
+        "extract",
+        "store",
+        "element-value",
+        "attribute",
+        "dynamic-data",
+        "paste",
+        "reuse"
+      ],
+      "related_commands": [
+        "CompareFile",
+        "UploadFile"
+      ],
+      "is_new": false,
+      "last_updated": "2024-01-10"
+    },
+    {
+      "order": 36,
+      "command_id": "upload-file",
+      "title": "Upload File",
+      "category": "File Operations",
+      "status": "Done",
+      "syntax": "UploadFile <Parameter>/filePath",
+      "description": "Uploads a file from the configured file system directory into the application by automating the file selection process during testing.",
+      "purpose": "Enables automation scripts to upload files such as CSV, Excel, images, or documents into the application for validation and testing scenarios.",
+      "when_to_use": "Use when automation requires attaching or uploading a file from the file system into the application during test execution.",
+      "use_cases": "Used to upload files for import validation, data processing, document submission, or testing file-based workflows within the application.",
+      "options_count": 0,
+      "options": [],
+      "examples": [
+        {
+          "example_id": "36.1",
+          "problem_statement": {
+            "scenario": "The test is automating a product import workflow.",
+            "problem": "A CSV file containing product data must be uploaded into the application's import dialog.",
+            "goal": "Upload the specified file to the file input element."
+          },
+          "command": "UploadFile F:/System/products/product.csv",
+          "description": "Uploads the product CSV file from the specified file path."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Upload File executed successfully.",
+        "fail": "FAIL: Upload File could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "upload file",
+        "file upload",
+        "select file",
+        "attach file",
+        "import file",
+        "file path",
+        "automation upload"
+      ],
+      "related_commands": [
+        "CompareFile",
+        "CopyFIle",
+        "SaveAsPDF"
+      ],
+      "is_new": false,
+      "last_updated": "2024-01-10"
+    },
+    {
+      "order": 37,
+      "command_id": "save-as-pdf",
+      "title": "Save as PDF",
+      "category": "File Operations",
+      "status": "Done",
+      "syntax": "SaveAsPDF <option> <file-name>",
+      "description": "Saves the currently open webpage or document as a PDF file by either triggering the print dialog using Ctrl + P or directly saving when the print preview is already open.",
+      "purpose": "Automates saving webpages or documents as PDF files for validation, record keeping, or comparison during automation testing.",
+      "when_to_use": "Use when the print dialog is already open and you want to avoid triggering Ctrl + P again.",
+      "use_cases": "Used to save webpages, invoices, reports, or documents as PDF files for validation, comparison, and automation record keeping.",
+      "options_count": 2,
+      "options": [
+        {
+          "label": "Save PDF with default print action",
+          "desc": "  Simulates pressing Ctrl + P and saves the current page as a PDF.",
+          "cmd": "SaveAsPDF <file-name>",
+          "usage_example": "SaveAsPDF CustomerContractReceipt1Actual.pdf"
+        },
+        {
+          "label": "Save PDF without triggering Ctrl + P",
+          "desc": "  Saves the PDF directly when the print preview is already open.",
+          "cmd": "SaveAsPDF -skipCtrlP <file-name>",
+          "usage_example": "SaveAsPDF -skipCtrlP CustomerContractReceipt1Actual.pdf"
+        }
+      ],
+      "examples": [
+        {
+          "example_id": "37.1",
+          "problem_statement": {
+            "scenario": "After generating a customer contract receipt on screen, it must be saved as PDF.",
+            "problem": "The PDF will be used later for comparison against a baseline file using CompareFile.",
+            "goal": "Trigger the browser's print dialog via Ctrl+P and save the page as PDF."
+          },
+          "command": "SaveAsPDF CustomerContractReceipt1Actual.pdf",
+          "description": "Triggers Ctrl+P and saves the current page as a PDF with the given filename."
+        },
+        {
+          "example_id": "37.2",
+          "problem_statement": {
+            "scenario": "The application already has the print preview dialog open (triggered by the app itself).",
+            "problem": "The test must save the PDF without sending another Ctrl+P, as the dialog is already present.",
+            "goal": "Save the already-open print preview as PDF without re-triggering Ctrl+P."
+          },
+          "command": "SaveAsPDF -skipCtrlP CustomerContractReceipt1Actual.pdf",
+          "description": "Saves the PDF directly without triggering Ctrl+P, since print preview is already open."
+        }
+      ],
+      "input_param_schema": null,
+      "assert_param_schema": null,
+      "comparison_modes": null,
+      "expected_output": {
+        "pass": "PASS: Save as PDF executed successfully.",
+        "fail": "FAIL: Save as PDF could not be completed. Check element state, locator, or application readiness."
+      },
+      "detailed_usage": {
+        "label": "",
+        "desc": "",
+        "cmd": ""
+      },
+      "keywords": [
+        "save pdf",
+        "export pdf",
+        "print to pdf",
+        "download pdf",
+        "capture document",
+        "save webpage"
+      ],
+      "related_commands": [
+        "CompareFile",
+        "UploadFile",
+        "CopyFile"
+      ],
+      "is_new": false,
+      "last_updated": "2024-01-10"
+    }
+  ]
+}

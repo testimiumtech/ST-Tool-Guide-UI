@@ -1,0 +1,24 @@
+{
+  "title": "What is Property Key?",
+  "description": "A Property Key is the first argument of commands like SetElement, Click, etc. It acts as an identifier that points to three essential components:",
+  "steps": [
+    {
+      "title": "Step 1: Inspect the HTML Element to Get Locator and Locator Value",
+      "description": "Use browser dev tools to inspect the field (e.g., Last Name field):",
+      "imageAlt": "Inspect Element Screenshot",
+       "imageUrl": "/Images/locator-step-1.png"
+    },
+    {
+      "title": "Step 2: Define the Locator in a Properties File",
+      "description": "Open your properties file (e.g., customer.properties) and configure the locator like this:",
+      "imageAlt": "Property File Example",
+      "code": "LastNameTextField=id,lname,Enter Last Name",
+       "imageUrl": "/Images/locator-step-2.png"
+    },
+    {
+      "title": "Step 3: Use the Property Key in a Command",
+      "description": "Now you can use the Property Key (LastNameTextField) as the first argument in a command:",
+      "code": "SetElement LastNameTextField Smith"
+    }
+  ]
+}

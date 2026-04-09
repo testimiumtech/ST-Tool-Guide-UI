@@ -1,0 +1,88 @@
+[
+  {
+    "title": "Excel Basics",
+    "items": [
+      {
+        "subTitle": "Cells, Rows, and Columns",
+        "description": "Understand how data is organized in cells, rows, and columns."
+      },
+      {
+        "subTitle": "Data Types",
+        "description": "Recognize different data types such as text, numbers, dates, and formulas."
+      },
+      {
+        "subTitle": "Sheet Navigation",
+        "description": "Learn to navigate between sheets and use shortcuts like Ctrl + Arrow keys to move around large datasets."
+      }
+    ]
+  },
+  {
+    "title": "Formulas & Functions",
+    "items": [
+      {
+        "subTitle": "Basic Formulas",
+        "description": "Use simple formulas like SUM(), AVERAGE(), IF(), etc., to perform calculations."
+      },
+      {
+        "subTitle": "VLOOKUP and HLOOKUP",
+        "description": "Use these functions to search for values across different sheets or tables."
+      },
+      {
+        "subTitle": "Conditional Functions",
+        "description": "Use functions like IF() and COUNTIF() to apply conditions to data."
+      }
+    ]
+  },
+  {
+    "title": "Excel for Data Handling",
+    "items": [
+      {
+        "subTitle": "Data Filtering",
+        "description": "Learn to filter and sort data to view only relevant records."
+      },
+      {
+        "subTitle": "Data Validation",
+        "description": "Use Excel's data validation features to ensure correct input, especially for dropdowns and restricted values."
+      },
+      {
+        "subTitle": "Data Formatting",
+        "description": "Format cells to highlight important data or ensure consistency (e.g., date format, text wrap)."
+      }
+    ]
+  },
+  {
+    "title": "Excel with Automation Tools",
+    "items": [
+      {
+        "subTitle": "Reading and Writing Data",
+        "description": "Know how to use automation tools to read data from and write data to Excel files using libraries like Apache POI (Java) or openpyxl (Python)."
+      },
+      {
+        "subTitle": "Excel Integration with Test Scripts",
+        "description": "Understand how to integrate Excel sheets with test scripts to use data-driven testing."
+      }
+    ]
+  },
+  {
+    "title": "Data-Driven Testing",
+    "items": [
+      {
+        "subTitle": "Test Data Management",
+        "description": "Use Excel sheets to manage input data for tests and store results."
+      },
+      {
+        "subTitle": "Looping Through Test Cases",
+        "description": "Learn how to loop through rows in an Excel sheet to execute multiple test cases with different sets of input data."
+      }
+    ]
+  },
+  {
+    "title": "Excel Shortcuts",
+    "items": [
+      {
+        "subTitle": "Keyboard Shortcuts",
+        "description": "Learn common Excel shortcuts for faster navigation and data handling, such as Ctrl + C, Ctrl + V, Ctrl + Shift + L for filters, and Ctrl + Arrow keys to jump between sections."
+      }
+    ]
+  }
+]

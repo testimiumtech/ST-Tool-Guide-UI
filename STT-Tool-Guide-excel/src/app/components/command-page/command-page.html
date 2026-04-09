@@ -1,0 +1,262 @@
+<div class="command-page-container">
+  <!-- Error State -->
+  <div *ngIf="notFound" class="flex flex-col items-center justify-center min-h-[40vh]">
+    <div class="text-2xl font-bold text-red-600 mb-2">Command Not Found</div>
+    <div class="text-slate-500">The command you are looking for does not exist or is unavailable.</div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="!notFound && !command" class="loading-state">
+    <div class="space-y-4">
+      <div class="h-8 bg-gray-200 dark:bg-slate-700 rounded w-96"></div>
+      <div class="h-4 bg-gray-200 dark:bg-slate-700 rounded w-full"></div>
+      <div class="h-4 bg-gray-200 dark:bg-slate-700 rounded w-5/6"></div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div *ngIf="!notFound && command" class="command-content-wrapper">
+    <!-- Header Section -->
+    <div class="command-header">
+      <app-command-metadata
+        [isNew]="command.is_new"
+        [category]="command.category"
+        [lastUpdated]="command.last_updated || ''"
+        [keywords]="command.keywords || []"
+      />
+
+      <h1 class="command-title">
+        {{ command.title || 'Untitled Command' }}
+      </h1>
+      <p class="command-description">
+        {{ command.description || '-' }}
+      </p>
+    </div>
+
+    <!-- Syntax Box -->
+    <div class="syntax-highlight">
+      <h3 class="syntax-label">Syntax</h3>
+      <app-code-block
+        [code]="command.syntax || ''"
+        language="command"
+      />
+    </div>
+
+    <!-- Content Sections -->
+
+    <!-- Purpose -->
+    <app-command-section sectionId="purpose" title="Purpose" iconPath="M13 10V3L4 14h7v7l9-11h-7z">
+      <p class="section-text">{{ command.purpose || '-' }}</p>
+    </app-command-section>
+
+    <!-- Basic Usage -->
+    <app-command-section
+      sectionId="basic-usage"
+      title="Basic Usage"
+      iconPath="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+    >
+      <app-code-block
+        [code]="command.syntax || ''"
+        language="command"
+      />
+    </app-command-section>
+
+    <!-- Options Table -->
+    <app-command-section
+      *ngIf="(command.options?.length || 0) > 0"
+      sectionId="options"
+      title="Options & Flags"
+      iconPath="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+    >
+      <app-command-options-table [options]="command.options || []" />
+    </app-command-section>
+
+    <!-- Use Cases -->
+    <app-command-section
+      sectionId="use-cases"
+      title="Use Cases"
+      iconPath="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+    >
+      <p class="section-text">{{ command.use_cases || '-' }}</p>
+    </app-command-section>
+
+    <!-- Example -->
+    <app-command-section
+      *ngIf="command.examples && command.examples.length > 0"
+      sectionId="examples"
+      title="Examples"
+      iconPath="M12 6.253v13m0-13C6.5 6.253 2 10.998 2 17s4.5 10.747 10 10.747c5.5 0 10-4.998 10-10.747S17.5 6.253 12 6.253z"
+    >
+      <div class="examples-list">
+        <div
+          *ngFor="let ex of command.examples; let i = index; trackBy: trackByExampleIndex"
+          class="example-item"
+        >
+          <div class="example-header">
+            <span class="example-number">Example {{ i + 1 }}</span>
+          </div>
+            <!-- Problem Statement Block -->
+            <div *ngIf="ex.problem_statement" class="example-problem-statement bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded p-3 mb-3">
+              <div *ngIf="ex.problem_statement.scenario" class="text-xs text-slate-500 mb-1"><span class="font-semibold">Scenario:</span> {{ ex.problem_statement.scenario }}</div>
+              <div *ngIf="ex.problem_statement.problem" class="text-xs text-slate-500 mb-1"><span class="font-semibold">Problem:</span> {{ ex.problem_statement.problem }}</div>
+              <div *ngIf="ex.problem_statement.goal" class="text-xs text-slate-500"><span class="font-semibold">Goal:</span> {{ ex.problem_statement.goal }}</div>
+            </div>
+          <ng-container *ngIf="splitLines(ex.command) as commandLines">
+            <div *ngIf="commandLines.length > 0" class="example-command">
+              <app-code-block
+                *ngFor="let cmdLine of commandLines; trackBy: trackByCommandLine"
+                [code]="cmdLine"
+                language="command"
+              />
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="splitLines(ex.description) as descriptionLines">
+            <p *ngIf="descriptionLines.length === 1" class="example-description">{{ descriptionLines[0] }}</p>
+            <ul *ngIf="descriptionLines.length > 1" class="example-description-list">
+              <li *ngFor="let descLine of descriptionLines; trackBy: trackByDescriptionLine">{{ descLine }}</li>
+            </ul>
+          </ng-container>
+
+          <ng-container *ngIf="splitLines(ex.output) as outputLines">
+            <div *ngIf="outputLines.length > 0" class="example-output">
+              <h5 class="output-label">Expected Output:</h5>
+              <div class="output-content">
+                <div
+                  *ngFor="let line of outputLines; trackBy: trackByOutputLine"
+                  class="output-line"
+                  [ngClass]="{
+                    'pass-line': line.startsWith('PASS:'),
+                    'fail-line': line.startsWith('FAIL:')
+                  }"
+                >
+                  {{ line }}
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </app-command-section>
+
+    <!-- When to Use -->
+    <app-command-section
+      sectionId="when-to-use"
+      title="When to Use"
+      iconPath="M8 16l2.879-2.879m0 0a3 3 0 104.243-4.243m-4.243 4.243L5.5 19.5M19.5 4.5a3 3 0 00-4.243 0m4.243 0L19.5 4.5m0 0a3 3 0 10-4.243 4.243m4.243-4.243l2.879 2.879"
+    >
+      <p class="section-text">{{ command.when_to_use || '-' }}</p>
+    </app-command-section>
+
+    <!-- Input Params -->
+    <app-command-section
+      *ngIf="command.input_params && command.input_params.length > 0"
+      sectionId="input-params"
+      title="Input Parameters"
+      iconPath="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+    >
+      <div class="params-list">
+        <div
+          *ngFor="let param of command.input_params; trackBy: trackByParamLabel"
+          class="param-item"
+        >
+          <h4 class="param-label">{{ param.label }}</h4>
+          <p *ngIf="param.desc" class="param-desc">{{ param.desc }}</p>
+          <div *ngIf="param.example" class="param-example">
+            <app-code-block [code]="formatJson(param.example)" language="json" />
+          </div>
+        </div>
+      </div>
+    </app-command-section>
+
+    <!-- Assert Params -->
+    <app-command-section
+      *ngIf="command.assert_params && command.assert_params.length > 0"
+      sectionId="assert-params"
+      title="Assert Parameters"
+      iconPath="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+    >
+      <div class="params-list">
+        <div
+          *ngFor="let param of command.assert_params; trackBy: trackByParamLabel"
+          class="param-item"
+        >
+          <h4 class="param-label">{{ param.label }}</h4>
+          <p *ngIf="param.desc" class="param-desc">{{ param.desc }}</p>
+          <div *ngIf="param.example" class="param-example">
+            <app-code-block [code]="formatJson(param.example)" language="json" />
+          </div>
+        </div>
+      </div>
+    </app-command-section>
+
+    <!-- Troubleshooting & Notes -->
+    <app-command-section
+      *ngIf="command.troubleshooting_notes"
+      sectionId="troubleshooting"
+      title="Troubleshooting & Notes"
+      iconPath="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+    >
+      <p class="section-text">{{ command.troubleshooting_notes }}</p>
+    </app-command-section>
+
+    <!-- Related Commands -->
+    <app-command-section
+      *ngIf="command.related_commands && command.related_commands.length > 0"
+      sectionId="related"
+      title="Related Commands"
+      iconPath="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+    >
+      <div class="related-commands">
+        <button
+          *ngFor="let relatedId of command.related_commands; trackBy: trackByRelatedCommand"
+          (click)="navigateTo(relatedId)"
+          class="related-command-btn"
+        >
+          {{ relatedId }}
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+    </app-command-section>
+
+    <!-- Divider -->
+    <div class="content-divider"></div>
+
+    <!-- Navigation -->
+    <div class="navigation-section">
+      <button
+        *ngIf="previousCommand"
+        (click)="navigateTo(previousCommand.command_id)"
+        class="nav-button prev"
+        aria-label="Go to previous command"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        <div>
+          <div class="nav-label">Previous</div>
+          <div class="nav-title">{{ previousCommand.title }}</div>
+        </div>
+      </button>
+      <div *ngIf="!previousCommand"></div>
+
+      <button
+        *ngIf="nextCommand"
+        (click)="navigateTo(nextCommand.command_id)"
+        class="nav-button next"
+        aria-label="Go to next command"
+      >
+        <div>
+          <div class="nav-label">Next</div>
+          <div class="nav-title">{{ nextCommand.title }}</div>
+        </div>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+      <div *ngIf="!nextCommand"></div>
+    </div>
+  </div>
+</div>

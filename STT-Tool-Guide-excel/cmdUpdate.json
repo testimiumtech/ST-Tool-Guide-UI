@@ -1,0 +1,20 @@
+Done	11	Verify Element Is Displayed	verify-element-is-displayed	VerifyElementIsDisplayed <locator-property-key>	"{
+  ""examples"": [
+    {
+      ""command"": ""VerifyElementIsDisplayed Login.Error.Message.lbl"",
+      ""description"": ""Verifies that the element 'Login.Error.Message.lbl' is visible on the screen."",
+      ""output"": ""PASS: Element is displayed.\nFAIL: Element is not displayed.""
+    }
+  ]
+}"	1	"[
+  {
+  ""label"": ""Locator Property Key"",
+  ""desc"": ""Identifies the locator of the web element using a property key defined in the properties file."",
+  ""cmd"": ""<locator-property-key>"",
+  ""usage_example"": ""Login.Error.Message.Lbl""
+  }
+  ]"	Checks whether a specific HTML element is visible on the screen.	Verifies that a UI element is present in the DOM and visibly displayed on the screen during test execution.	Use after page navigation, form submission, or triggering UI events to confirm that required elements are visible before proceeding.	Used to confirm that UI components such as input fields, buttons, labels, popups, or modals are visible after navigation, submission, or state changes.	"{
+  ""label"": ""Visibility Verification"",
+  ""desc"": ""Accepts a property key that identifies the HTML element and checks whether it is currently visible to the user."",
+  ""cmd"": ""VerifyElementIsDisplayed <locator-property-key>""
+  }"		verify, displayed, visible	VerifyElement	Verification	FALSE	2/17/2026								

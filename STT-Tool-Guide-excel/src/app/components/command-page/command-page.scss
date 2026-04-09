@@ -1,0 +1,241 @@
+.example-problem-statement {
+  @apply bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded p-3 mb-3;
+  box-shadow: 0 2px 8px 0 rgb(30 41 59 / 0.04);
+  .font-semibold {
+    @apply text-slate-700 dark:text-slate-200;
+  }
+  .text-xs {
+    @apply leading-snug;
+  }
+}
+:host {
+  @apply block w-full;
+}
+
+.command-page-container {
+  @apply bg-gradient-to-b from-white to-gray-50 dark:from-slate-950 dark:to-slate-900 w-full min-h-full;
+
+  .loading-state {
+    @apply flex items-center justify-center py-12 px-6;
+  }
+
+  .command-content-wrapper {
+    @apply max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 w-full;
+  }
+
+  // ===== Header Styling =====
+  .command-header {
+    @apply mb-12;
+
+    .command-title {
+      @apply text-5xl font-bold text-gray-900 dark:text-white mb-4 leading-tight;
+    }
+
+    .command-description {
+      @apply text-xl text-gray-600 dark:text-gray-400 mb-6 leading-relaxed;
+    }
+
+  }
+
+  // ===== Syntax Highlight =====
+  .syntax-highlight {
+    @apply mb-12 p-6 rounded-lg bg-gradient-to-r from-slate-900 to-slate-800 border border-slate-700;
+
+    .syntax-label {
+      @apply text-sm font-semibold text-slate-300 uppercase tracking-wider mb-4;
+    }
+
+    :deep(app-code-block) {
+      @apply my-0;
+    }
+  }
+
+  // ===== Section Content =====
+  .section-text {
+    @apply text-gray-700 dark:text-gray-300 leading-relaxed;
+  }
+
+  .usage-box {
+    @apply bg-blue-50 dark:bg-slate-900/50 border-l-4 border-blue-500 rounded-lg p-6 mb-6;
+
+    .usage-label {
+      @apply text-lg font-semibold text-gray-900 dark:text-white mb-3;
+    }
+
+    .usage-description {
+      @apply text-gray-700 dark:text-gray-300;
+    }
+  }
+
+  // ===== Related Commands =====
+  .related-commands {
+    @apply flex flex-wrap gap-3;
+
+    .related-command-btn {
+      @apply flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-600 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all hover:bg-blue-50 dark:hover:bg-slate-800;
+    }
+  }
+
+  // ===== Examples Section =====
+  .examples-list {
+    @apply space-y-6;
+
+    .example-item {
+      @apply bg-gray-50 dark:bg-slate-800/50 rounded-xl p-6 border border-gray-200 dark:border-slate-700;
+
+      .example-header {
+        @apply mb-4;
+
+        .example-number {
+          @apply inline-block px-3 py-1 text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/30 rounded-full;
+        }
+      }
+
+      .example-command {
+        @apply mb-4;
+      }
+
+      .example-description {
+        @apply text-gray-700 dark:text-gray-300 mb-4 leading-relaxed;
+      }
+
+      .example-description-list {
+        @apply list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300 mb-4 leading-relaxed;
+      }
+
+      .example-output {
+        @apply mt-4 pt-4 border-t border-gray-200 dark:border-slate-700;
+
+        .output-label {
+          @apply text-sm font-semibold text-gray-600 dark:text-gray-400 mb-3;
+        }
+
+        .output-content {
+          @apply font-mono text-sm bg-slate-900 rounded-lg p-4;
+
+          .output-line {
+            @apply py-1 text-gray-300;
+
+            &.pass-line {
+              @apply text-green-400;
+            }
+
+            &.fail-line {
+              @apply text-red-400;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // ===== Params Section (Input/Assert) =====
+  .params-list {
+    @apply space-y-6;
+
+    .param-item {
+      @apply bg-amber-50 dark:bg-amber-900/10 border-l-4 border-amber-500 rounded-lg p-6;
+
+      .param-label {
+        @apply text-lg font-semibold text-gray-900 dark:text-white mb-2;
+      }
+
+      .param-desc {
+        @apply text-gray-700 dark:text-gray-300 mb-4 leading-relaxed;
+      }
+
+      .param-example {
+        @apply mt-4;
+      }
+    }
+  }
+
+  // ===== Divider =====
+  .content-divider {
+    @apply my-16 border-t border-gray-200 dark:border-slate-700;
+  }
+
+  // ===== Navigation Section =====
+  .navigation-section {
+    @apply flex justify-between items-center gap-4 mt-12 pt-8 border-t border-gray-200 dark:border-slate-700;
+
+    .nav-button {
+      @apply flex items-center gap-3 px-6 py-4 rounded-lg border border-gray-200 dark:border-slate-700 hover:border-gray-300 dark:hover:border-slate-600 hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-all max-w-sm;
+
+      .nav-label {
+        @apply text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider;
+      }
+
+      .nav-title {
+        @apply text-sm font-semibold text-gray-900 dark:text-white;
+      }
+
+      &.prev {
+        @apply flex-row-reverse;
+      }
+
+      &.next {
+        @apply flex-row ml-auto;
+      }
+
+      &:hover {
+        @apply border-blue-400 dark:border-blue-600 text-blue-600 dark:text-blue-400;
+      }
+    }
+  }
+}
+
+/* Responsive adjustments for mobile and tablet */
+@media (max-width: 768px) {
+  .command-page-container {
+    .command-header {
+      @apply mb-8;
+
+      .command-title {
+        @apply text-3xl;
+      }
+
+      .command-description {
+        @apply text-base;
+      }
+    }
+
+    .usage-box {
+      @apply p-4;
+
+      .usage-label {
+        @apply text-base;
+      }
+    }
+
+    .navigation-section {
+      @apply flex-col gap-2 mt-8;
+
+      .nav-button {
+        @apply w-full max-w-none;
+
+        &.next {
+          @apply ml-0;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .command-page-container {
+    .command-header {
+      .command-title {
+        @apply text-2xl;
+      }
+    }
+
+    .syntax-highlight {
+      @apply p-3;
+    }
+
+    .content-divider {
+      @apply my-8;
+    }
+  }
+}

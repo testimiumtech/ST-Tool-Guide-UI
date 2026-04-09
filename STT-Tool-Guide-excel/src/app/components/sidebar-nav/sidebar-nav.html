@@ -1,0 +1,55 @@
+<nav class="sidebar-nav">
+
+  <div class="sidebar-content">
+    <!-- Quick Links Section -->
+    <div class="quick-links-section">
+      <h3 class="quick-links-title">Resources</h3>
+      <ul class="quick-links">
+        <li>
+          <a routerLink="/prerequisites/excel" class="quick-link">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Prerequisites
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Grouped Commands by Category -->
+    <div class="categories-section" *ngIf="!isHomePage()">
+      <div *ngFor="let category of groupedCategories(); trackBy: trackByCategory" class="category-group">
+        <button
+          (click)="toggleCategory(category.name)"
+          class="category-header"
+          [class.expanded]="expandedCategories[category.name]"
+        >
+          <svg class="category-toggle" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+          <span class="category-name">{{ category.name }}</span>
+          <span class="category-count">{{ category.items.length }}</span>
+        </button>
+
+        <div
+          class="category-items"
+          [class.collapsed]="!expandedCategories[category.name]"
+        >
+          <ul class="nav-items">
+            <li *ngFor="let item of category.items; trackBy: trackByNavItem">
+              <a
+                [routerLink]="['/cmd', item.id]"
+                routerLinkActive="active"
+                class="nav-link"
+              >
+                <span class="nav-icon" [class.new]="item.isNew"></span>
+                {{ item.label }}
+                <span *ngIf="item.isNew" class="badge-new">NEW</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

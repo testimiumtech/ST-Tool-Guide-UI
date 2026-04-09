@@ -1,0 +1,41 @@
+<div class="prerequisites-container prereq-container">
+  <!-- Back Navigation -->
+  <div class="back-navigation">
+    <button (click)="goBack()" class="btn-back" title="Go back to previous page">
+      <svg class="back-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+      Back
+    </button>
+  </div>
+
+  <div class="prerequisites-header">
+    <h1 class="typo-page-title mb-3">📊 Basic Knowledge of Excel for Automation Testing</h1>
+  </div>
+
+  <div *ngIf="isLoading()" class="loading-spinner">
+    <div class="spinner"></div>
+    <p>Loading prerequisites...</p>
+  </div>
+
+  <div *ngIf="!isLoading() && prerequisites().length > 0" class="prerequisites-content">
+    <div *ngFor="let section of prerequisites(); let i = index" class="prerequisite-section">
+      <div class="section-card">
+        <h2 class="section-title">{{ section.title }}</h2>
+        
+        <div class="items-grid">
+          <div *ngFor="let item of section.items" class="item">
+            <div class="item-header">
+              <h3 class="item-title">{{ item.subTitle }}</h3>
+            </div>
+            <p class="item-description">{{ item.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading() && prerequisites().length === 0" class="empty-state-msg">
+    No prerequisites found. Please check back later.
+  </div>
+</div>

@@ -1,0 +1,39 @@
+import { Component, signal, ChangeDetectionStrategy, DestroyRef, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { HeaderComponent } from '../../components/header/header';
+import { SidebarNavComponent } from '../../components/sidebar-nav/sidebar-nav';
+import { TableOfContentsComponent } from '../../components/table-of-contents/table-of-contents';
+import { SearchModalComponent } from '../../components/search-modal/search-modal';
+import { ApiService } from '../../services/api.service';
+import { CommandPage } from '../../models/command-page.model';
+
+@Component({
+  selector: 'app-main-layout',
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+    HeaderComponent,
+    SidebarNavComponent,
+    TableOfContentsComponent,
+    SearchModalComponent,
+  ],
+  templateUrl: './main-layout.html',
+  styleUrl: './main-layout.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class MainLayoutComponent {
+  searchModalOpen = signal(false);
+  commands = signal<CommandPage[]>([]);
+  private readonly destroyRef = inject(DestroyRef);
+
+  constructor(private apiService: ApiService) {
+    this.apiService.getCommands()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data) => {
+        this.commands.set(data.commands);
+      });
+  }
+}
