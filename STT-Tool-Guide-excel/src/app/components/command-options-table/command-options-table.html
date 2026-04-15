@@ -1,26 +1,26 @@
-<div class="border border-gray-200 dark:border-slate-700 rounded-lg overflow-hidden shadow-sm overflow-x-auto">
-  <table class="min-w-full w-full text-xs md:text-sm">
+<div class="options-table-shell">
+  <table class="options-table">
     <caption class="sr-only">Command options and usage examples</caption>
     <thead>
-      <tr class="border-b border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900/50">
-        <th scope="col" class="px-3 py-2 md:px-6 md:py-4 text-left font-semibold text-gray-900 dark:text-white">Flag/Option</th>
-        <th scope="col" class="px-3 py-2 md:px-6 md:py-4 text-left font-semibold text-gray-900 dark:text-white">Description</th>
-        <th scope="col" class="px-3 py-2 md:px-6 md:py-4 text-left font-semibold text-gray-900 dark:text-white">Usage Example</th>
+      <tr class="options-table-head-row">
+        <th scope="col" class="options-table-head-cell">Flag/Option</th>
+        <th scope="col" class="options-table-head-cell">Description</th>
+        <th scope="col" class="options-table-head-cell">Usage Example</th>
       </tr>
     </thead>
     <tbody>
       <tr
         *ngFor="let option of options; trackBy: trackByOption"
-        class="border-b border-gray-200 dark:border-slate-700 last:border-0 hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors"
+        class="options-table-row"
       >
-        <td class="px-3 py-2 md:px-6 md:py-4 font-mono text-blue-600 dark:text-blue-400 font-semibold">
+        <td class="options-table-cell options-table-flag">
           {{ option.label || $any(option).option || '-' }}
         </td>
-        <td class="px-3 py-2 md:px-6 md:py-4 text-gray-700 dark:text-gray-300">
+        <td class="options-table-cell options-table-description">
           {{ option.desc || $any(option).description || '-' }}
         </td>
-        <td class="px-3 py-2 md:px-6 md:py-4 font-mono text-xs">
-          <span class="bg-gray-100 dark:bg-slate-900 px-2 py-1 rounded text-gray-800 dark:text-gray-200">{{ option.usage_example || option.cmd || '-' }}</span>
+        <td class="options-table-cell options-table-example-cell">
+          <span class="options-table-example">{{ option.usage_example || option.cmd || '-' }}</span>
         </td>
       </tr>
     </tbody>

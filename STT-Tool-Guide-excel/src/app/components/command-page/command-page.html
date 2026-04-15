@@ -2,15 +2,15 @@
   <!-- Error State -->
   <div *ngIf="notFound" class="flex flex-col items-center justify-center min-h-[40vh]">
     <div class="text-2xl font-bold text-red-600 mb-2">Command Not Found</div>
-    <div class="text-slate-500">The command you are looking for does not exist or is unavailable.</div>
+    <div class="command-empty-text">The command you are looking for does not exist or is unavailable.</div>
   </div>
 
   <!-- Loading State -->
   <div *ngIf="!notFound && !command" class="loading-state">
     <div class="space-y-4">
-      <div class="h-8 bg-gray-200 dark:bg-slate-700 rounded w-96"></div>
-      <div class="h-4 bg-gray-200 dark:bg-slate-700 rounded w-full"></div>
-      <div class="h-4 bg-gray-200 dark:bg-slate-700 rounded w-5/6"></div>
+      <div class="loading-skeleton loading-skeleton-title"></div>
+      <div class="loading-skeleton loading-skeleton-line"></div>
+      <div class="loading-skeleton loading-skeleton-line loading-skeleton-line-short"></div>
     </div>
   </div>
 
@@ -63,7 +63,7 @@
 
     <!-- Options Table -->
     <app-command-section
-      *ngIf="(command.options?.length || 0) > 0"
+      *ngIf="(command.options.length || 0) > 0"
       sectionId="options"
       title="Options & Flags"
       iconPath="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
@@ -96,10 +96,10 @@
             <span class="example-number">Example {{ i + 1 }}</span>
           </div>
             <!-- Problem Statement Block -->
-            <div *ngIf="ex.problem_statement" class="example-problem-statement bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded p-3 mb-3">
-              <div *ngIf="ex.problem_statement.scenario" class="text-xs text-slate-500 mb-1"><span class="font-semibold">Scenario:</span> {{ ex.problem_statement.scenario }}</div>
-              <div *ngIf="ex.problem_statement.problem" class="text-xs text-slate-500 mb-1"><span class="font-semibold">Problem:</span> {{ ex.problem_statement.problem }}</div>
-              <div *ngIf="ex.problem_statement.goal" class="text-xs text-slate-500"><span class="font-semibold">Goal:</span> {{ ex.problem_statement.goal }}</div>
+            <div *ngIf="ex.problem_statement" class="example-problem-statement">
+              <div *ngIf="ex.problem_statement.scenario" class="problem-meta-row"><span class="font-semibold">Scenario:</span> {{ ex.problem_statement.scenario }}</div>
+              <div *ngIf="ex.problem_statement.problem" class="problem-meta-row"><span class="font-semibold">Problem:</span> {{ ex.problem_statement.problem }}</div>
+              <div *ngIf="ex.problem_statement.goal" class="problem-meta-row"><span class="font-semibold">Goal:</span> {{ ex.problem_statement.goal }}</div>
             </div>
           <ng-container *ngIf="splitLines(ex.command) as commandLines">
             <div *ngIf="commandLines.length > 0" class="example-command">

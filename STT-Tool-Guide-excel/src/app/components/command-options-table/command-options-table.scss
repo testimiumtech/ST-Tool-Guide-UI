@@ -1,3 +1,57 @@
 :host {
   display: block;
 }
+
+.options-table-shell {
+  @apply border rounded-lg overflow-hidden shadow-sm overflow-x-auto;
+  border-color: var(--border-color);
+  background-color: var(--background);
+}
+
+.options-table {
+  @apply min-w-full w-full text-xs md:text-sm;
+}
+
+.options-table-head-row {
+  @apply border-b;
+  border-color: var(--border-color);
+  background-color: var(--background-light);
+}
+
+.options-table-head-cell {
+  @apply px-3 py-2 md:px-6 md:py-4 text-left font-semibold;
+  color: var(--text-primary);
+}
+
+.options-table-row {
+  @apply border-b last:border-0;
+  border-color: var(--border-color);
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--background-light);
+  }
+}
+
+.options-table-cell {
+  @apply px-3 py-2 md:px-6 md:py-4;
+}
+
+.options-table-flag {
+  @apply font-mono font-semibold;
+  color: var(--primary-color);
+}
+
+.options-table-description {
+  color: var(--text-secondary);
+}
+
+.options-table-example-cell {
+  @apply font-mono text-xs;
+}
+
+.options-table-example {
+  @apply px-2 py-1 rounded;
+  background-color: var(--background-muted);
+  color: var(--text-primary);
+}

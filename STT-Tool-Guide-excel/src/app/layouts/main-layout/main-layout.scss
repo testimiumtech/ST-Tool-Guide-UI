@@ -1,5 +1,7 @@
 .main-layout {
-  @apply flex h-[calc(100vh-64px)] bg-white dark:bg-slate-950 gap-0;
+  @apply flex h-[calc(100vh-64px)] gap-0;
+  background-color: var(--background);
+  transition: background-color 0.3s ease;
 
   /* Left sidebar - fixed width, scrollable independently */
   app-sidebar-nav {

@@ -1,3 +1,37 @@
 :host {
   display: block;
 }
+
+.command-metadata-row {
+  @apply flex flex-wrap items-center gap-2 sm:gap-3 mb-6;
+}
+
+.metadata-badge {
+  @apply inline-flex items-center gap-1.5 px-2 py-1 text-xs sm:px-3 sm:py-1.5 font-bold rounded-full;
+}
+
+.metadata-badge-base {
+  background-color: var(--background-muted);
+  color: var(--text-secondary);
+}
+
+.metadata-badge-new {
+  background-color: color-mix(in srgb, #f59e0b 18%, var(--background));
+  color: #d97706;
+}
+
+.metadata-badge-category {
+  @apply px-3 py-1.5 text-xs font-semibold rounded-full;
+  background-color: color-mix(in srgb, var(--primary-color) 14%, var(--background));
+  color: var(--primary-color);
+}
+
+.metadata-updated {
+  @apply text-xs ml-0 mt-2 w-full sm:ml-auto sm:mt-0 sm:w-auto;
+  color: var(--text-secondary);
+}
+
+.metadata-keywords {
+  @apply flex flex-wrap items-center gap-3 pt-6 border-t;
+  border-color: var(--border-color);
+}

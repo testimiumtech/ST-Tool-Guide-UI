@@ -1,11 +1,16 @@
 .prerequisite-layout {
-  @apply flex h-[calc(100vh-64px)] overflow-hidden bg-white dark:bg-slate-950;
+  @apply flex h-[calc(100vh-64px)] overflow-hidden;
+  background-color: var(--background);
+  transition: background-color 0.3s ease;
 
   .prerequisites-sidebar {
-    @apply w-64 border-r border-gray-200 dark:border-slate-800 flex flex-col overflow-hidden hidden lg:flex;
+    @apply w-64 flex flex-col overflow-hidden hidden lg:flex;
+    border-right: 1px solid var(--border-color);
 
     .sidebar-header {
-      @apply sticky top-0 px-6 py-6 border-b border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-950 z-10 flex-shrink-0;
+      @apply sticky top-0 px-6 py-6 z-10 flex-shrink-0;
+      background-color: var(--background);
+      border-bottom: 1px solid var(--border-color);
 
       .sidebar-title {
         @apply text-lg font-bold text-gray-900 dark:text-white;
@@ -26,7 +31,14 @@
           }
 
           &.active {
-            @apply bg-blue-50 dark:bg-slate-800 text-blue-600 dark:text-blue-400 border-l-2 border-blue-600 pl-2;
+            background-color: rgba(59, 130, 246, 0.08);
+            color: var(--primary-color);
+            border-left: 2px solid var(--primary-color);
+            padding-left: 0.5rem;
+
+            .dark & {
+              background-color: rgba(99, 102, 241, 0.1);
+            }
           }
         }
       }

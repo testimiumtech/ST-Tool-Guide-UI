@@ -1,8 +1,12 @@
 .sidebar-nav {
-  @apply w-64 bg-white dark:bg-slate-950 border-r border-gray-200 dark:border-slate-800 flex flex-col flex-shrink-0 h-full overflow-y-auto;
+  @apply w-64 flex flex-col flex-shrink-0 h-full overflow-y-auto;
+  background-color: var(--background);
+  border-right: 1px solid var(--border-color);
 
   .sidebar-header {
-    @apply sticky top-0 px-6 py-8 border-b border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-950 z-20 flex-shrink-0;
+    @apply sticky top-0 px-6 py-8 z-20 flex-shrink-0;
+    background-color: var(--background);
+    border-bottom: 1px solid var(--border-color);
 
     .sidebar-title {
       @apply text-xl font-bold text-gray-900 dark:text-white;
@@ -73,10 +77,24 @@
             @apply space-y-1 mt-2 pl-2;
 
             .nav-link {
-              @apply flex items-center gap-2 px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-lg transition-colors relative;
+              @apply flex items-center gap-2 px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-lg relative;
+              transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+              &:hover {
+                @apply bg-gray-100 dark:bg-slate-800;
+                transform: translateX(3px);
+              }
 
               &.active {
-                @apply bg-blue-50 dark:bg-slate-800 text-blue-600 dark:text-blue-400 border-l-2 border-blue-600 font-medium;
+                @apply font-medium;
+                background-color: rgba(59, 130, 246, 0.08);
+                color: var(--primary-color);
+                border-left: 2px solid var(--primary-color);
+                transform: translateX(3px);
+
+                .dark & {
+                  background-color: rgba(99, 102, 241, 0.1);
+                }
               }
 
               .nav-icon {

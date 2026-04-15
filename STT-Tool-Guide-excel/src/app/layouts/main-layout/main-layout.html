@@ -1,3 +1,6 @@
+<!-- Reading Progress Bar -->
+<app-reading-progress [scrollContainer]="mainScrollElement()" />
+
 <!-- Search Modal -->
 <app-search-modal
   [isOpen]="searchModalOpen"
@@ -13,10 +16,10 @@
   <app-sidebar-nav [commands]="commands()" />
 
   <!-- Main Content -->
-  <main class="flex-1 min-w-0 w-full">
+  <main #mainScrollContainerRef class="flex-1 min-w-0 w-full">
     <router-outlet></router-outlet>
   </main>
 
   <!-- Right Sidebar Table of Contents -->
-  <app-table-of-contents />
+  <app-table-of-contents [scrollContainer]="mainScrollElement()" />
 </div>

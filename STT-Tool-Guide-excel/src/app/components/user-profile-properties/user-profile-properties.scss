@@ -28,7 +28,7 @@
       @apply bg-white dark:bg-slate-900 rounded-xl shadow-lg border border-gray-200 dark:border-slate-700 overflow-hidden;
 
       .section-title {
-        @apply text-2xl font-bold text-gray-900 dark:text-white px-6 py-4 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-slate-800 dark:to-slate-800 border-b border-gray-200 dark:border-slate-700;
+        @apply text-2xl font-bold text-gray-900 dark:text-white px-6 py-4 bg-gradient-to-r from-blue-50 to-teal-50 dark:from-slate-800 dark:to-slate-800 border-b border-gray-200 dark:border-slate-700;
       }
 
       .items-list {
@@ -44,7 +44,7 @@
       @apply mb-2;
 
       .property-key {
-        @apply text-lg font-semibold text-purple-600 dark:text-purple-400 font-mono;
+        @apply text-lg font-semibold text-blue-600 dark:text-indigo-400 font-mono;
       }
     }
 

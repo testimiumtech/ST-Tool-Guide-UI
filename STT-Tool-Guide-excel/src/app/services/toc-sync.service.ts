@@ -58,7 +58,6 @@ export class TocSyncService {
 
   private updateTOC(): void {
     if (!this.contentContainer) {
-      console.log('🚫 TOC Service: No content container');
       this.tocItems.set([]);
       return;
     }
@@ -67,8 +66,6 @@ export class TocSyncService {
     const headings = Array.from(
       this.contentContainer.querySelectorAll('h2, h3, h4')
     ) as HTMLElement[];
-
-    console.log('🔎 TOC Service: Found headings in container:', headings.length, headings);
 
     const items: TOCItem[] = headings
       .map((heading, index) => {
@@ -91,8 +88,6 @@ export class TocSyncService {
         };
       })
       .filter((item) => item.label.trim().length > 0);
-
-    console.log('✅ TOC Service: Generated items:', items);
     this.tocItems.set(items);
   }
 

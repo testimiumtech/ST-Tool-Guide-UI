@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, effect, Signal } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, Signal, effect, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
@@ -14,7 +14,28 @@ import { TOCItem } from '../../services/toc-sync.service';
   styleUrl: './table-of-contents.scss',
 })
 export class TableOfContentsComponent implements OnInit {
+  @Input() scrollContainer: HTMLElement | null = null;
   activeSection = signal('');
+  private scrollListenerAttachedTo: HTMLElement | Window | null = null;
+  private readonly handleScroll = () => {
+    const items = this.tocService.items();
+    if (items.length === 0) return;
+
+    let currentSection = items[0].id;
+
+    for (const item of items) {
+      const element = document.getElementById(item.id);
+      if (!element) continue;
+
+      const rect = element.getBoundingClientRect();
+      if (rect.top >= 0 && rect.top <= 200) {
+        currentSection = item.id;
+        break;
+      }
+    }
+
+    this.activeSection.set(currentSection);
+  };
 
   // Track if we're on the home page
   isHomePage: Signal<boolean>;
@@ -30,9 +51,7 @@ export class TableOfContentsComponent implements OnInit {
 
     // Update active section based on scroll position
     effect(() => {
-      // Access items to establish dependency
       this.tocService.items();
-      // Set up scroll listener
       this.setupScrollListener();
     });
 
@@ -41,6 +60,7 @@ export class TableOfContentsComponent implements OnInit {
       if (this.isHomePage()) {
         // Clear TOC on home page
         this.tocService.setContentContainer(null);
+        this.activeSection.set('');
       } else {
         // Delay to ensure content is rendered
         setTimeout(() => this.updateContentContainer(), 200);
@@ -53,27 +73,27 @@ export class TableOfContentsComponent implements OnInit {
     this.updateContentContainer();
   }
 
+  ngOnDestroy(): void {
+    this.teardownScrollListener();
+  }
+
   private updateContentContainer(): void {
     let attempts = 0;
     const maxAttempts = 20; // Try for up to 2 seconds (20 * 100ms)
     
     const tryFind = () => {
       attempts++;
-      const contentContainer = document.querySelector('.command-content-wrapper');
-      console.log(`🔍 TOC: Attempt ${attempts} - Looking for content container...`, contentContainer);
+      const contentContainer = this.scrollContainer?.querySelector('.command-content-wrapper')
+        ?? document.querySelector('.command-content-wrapper');
       
       if (contentContainer) {
-        const headings = contentContainer.querySelectorAll('h2, h3, h4');
-        console.log('📝 TOC: Found headings:', headings.length, headings);
         this.tocService.setContentContainer(contentContainer as HTMLElement);
+        this.handleScroll();
         return; // Success, stop trying
       }
       
       if (attempts < maxAttempts) {
-        console.log(`⏳ TOC: Retrying in 100ms... (${attempts}/${maxAttempts})`);
         setTimeout(tryFind, 100);
-      } else {
-        console.warn('⚠️ TOC: Content container not found after maximum attempts');
       }
     };
     
@@ -82,42 +102,22 @@ export class TableOfContentsComponent implements OnInit {
   }
 
   private setupScrollListener(): void {
-    const handleScroll = () => {
-      const items = this.tocService.items();
-      if (items.length === 0) return;
-
-      // Find which section is currently in view
-      let currentSection = items[0].id;
-
-      for (const item of items) {
-        const element = document.getElementById(item.id);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top >= 0 && rect.top <= 200) {
-            currentSection = item.id;
-            break;
-          }
-        }
-      }
-
-      this.activeSection.set(currentSection);
-    };
-
-    // Listen on the main scroll container instead of window
-    const scrollContainer = document.querySelector('main.overflow-y-auto') || document.querySelector('main');
-    if (scrollContainer) {
-      scrollContainer.addEventListener('scroll', handleScroll);
-    } else {
-      window.addEventListener('scroll', handleScroll);
+    const nextTarget = this.scrollContainer ?? window;
+    if (this.scrollListenerAttachedTo === nextTarget) {
+      return;
     }
+
+    this.teardownScrollListener();
+    nextTarget.addEventListener('scroll', this.handleScroll, { passive: true });
+    this.scrollListenerAttachedTo = nextTarget;
+    this.handleScroll();
   }
 
   scrollToSection(sectionId: string, event: Event): void {
     event.preventDefault();
     const element = document.getElementById(sectionId);
     if (element) {
-      // Find the main scroll container
-      const scrollContainer = document.querySelector('main.overflow-y-auto') || document.querySelector('main');
+      const scrollContainer = this.scrollContainer;
       if (scrollContainer) {
         const elementTop = element.getBoundingClientRect().top;
         const containerTop = scrollContainer.getBoundingClientRect().top;
@@ -128,6 +128,11 @@ export class TableOfContentsComponent implements OnInit {
       }
       this.activeSection.set(sectionId);
     }
+  }
+
+  private teardownScrollListener(): void {
+    this.scrollListenerAttachedTo?.removeEventListener('scroll', this.handleScroll);
+    this.scrollListenerAttachedTo = null;
   }
 
   get items() {

@@ -1,7 +1,9 @@
 .header {
-  @apply sticky top-0 z-40 bg-white/95 dark:bg-slate-950/95 border-b border-gray-200 dark:border-slate-800 backdrop-blur-md;
+  @apply sticky top-0 z-40 border-b backdrop-blur-md;
+  background-color: color-mix(in srgb, var(--background) 92%, transparent);
+  border-color: var(--border-color);
   @apply transition-shadow duration-200;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-sm);
 
   .header-container {
     @apply flex items-center justify-between h-16 px-6 lg:px-8;
@@ -9,16 +11,33 @@
     .logo-section {
       @apply flex items-center gap-3;
 
-      .logo-icon {
-        @apply w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center;
+      .brand-link {
+        @apply rounded-lg transition-transform duration-200 no-underline;
+        color: inherit;
+
+        &:hover {
+          transform: translateY(-1px);
+        }
+      }
+
+      .brand-text-link {
+        @apply inline-flex items-center;
+      }
+
+      .logo-image {
+        @apply w-10 h-10 object-contain rounded-xl;
+        filter: drop-shadow(0 8px 18px rgba(59, 130, 246, 0.18));
       }
 
       .product-name {
-        @apply text-lg font-bold text-gray-900 dark:text-white;
+        @apply text-lg font-bold;
+        color: var(--text-primary);
+        line-height: 1.1;
       }
 
       .product-tagline {
-        @apply text-xs text-gray-500 dark:text-gray-400;
+        @apply text-xs;
+        color: var(--text-secondary);
       }
     }
 
@@ -26,10 +45,24 @@
       @apply hidden md:flex flex-1 mx-12;
 
       .search-bar {
-        @apply w-full max-w-sm px-4 py-2 bg-gray-100 dark:bg-slate-900 border border-gray-300 dark:border-slate-700 rounded-lg text-gray-600 dark:text-gray-400 text-sm hover:bg-gray-200 dark:hover:bg-slate-800 transition-colors flex items-center gap-3;
+        @apply w-full max-w-sm px-4 py-2 border rounded-lg text-sm flex items-center gap-3;
+        background-color: var(--background-muted);
+        border-color: var(--border-color);
+        color: var(--text-secondary);
+        transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+
+        &:hover {
+          background-color: var(--background-light);
+          border-color: color-mix(in srgb, var(--primary-color) 18%, var(--border-color));
+          color: var(--text-primary);
+          transform: translateY(-1px);
+        }
 
         .keyboard-hint {
-          @apply ml-auto text-xs px-2 py-1 bg-white dark:bg-slate-800 rounded border border-gray-300 dark:border-slate-600;
+          @apply ml-auto text-xs px-2 py-1 rounded border;
+          background-color: var(--background);
+          border-color: var(--border-color);
+          color: var(--text-muted);
         }
       }
     }
@@ -37,29 +70,52 @@
     .actions-section {
       @apply flex items-center gap-4;
 
-      .home-btn {
-        @apply p-2 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors flex items-center justify-center;
+      .home-btn,
+      .mobile-search-btn {
+        @apply p-2 rounded-lg flex items-center justify-center no-underline;
+        color: var(--text-secondary);
+        transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+
+        &:hover {
+          background-color: var(--background-muted);
+          color: var(--text-primary);
+          transform: translateY(-1px);
+        }
       }
 
       .mobile-search-btn {
-        @apply md:hidden p-2 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors;
+        @apply md:hidden;
       }
 
       .settings-dropdown {
         @apply relative;
 
         .settings-btn {
-          @apply text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-150 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800;
+          @apply p-2 rounded-lg;
+          color: var(--text-secondary);
+          transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+
+          &:hover {
+            background-color: var(--background-muted);
+            color: var(--text-primary);
+            transform: translateY(-1px);
+          }
         }
 
         .settings-menu {
-          @apply absolute right-0 mt-2 w-56 bg-white dark:bg-slate-800 rounded-lg shadow-lg dark:shadow-2xl border border-gray-200 dark:border-slate-700 z-50 overflow-hidden;
+          @apply absolute right-0 mt-2 w-56 rounded-lg z-50 overflow-hidden;
+          background-color: var(--background);
+          border: 1px solid var(--border-color);
+          box-shadow: var(--shadow-lg);
 
           .settings-menu-item {
-            @apply w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors duration-150 no-underline;
+            @apply w-full flex items-center gap-3 px-4 py-3 text-sm no-underline;
+            color: var(--text-secondary);
+            transition: background-color 0.15s ease, color 0.15s ease;
 
             &:hover {
-              @apply text-gray-900 dark:text-white;
+              background-color: var(--background-muted);
+              color: var(--text-primary);
             }
 
             svg {
@@ -72,7 +128,8 @@
           }
 
           .settings-menu-divider {
-            @apply h-px bg-gray-200 dark:bg-slate-700;
+            @apply h-px;
+            background-color: var(--border-color);
           }
         }
       }
@@ -87,8 +144,8 @@
       @apply px-4;
 
       .logo-section {
-        .logo-icon {
-          @apply w-7 h-7;
+        .logo-image {
+          @apply w-9 h-9;
         }
 
         .product-name {

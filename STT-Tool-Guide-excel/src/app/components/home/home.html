@@ -1,22 +1,15 @@
 <div class="home-container">
   <!-- Hero Section -->
   <div class="hero-section">
-    <div class="hero-icon">
-      <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M13 10V3L4 14h7v7l9-11h-7z"
-        />
-      </svg>
+    <div class="hero-logo-shell" appScrollReveal>
+      <img src="logo.png" alt="STT logo" class="hero-logo" />
     </div>
-    <h1 class="hero-title">Selenium Testing Tool Documentation</h1>
-    <p class="hero-description">
+    <h1 class="hero-title" appScrollReveal [revealDelay]="1">Selenium Testing Tool Documentation</h1>
+    <p class="hero-description" appScrollReveal [revealDelay]="2">
       Your comprehensive guide to custom Selenium-based testing commands, prerequisites, and best practices.
       Master automated testing with our powerful command-line interface.
     </p>
-    <div class="hero-actions">
+    <div class="hero-actions" appScrollReveal [revealDelay]="3">
       <a routerLink="/cmd/clear" class="btn btn-primary">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
@@ -44,9 +37,11 @@
 
   <!-- Features Section -->
   <div class="features-section">
-    <h2 class="features-title">What's Inside</h2>
+    <h2 class="features-title heading-animated" appScrollReveal>What's Inside</h2>
     <div class="features-grid">
-      <div *ngFor="let feature of features; trackBy: trackByFeature" class="feature-card">
+      <div *ngFor="let feature of features; let i = index; trackBy: trackByFeature"
+           class="feature-card card-hover glow-border"
+           appScrollReveal [revealDelay]="i + 1">
         <div class="feature-icon">
           <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -77,28 +72,14 @@
   </div>
 
   <!-- Quick Start Section -->
-  <div class="quickstart-section">
-    <h2 class="quickstart-title">Quick Start</h2>
+  <div class="quickstart-section" appScrollReveal revealClass="reveal-scale">
+    <h2 class="quickstart-title heading-animated" appScrollReveal>Quick Start</h2>
     <div class="quickstart-steps">
-      <div class="step">
-        <div class="step-number">1</div>
+      <div class="step" *ngFor="let s of [1,2,3]; let i = index" appScrollReveal [revealDelay]="i + 1" revealClass="reveal-left">
+        <div class="step-number" [class]="'step-number'">{{ i + 1 }}</div>
         <div class="step-content">
-          <h3 class="step-title">Review Prerequisites</h3>
-          <p class="step-description">Set up your testing environment with Excel, HTML, and locator configurations.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-number">2</div>
-        <div class="step-content">
-          <h3 class="step-title">Browse Commands</h3>
-          <p class="step-description">Explore available Selenium commands with detailed syntax and examples.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-number">3</div>
-        <div class="step-content">
-          <h3 class="step-title">Start Testing</h3>
-          <p class="step-description">Apply the commands to build robust automated test suites for your applications.</p>
+          <h3 class="step-title">{{ ['Review Prerequisites', 'Browse Commands', 'Start Testing'][i] }}</h3>
+          <p class="step-description">{{ ['Set up your testing environment with Excel, HTML, and locator configurations.', 'Explore available Selenium commands with detailed syntax and examples.', 'Apply the commands to build robust automated test suites for your applications.'][i] }}</p>
         </div>
       </div>
     </div>

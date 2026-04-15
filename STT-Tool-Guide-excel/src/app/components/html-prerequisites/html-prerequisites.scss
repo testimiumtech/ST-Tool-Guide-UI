@@ -21,7 +21,7 @@
     }
 
     .add-image-btn {
-      @apply flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 text-sm sm:text-base font-medium bg-purple-600 hover:bg-purple-700 text-white rounded-lg shadow-sm hover:shadow-md transition-all duration-150 cursor-pointer flex-shrink-0;
+      @apply flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 text-sm sm:text-base font-medium bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-sm hover:shadow-md transition-all duration-150 cursor-pointer flex-shrink-0;
 
       .btn-icon {
         @apply w-5 h-5;
@@ -34,7 +34,7 @@
   }
 
   .image-upload-form {
-    @apply mb-8 p-6 bg-purple-50 dark:bg-slate-800 rounded-lg border-2 border-purple-200 dark:border-slate-700 shadow-sm;
+    @apply mb-8 p-6 bg-blue-50 dark:bg-slate-800 rounded-lg border-2 border-blue-200 dark:border-slate-700 shadow-sm;
 
     .form-content {
       @apply flex flex-col gap-4;
@@ -55,16 +55,16 @@
         }
 
         .file-label {
-          @apply flex flex-col items-center justify-center p-8 border-2 border-dashed border-purple-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-900 hover:bg-purple-50 dark:hover:bg-slate-800 transition-colors cursor-pointer;
+          @apply flex flex-col items-center justify-center p-8 border-2 border-dashed border-blue-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-900 hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors cursor-pointer;
 
           .upload-icon {
-            @apply w-12 h-12 text-purple-600 dark:text-purple-400 mb-2;
+            @apply w-12 h-12 text-blue-600 dark:text-blue-400 mb-2;
           }
 
-          @apply text-purple-600 dark:text-purple-400 font-medium;
+          @apply text-blue-600 dark:text-blue-400 font-medium;
 
           &:hover {
-            @apply bg-purple-50 dark:bg-slate-800;
+            @apply bg-blue-50 dark:bg-slate-800;
           }
         }
       }
@@ -99,7 +99,7 @@
         @apply bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-700 overflow-hidden hover:shadow-lg dark:hover:shadow-2xl transition-shadow duration-300;
 
         .section-title {
-          @apply text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white px-6 py-5 border-b border-gray-200 dark:border-slate-700 bg-gradient-to-r from-purple-50 dark:from-slate-800 to-transparent;
+          @apply text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white px-6 py-5 border-b border-gray-200 dark:border-slate-700 bg-gradient-to-r from-blue-50 dark:from-slate-800 to-transparent;
         }
 
         .items-grid {
@@ -112,7 +112,7 @@
               @apply mb-3;
 
               .item-title {
-                @apply text-lg font-semibold text-purple-600 dark:text-purple-400 m-0;
+                @apply text-lg font-semibold text-blue-600 dark:text-blue-400 m-0;
               }
             }
 

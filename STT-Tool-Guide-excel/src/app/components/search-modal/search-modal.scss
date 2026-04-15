@@ -1,8 +1,14 @@
 .search-modal-overlay {
   @apply fixed inset-0 z-50 bg-black/50 backdrop-blur-sm dark:bg-black/70 flex items-center justify-center p-4;
+  animation: fadeIn 0.2s ease-out;
 
   .search-modal-content {
-    @apply w-full max-w-2xl bg-white dark:bg-slate-900 rounded-lg shadow-2xl;
+    @apply w-full max-w-2xl rounded-lg shadow-2xl;
+    background: var(--background);
+    animation: scaleIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    .dark & {
+      background: var(--background-light);
+    }
 
     .modal-header {
       @apply border-b border-gray-200 dark:border-slate-700 p-4 sm:p-6;
@@ -20,7 +26,7 @@
       @apply p-4 sm:p-6 border-b border-gray-200 dark:border-slate-700;
 
       .search-input {
-        @apply w-full px-4 py-2 sm:py-3 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base;
+        @apply w-full px-4 py-2 sm:py-3 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-indigo-500 text-sm sm:text-base;
       }
     }
 
@@ -28,7 +34,13 @@
       @apply max-h-[calc(100vh-300px)] overflow-y-auto;
 
       .result-button {
-        @apply w-full text-left px-4 sm:px-6 py-3 sm:py-4 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors border-b border-gray-100 dark:border-slate-700 last:border-0;
+        @apply w-full text-left px-4 sm:px-6 py-3 sm:py-4 hover:bg-gray-50 dark:hover:bg-slate-800 border-b border-gray-100 dark:border-slate-700 last:border-0;
+        transition: all 0.2s ease;
+
+        &:hover {
+          padding-left: 1.75rem;
+          border-left: 3px solid var(--primary-color);
+        }
 
         .result-title {
           @apply font-semibold text-gray-900 dark:text-white text-sm sm:text-base;
@@ -49,7 +61,8 @@
     }
 
     .modal-footer {
-      @apply border-t border-gray-200 dark:border-slate-700 p-4 sm:p-6 bg-gray-50 dark:bg-slate-800/50;
+      @apply border-t border-gray-200 dark:border-slate-700 p-4 sm:p-6;
+      background: var(--background-muted);
 
       .keyboard-hints {
         @apply text-xs sm:text-sm text-gray-500 dark:text-gray-400;
@@ -71,4 +84,14 @@
       @apply max-w-full;
     }
   }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95) translateY(-10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
 }

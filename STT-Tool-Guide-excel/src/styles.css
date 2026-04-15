@@ -2,6 +2,54 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ========================================
+   BOPSEN THEME — CSS Custom Properties
+   ======================================== */
+:root {
+  --primary-color: #3b82f6;
+  --primary-light: #dbeafe;
+  --primary-dark: #1d4ed8;
+  --accent-color: #14b8a6;
+  --accent-light: #ccfbf1;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  --background: #ffffff;
+  --background-light: #f9fafb;
+  --background-muted: #f3f4f6;
+  --border-color: #e5e7eb;
+  --border-light: #f3f4f6;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / .05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / .1), 0 2px 4px -2px rgb(0 0 0 / .1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / .1), 0 4px 6px -4px rgb(0 0 0 / .1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / .1), 0 8px 10px -6px rgb(0 0 0 / .1);
+  --gradient-primary: linear-gradient(135deg, #3b82f6, #14b8a6);
+  --gradient-hero: linear-gradient(135deg, #0f172a, #1e293b, #0f172a);
+}
+
+:root.dark,
+.dark {
+  --primary-color: #6366F1;
+  --primary-light: #818CF8;
+  --primary-dark: #4F46E5;
+  --accent-color: #22D3EE;
+  --accent-light: #164e63;
+  --text-primary: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --background: #0A0E1A;
+  --background-light: #111827;
+  --background-muted: #1E293B;
+  --border-color: rgba(255, 255, 255, .06);
+  --border-light: rgba(255, 255, 255, .04);
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / .3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / .4), 0 2px 4px -2px rgb(0 0 0 / .4);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / .4), 0 4px 6px -4px rgb(0 0 0 / .4);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / .4), 0 8px 10px -6px rgb(0 0 0 / .4);
+  --gradient-primary: linear-gradient(135deg, #6366F1, #22D3EE);
+  --gradient-hero: linear-gradient(135deg, #0A0E1A, #1A2237, #0A0E1A);
+}
+
 @layer base {
   html {
     @apply scroll-smooth;
@@ -9,8 +57,17 @@
 
   body {
     @apply bg-white text-gray-900;
-    @apply dark:bg-slate-950 dark:text-gray-100;
     @apply overflow-hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .dark body,
+  body.dark {
+    background-color: #0A0E1A;
+    color: #F1F5F9;
   }
 
   h1 {
@@ -35,7 +92,8 @@
   input:focus-visible,
   select:focus-visible,
   [tabindex]:focus-visible {
-    @apply outline-2 outline-offset-2 outline-blue-500;
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
   }
 }
 
@@ -86,11 +144,11 @@
 
   /* — Nav Link Text — */
   .typo-nav-link {
-    @apply text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors;
+    @apply text-sm text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-indigo-400 transition-colors;
   }
 
   .typo-nav-link-active {
-    @apply text-sm font-medium text-blue-600 dark:text-blue-400;
+    @apply text-sm font-medium text-blue-500 dark:text-indigo-400;
   }
 
   /* ========================================
@@ -112,7 +170,7 @@
     @apply flex flex-col items-center justify-center py-16;
 
     .spinner {
-      @apply w-12 h-12 border-4 border-gray-200 dark:border-slate-700 border-t-blue-600 dark:border-t-blue-400 rounded-full animate-spin mb-4;
+      @apply w-12 h-12 border-4 border-gray-200 dark:border-slate-700 border-t-blue-500 dark:border-t-indigo-400 rounded-full animate-spin mb-4;
     }
 
     p {
@@ -131,7 +189,7 @@
   }
 
   .badge-blue {
-    @apply text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/30;
+    @apply text-blue-500 dark:text-indigo-400 bg-blue-100 dark:bg-indigo-900/30;
   }
 
   .badge-amber {
@@ -140,7 +198,11 @@
 
   /* — Section Card — */
   .section-card {
-    @apply bg-white dark:bg-slate-900 rounded-xl border border-gray-200 dark:border-slate-700 overflow-hidden hover:shadow-lg dark:hover:shadow-2xl transition-shadow duration-300;
+    @apply bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300;
+    .dark & {
+      background-color: var(--background-light);
+      border-color: var(--border-color);
+    }
   }
 
   /* ========================================
@@ -148,11 +210,25 @@
      ======================================== */
 
   .btn-primary {
-    @apply bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors;
+    background: var(--gradient-primary);
+    @apply text-white font-medium py-2 px-4 rounded-lg transition-all;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+    }
   }
 
   .btn-secondary {
-    @apply bg-gray-200 dark:bg-slate-700 hover:bg-gray-300 dark:hover:bg-slate-600 text-gray-900 dark:text-white font-medium py-2 px-4 rounded-lg transition-colors;
+    @apply bg-gray-200 hover:bg-gray-300 text-gray-900 font-medium py-2 px-4 rounded-lg transition-all;
+    .dark & {
+      background-color: var(--background-muted);
+      color: var(--text-primary);
+      &:hover {
+        background-color: #334155;
+      }
+    }
   }
 
   .prose-dark {
@@ -166,7 +242,11 @@
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-gray-100 dark:bg-slate-900;
+  @apply bg-gray-100;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background-color: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -180,7 +260,12 @@
 
 /* Selection styling */
 ::selection {
-  @apply bg-blue-200 dark:bg-blue-900 text-gray-900 dark:text-white;
+  @apply bg-blue-200 text-gray-900;
+}
+
+.dark ::selection {
+  background-color: rgba(99, 102, 241, 0.3);
+  color: #fff;
 }
 
 /* Focus visible for accessibility */
@@ -191,4 +276,169 @@
 /* Remove default focus for mouse users */
 *:focus:not(:focus-visible) {
   @apply outline-none;
+}
+
+/* ========================================
+   SCROLL-REVEAL ANIMATION SYSTEM
+   ======================================== */
+
+/* Elements start hidden and animate when they enter the viewport */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delays for child elements */
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+.reveal-delay-4 { transition-delay: 0.32s; }
+.reveal-delay-5 { transition-delay: 0.40s; }
+
+/* Slide from left variant */
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-24px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-left.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Scale-up variant */
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-scale.revealed {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ========================================
+   READING PROGRESS BAR
+   ======================================== */
+.reading-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--gradient-primary);
+  z-index: 9999;
+  transition: width 0.15s ease-out;
+  border-radius: 0 2px 2px 0;
+}
+
+/* ========================================
+   ENHANCED INTERACTIVE EFFECTS
+   ======================================== */
+
+/* Smooth card lift */
+.card-hover {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Subtle border glow on hover */
+.glow-border {
+  position: relative;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.glow-border:hover {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 1px var(--primary-color), var(--shadow-md);
+}
+
+/* Section heading underline animation */
+.heading-animated::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 3px;
+  background: var(--gradient-primary);
+  border-radius: 2px;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-top: 8px;
+}
+.heading-animated:hover::after,
+.heading-animated.revealed::after {
+  width: 48px;
+}
+
+/* Smooth image/code block zoom */
+.zoom-hover {
+  transition: transform 0.3s ease;
+  overflow: hidden;
+}
+.zoom-hover:hover {
+  transform: scale(1.02);
+}
+
+/* Reading-friendly text effects */
+.readable-text {
+  line-height: 1.8;
+  letter-spacing: 0.01em;
+}
+.readable-text p + p {
+  margin-top: 1.25em;
+}
+
+/* Smooth tooltip/popover effect */
+[data-tooltip] {
+  position: relative;
+}
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  padding: 6px 12px;
+  background: var(--background-muted);
+  color: var(--text-primary);
+  font-size: 0.75rem;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 50;
+}
+[data-tooltip]:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-left, .reveal-scale {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .card-hover:hover {
+    transform: none;
+  }
+  .heading-animated::after {
+    transition: none;
+  }
+  .reading-progress-bar {
+    transition: none;
+  }
 }
