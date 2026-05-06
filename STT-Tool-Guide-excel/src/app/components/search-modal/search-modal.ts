@@ -1,4 +1,17 @@
-import { Component, Input, Output, EventEmitter, signal, computed, ChangeDetectionStrategy, DestroyRef, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  computed,
+  effect,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ApiService } from '../../services/api.service';
@@ -17,6 +30,9 @@ export class SearchModalComponent {
   @Input() isOpen = signal(false);
   @Output() closeModal = new EventEmitter<void>();
 
+  private readonly searchInput = viewChild<ElementRef<HTMLInputElement>>('searchInput');
+  private readonly destroyRef = inject(DestroyRef);
+
   searchQuery = signal('');
   commands = signal<CommandPage[]>([]);
 
@@ -30,12 +46,26 @@ export class SearchModalComponent {
     );
   });
 
-  private readonly destroyRef = inject(DestroyRef);
-
   constructor(
     private apiService: ApiService,
     private router: Router
   ) {
+    effect(() => {
+      const open = this.isOpen();
+
+      if (!open) {
+        this.searchQuery.set('');
+        return;
+      }
+
+      setTimeout(() => {
+        const input = this.searchInput()?.nativeElement;
+        if (!input) return;
+        input.focus();
+        input.select();
+      });
+    });
+
     this.apiService.getCommands()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data) => {
@@ -48,12 +78,17 @@ export class SearchModalComponent {
   }
 
   selectCommand(command: CommandPage): void {
-    this.closeModal.emit();
+    this.handleClose();
     this.router.navigate(['/cmd', command.command_id]);
   }
 
   onSearchInput(event: Event): void {
     const target = event.target as HTMLInputElement;
     this.searchQuery.set(target.value);
+  }
+
+  handleClose(): void {
+    this.searchQuery.set('');
+    this.closeModal.emit();
   }
 }

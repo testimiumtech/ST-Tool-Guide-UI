@@ -32,10 +32,10 @@ describe('MainLayoutComponent', () => {
             keywords: [],
             purpose: '',
             syntax: '',
-            detailed_usage: { label: '', desc: '', cmd: '' },
+            detailed_usage: null,
             options: [],
             use_cases: '',
-            example: '',
+            examples: [],
             when_to_use: ''
           }
         ]

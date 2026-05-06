@@ -6,48 +6,60 @@
    BOPSEN THEME — CSS Custom Properties
    ======================================== */
 :root {
-  --primary-color: #3b82f6;
+  color-scheme: light;
+  --primary-color: #2563eb;
   --primary-light: #dbeafe;
   --primary-dark: #1d4ed8;
-  --accent-color: #14b8a6;
+  --accent-color: #0f766e;
   --accent-light: #ccfbf1;
-  --text-primary: #111827;
-  --text-secondary: #6b7280;
-  --text-muted: #9ca3af;
-  --background: #ffffff;
-  --background-light: #f9fafb;
-  --background-muted: #f3f4f6;
-  --border-color: #e5e7eb;
-  --border-light: #f3f4f6;
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / .05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / .1), 0 2px 4px -2px rgb(0 0 0 / .1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / .1), 0 4px 6px -4px rgb(0 0 0 / .1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / .1), 0 8px 10px -6px rgb(0 0 0 / .1);
-  --gradient-primary: linear-gradient(135deg, #3b82f6, #14b8a6);
-  --gradient-hero: linear-gradient(135deg, #0f172a, #1e293b, #0f172a);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --background: #f8fafc;
+  --background-light: #ffffff;
+  --background-muted: #eef2f7;
+  --background-elevated: rgba(255, 255, 255, 0.82);
+  --background-overlay: rgba(248, 250, 252, 0.86);
+  --border-color: rgba(15, 23, 42, 0.08);
+  --border-strong: rgba(15, 23, 42, 0.12);
+  --border-light: rgba(15, 23, 42, 0.04);
+  --shadow-sm: 0 1px 2px 0 rgb(15 23 42 / 0.04);
+  --shadow-md: 0 12px 30px -16px rgb(15 23 42 / 0.12);
+  --shadow-lg: 0 24px 48px -24px rgb(15 23 42 / 0.18);
+  --shadow-xl: 0 32px 64px -28px rgb(15 23 42 / 0.22);
+  --gradient-primary: linear-gradient(135deg, #2563eb, #0f766e);
+  --gradient-soft: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(15, 118, 110, 0.12));
+  --gradient-page: radial-gradient(circle at top, rgba(37, 99, 235, 0.08), transparent 38%),
+    linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
 }
 
 :root.dark,
 .dark {
-  --primary-color: #6366F1;
-  --primary-light: #818CF8;
-  --primary-dark: #4F46E5;
-  --accent-color: #22D3EE;
+  color-scheme: dark;
+  --primary-color: #7c93ff;
+  --primary-light: #a5b4fc;
+  --primary-dark: #5b74f7;
+  --accent-color: #2dd4bf;
   --accent-light: #164e63;
   --text-primary: #F1F5F9;
-  --text-secondary: #94A3B8;
-  --text-muted: #64748B;
-  --background: #0A0E1A;
-  --background-light: #111827;
-  --background-muted: #1E293B;
-  --border-color: rgba(255, 255, 255, .06);
-  --border-light: rgba(255, 255, 255, .04);
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / .3);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / .4), 0 2px 4px -2px rgb(0 0 0 / .4);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / .4), 0 4px 6px -4px rgb(0 0 0 / .4);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / .4), 0 8px 10px -6px rgb(0 0 0 / .4);
-  --gradient-primary: linear-gradient(135deg, #6366F1, #22D3EE);
-  --gradient-hero: linear-gradient(135deg, #0A0E1A, #1A2237, #0A0E1A);
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --background: #08111f;
+  --background-light: #111c2f;
+  --background-muted: #162235;
+  --background-elevated: rgba(17, 28, 47, 0.82);
+  --background-overlay: rgba(8, 17, 31, 0.88);
+  --border-color: rgba(148, 163, 184, 0.14);
+  --border-strong: rgba(148, 163, 184, 0.22);
+  --border-light: rgba(148, 163, 184, 0.08);
+  --shadow-sm: 0 1px 2px 0 rgb(2 6 23 / 0.32);
+  --shadow-md: 0 18px 36px -22px rgb(2 6 23 / 0.52);
+  --shadow-lg: 0 28px 60px -30px rgb(2 6 23 / 0.62);
+  --shadow-xl: 0 40px 80px -36px rgb(2 6 23 / 0.68);
+  --gradient-primary: linear-gradient(135deg, #7c93ff, #2dd4bf);
+  --gradient-soft: linear-gradient(135deg, rgba(124, 147, 255, 0.16), rgba(45, 212, 191, 0.18));
+  --gradient-page: radial-gradient(circle at top, rgba(124, 147, 255, 0.12), transparent 36%),
+    linear-gradient(180deg, #08111f 0%, #0d1728 100%);
 }
 
 @layer base {
@@ -56,18 +68,20 @@
   }
 
   body {
-    @apply bg-white text-gray-900;
+    @apply text-gray-900;
     @apply overflow-hidden;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    background: var(--gradient-page);
+    color: var(--text-primary);
+    font-family: "Segoe UI", "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background 0.3s ease, color 0.3s ease;
   }
 
   .dark body,
   body.dark {
-    background-color: #0A0E1A;
-    color: #F1F5F9;
+    background: var(--gradient-page);
+    color: var(--text-primary);
   }
 
   h1 {
@@ -198,7 +212,11 @@
 
   /* — Section Card — */
   .section-card {
-    @apply bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300;
+    @apply rounded-2xl overflow-hidden transition-shadow duration-300;
+    background-color: var(--background-elevated);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    backdrop-filter: blur(18px);
     .dark & {
       background-color: var(--background-light);
       border-color: var(--border-color);
@@ -221,7 +239,15 @@
   }
 
   .btn-secondary {
-    @apply bg-gray-200 hover:bg-gray-300 text-gray-900 font-medium py-2 px-4 rounded-lg transition-all;
+    @apply font-medium py-2 px-4 rounded-lg transition-all;
+    background-color: var(--background-muted);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    &:hover {
+      background-color: var(--background-light);
+      border-color: var(--border-strong);
+    }
     .dark & {
       background-color: var(--background-muted);
       color: var(--text-primary);
@@ -340,6 +366,24 @@
 }
 
 /* ========================================
+   PAGE ENTRY ANIMATION
+   ======================================== */
+@keyframes page-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-enter {
+  animation: page-fade-up 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ========================================
    ENHANCED INTERACTIVE EFFECTS
    ======================================== */
 
@@ -440,5 +484,8 @@
   }
   .reading-progress-bar {
     transition: none;
+  }
+  .page-enter {
+    animation: none;
   }
 }

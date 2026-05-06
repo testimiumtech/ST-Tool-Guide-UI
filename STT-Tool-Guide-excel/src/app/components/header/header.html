@@ -16,12 +16,7 @@
     <!-- Search Bar -->
     <div class="search-section">
       <button (click)="openSearch()" class="search-bar" aria-label="Search commands">
-        <svg
-          class="w-4 h-4"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -30,7 +25,6 @@
           />
         </svg>
         <span>Search commands...</span>
-        <kbd class="keyboard-hint"> ⌘K </kbd>
       </button>
     </div>
 
@@ -38,12 +32,7 @@
     <div class="actions-section">
       <!-- Home Button -->
       <a routerLink="/" class="home-btn" aria-label="Go to home page">
-        <svg
-          class="w-5 h-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -55,12 +44,7 @@
 
       <!-- Mobile Search Button -->
       <button (click)="openSearch()" class="mobile-search-btn" aria-label="Search commands">
-        <svg
-          class="w-5 h-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -78,12 +62,7 @@
           [attr.aria-expanded]="settingsOpen()"
           aria-label="Open settings menu"
         >
-          <svg
-            class="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -128,12 +107,7 @@
                 clip-rule="evenodd"
               />
             </svg>
-            <span
-              >{{
-                themeService.theme() === "light" ? "Dark" : "Light"
-              }}
-              Mode</span
-            >
+            <span>{{ themeService.theme() === "light" ? "Dark" : "Light" }} Mode</span>
           </button>
 
           <!-- Divider -->
@@ -145,12 +119,7 @@
             (click)="closeSettings()"
             class="settings-menu-item"
           >
-            <svg
-              class="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -169,12 +138,7 @@
             (click)="closeSettings()"
             class="settings-menu-item"
           >
-            <svg
-              class="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"

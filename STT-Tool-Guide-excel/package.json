@@ -7,7 +7,6 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "generate-xlsx": "node generate-xlsx.js",
     "xlsx-to-json": "node xlsx-to-json.js"
   },
   "prettier": {

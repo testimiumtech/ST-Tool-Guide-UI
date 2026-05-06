@@ -1,16 +1,16 @@
 .example-problem-statement {
-  @apply rounded p-3 mb-3 border;
+  @apply mb-4 rounded-sm border px-3 py-2;
   background-color: var(--background-light);
   border-color: var(--border-color);
-  box-shadow: 0 2px 8px 0 rgb(30 41 59 / 0.04);
+  box-shadow: none;
 
   .font-semibold {
     color: var(--text-primary);
   }
 
   .problem-meta-row {
-    @apply text-xs leading-snug;
-    color: var(--text-secondary);
+    @apply text-xs leading-relaxed;
+    color: var(--text-primary);
   }
 
   .problem-meta-row + .problem-meta-row {
@@ -23,7 +23,13 @@
 
 .command-page-container {
   @apply w-full min-h-full;
-  background: linear-gradient(to bottom, var(--background), var(--background-light));
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--background-elevated) 55%, transparent),
+      transparent 24rem
+    );
+  animation: page-fade-up 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
 
   .command-empty-text {
     color: var(--text-secondary);
@@ -51,20 +57,35 @@
   }
 
   .command-content-wrapper {
-    @apply max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 w-full;
+    @apply w-full px-2 py-3 sm:px-4 sm:py-5;
+    max-width: 1040px;
+    margin: 0 auto;
   }
 
   // ===== Header Styling =====
   .command-header {
-    @apply mb-12;
+    @apply mb-5 rounded-2xl border px-5 py-6 shadow-sm;
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--background-elevated) 96%, transparent),
+        color-mix(in srgb, var(--background-light) 92%, transparent)
+      );
+    border-color: var(--border-color);
+    border-top: 3px solid var(--primary-color);
+    transition: box-shadow 0.2s ease;
+
+    &:hover {
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.07);
+    }
 
     .command-title {
-      @apply text-5xl font-bold mb-4 leading-tight;
+      @apply mb-2 text-2xl font-bold leading-tight sm:text-3xl;
       color: var(--text-primary);
     }
 
     .command-description {
-      @apply text-xl mb-6 leading-relaxed;
+      @apply mb-0 text-sm leading-relaxed;
       color: var(--text-secondary);
     }
 
@@ -72,44 +93,56 @@
 
   // ===== Syntax Highlight =====
   .syntax-highlight {
-    @apply mb-12 p-6 rounded-lg bg-gradient-to-r from-slate-900 to-slate-800 border border-slate-700;
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    @apply mb-6 rounded-2xl border px-5 py-5 shadow-sm;
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--background-elevated) 96%, transparent),
+        color-mix(in srgb, var(--background-light) 92%, transparent)
+      );
+    border-color: var(--border-color);
+    transition: box-shadow 0.2s ease;
 
     &:hover {
-      box-shadow: 0 0 24px rgba(99, 102, 241, 0.15);
-      transform: translateY(-2px);
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.07);
     }
 
     .syntax-label {
-      @apply text-sm font-semibold text-slate-300 uppercase tracking-wider mb-4;
+      @apply mb-3 border-b pb-3 text-sm font-bold normal-case flex items-center gap-2;
+      border-color: #d6dbe4;
+      color: var(--text-primary);
+      letter-spacing: 0;
     }
 
-    :deep(app-code-block) {
+    ::ng-deep app-code-block .code-block-container {
       @apply my-0;
+      background: #f3f6fb;
+      border-color: #d8dee9;
+      color: var(--text-primary);
+      box-shadow: inset 0 1px 2px rgb(15 23 42 / 0.04);
+    }
+
+    ::ng-deep app-code-block .code-block-header {
+      display: none;
+    }
+
+    ::ng-deep app-code-block .code-block-content {
+      @apply px-3 py-2;
     }
   }
 
   // ===== Section Content =====
   .section-text {
-    @apply leading-relaxed;
-    color: var(--text-secondary);
+    @apply whitespace-pre-line text-sm leading-relaxed;
+    color: var(--text-primary);
   }
 
-  .usage-box {
-    @apply bg-blue-50 dark:bg-[var(--background-muted)] border-l-4 border-blue-500 dark:border-indigo-500 rounded-lg p-6 mb-6;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-
-    &:hover {
-      box-shadow: inset 4px 0 0 0 var(--primary-color), var(--shadow-sm);
-    }
-
-    .usage-label {
-      @apply text-lg font-semibold text-gray-900 dark:text-white mb-3;
-    }
-
-    .usage-description {
-      @apply text-gray-700 dark:text-gray-300;
-    }
+  .use-case-box {
+    @apply rounded-xl border px-4 py-4;
+    min-height: 64px;
+    border-color: var(--border-color);
+    background-color: color-mix(in srgb, var(--background-light) 90%, transparent);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--background) 60%, transparent);
   }
 
   // ===== Related Commands =====
@@ -135,54 +168,142 @@
 
   // ===== Examples Section =====
   .examples-list {
-    @apply space-y-6;
+    @apply space-y-5;
 
     .example-item {
-      @apply rounded-xl p-6 border;
-      background-color: var(--background-light);
-      border-color: var(--border-color);
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-                  box-shadow 0.3s ease, border-color 0.3s ease;
+      @apply relative overflow-hidden rounded-md border p-4;
+      background:
+        linear-gradient(135deg, rgb(255 255 255 / 0.96), rgb(248 250 252 / 0.96)),
+        radial-gradient(circle at top left, rgb(20 184 166 / 0.14), transparent 34%);
+      border-color: #dbe2ec;
+      box-shadow: 0 10px 24px rgb(15 23 42 / 0.06);
 
-      &:hover {
-        transform: translateY(-3px);
-        box-shadow: var(--shadow-lg);
-        border-color: var(--primary-color);
+      &::before {
+        @apply absolute bottom-0 left-0 top-0 w-1;
+        content: '';
+        background: linear-gradient(#14b8a6, #3b82f6);
       }
 
       .example-header {
-        @apply mb-4;
+        @apply mb-4 flex items-center gap-3;
 
         .example-number {
-          @apply inline-block px-3 py-1 text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-indigo-400 bg-blue-100 dark:bg-indigo-900/30 rounded-full;
+          @apply inline-flex h-8 items-center rounded-full px-3 text-xs font-bold;
+          background-color: #e6fffb;
+          color: #0f766e;
+          border: 1px solid #99f6e4;
+        }
+      }
+
+      .example-subtitle {
+        @apply mb-2 flex items-center gap-2 text-xs font-bold;
+        color: #253044;
+
+        &::before {
+          @apply inline-block h-2 w-2 rounded-full;
+          content: '';
+          background-color: #14b8a6;
+          box-shadow: 0 0 0 4px rgb(20 184 166 / 0.12);
         }
       }
 
       .example-command {
-        @apply mb-4;
+        @apply mb-4 rounded-md border p-3;
+        background-color: #f8fbff;
+        border-color: #dce6f2;
+
+        ::ng-deep app-code-block .code-block-container {
+          @apply my-0 rounded-md;
+          background: #0f172a;
+          border-color: #1e293b;
+          box-shadow: none;
+          color: #e5eefb;
+        }
+
+        ::ng-deep app-code-block + app-code-block .code-block-container {
+          @apply mt-2;
+        }
+
+        ::ng-deep app-code-block .code {
+          color: #e5eefb;
+        }
+
+        ::ng-deep app-code-block .code-block-header {
+          display: none;
+        }
+
+        ::ng-deep app-code-block .code-block-content {
+          @apply px-3 py-3;
+        }
       }
 
       .example-description {
-        @apply mb-4 leading-relaxed;
-        color: var(--text-secondary);
+        @apply mb-4 rounded-md border px-3 py-3 text-sm leading-relaxed;
+        background-color: #ffffff;
+        border-color: #e5eaf2;
+        color: var(--text-primary);
       }
 
       .example-description-list {
-        @apply list-disc list-inside space-y-2 mb-4 leading-relaxed;
-        color: var(--text-secondary);
+        @apply mb-4 list-none space-y-3 pl-0 text-sm leading-relaxed;
+        color: var(--text-primary);
+        counter-reset: step;
+
+        li {
+          @apply relative rounded-md border bg-white py-3 pl-12 pr-3;
+          border-color: #e5eaf2;
+          counter-increment: step;
+          box-shadow: 0 1px 2px rgb(15 23 42 / 0.04);
+        }
+
+        li::before {
+          @apply absolute left-3 top-1/2 inline-flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full text-xs font-bold;
+          content: counter(step);
+          background: linear-gradient(135deg, #14b8a6, #3b82f6);
+          color: #ffffff;
+        }
+      }
+
+      .example-param-json {
+        @apply mt-4 rounded-sm border overflow-hidden;
+        border-color: #c7d2fe;
+      }
+
+      .example-param-json-header {
+        @apply flex items-center gap-1.5 px-3 py-2 text-[11px] font-bold uppercase tracking-wide border-b;
+
+        &--input {
+          border-color: rgba(20, 184, 166, 0.25);
+          color: var(--text-primary);
+          background-color: rgba(20, 184, 166, 0.08);
+          border-bottom-color: rgba(20, 184, 166, 0.25);
+        }
+
+        &--assert {
+          border-color: rgba(59, 130, 246, 0.25);
+          color: var(--text-primary);
+          background-color: rgba(59, 130, 246, 0.08);
+          border-bottom-color: rgba(59, 130, 246, 0.25);
+        }
+      }
+
+      .example-param-json-icon {
+        @apply h-3.5 w-3.5 flex-shrink-0;
       }
 
       .example-output {
-        @apply mt-4 pt-4 border-t;
-        border-color: var(--border-color);
+        @apply mt-4 rounded-md border p-3;
+        border-color: #dbe2ec;
+        background-color: #ffffff;
 
         .output-label {
-          @apply text-sm font-semibold mb-3;
-          color: var(--text-secondary);
+          @apply mb-3 text-xs font-bold;
+          color: #253044;
         }
 
         .output-content {
-          @apply font-mono text-sm bg-slate-900 rounded-lg p-4;
+          @apply rounded-md p-4 font-mono text-sm;
+          background-color: #111827;
 
           .output-line {
             @apply py-1 text-gray-300;
@@ -227,6 +348,23 @@
 
       .param-example {
         @apply mt-4;
+      }
+
+      .param-json-structure {
+        @apply mt-3 rounded-sm border overflow-hidden;
+        border-color: #c7d2fe;
+        background: linear-gradient(135deg, rgb(238 242 255 / 0.8), rgb(255 255 255 / 0.95));
+      }
+
+      .param-json-label {
+        @apply flex items-center gap-1.5 px-3 py-2 text-[11px] font-bold uppercase tracking-wide border-b;
+        border-color: #c7d2fe;
+        color: #3730a3;
+        background-color: #eef2ff;
+      }
+
+      .param-json-icon {
+        @apply h-3.5 w-3.5 flex-shrink-0;
       }
     }
   }
@@ -274,6 +412,105 @@
   }
 }
 
+:host-context(.dark) {
+  .example-problem-statement {
+    background-color: color-mix(in srgb, var(--background-light) 90%, #ffffff 10%);
+    border-color: var(--border-color);
+  }
+
+  .command-page-container {
+    background: var(--background);
+
+    .command-header,
+    .syntax-highlight {
+      background-color: var(--background-light);
+      border-color: var(--border-color);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .command-header {
+      border-top-color: var(--primary-color);
+    }
+
+    .syntax-highlight {
+      .syntax-label {
+        border-color: var(--border-color);
+      }
+
+      ::ng-deep app-code-block .code-block-container {
+        background: var(--background);
+        border-color: var(--border-color);
+        color: var(--text-primary);
+        box-shadow: none;
+      }
+
+      ::ng-deep app-code-block .code {
+        color: var(--text-primary);
+      }
+    }
+
+    .use-case-box {
+      background-color: color-mix(in srgb, var(--background-light) 76%, var(--background));
+      border-color: var(--border-color);
+    }
+
+    .examples-list {
+      .example-item {
+        background:
+          linear-gradient(135deg, rgb(17 24 39 / 0.96), rgb(10 14 26 / 0.96)),
+          radial-gradient(circle at top left, rgb(34 211 238 / 0.14), transparent 34%);
+        border-color: var(--border-color);
+        box-shadow: 0 12px 28px rgb(0 0 0 / 0.28);
+      }
+
+      .example-number {
+        background-color: color-mix(in srgb, var(--accent-color) 14%, var(--background));
+        border-color: color-mix(in srgb, var(--accent-color) 45%, var(--border-color));
+        color: var(--accent-color);
+      }
+
+      .example-subtitle {
+        color: var(--text-primary);
+      }
+
+      .example-command,
+      .example-description,
+      .example-description-list li,
+      .example-output {
+        background-color: var(--background);
+        border-color: var(--border-color);
+      }
+
+      .example-command {
+        ::ng-deep app-code-block .code-block-container {
+          background: #020617;
+          border-color: var(--border-color);
+        }
+
+        ::ng-deep app-code-block .code {
+          color: #e5eefb;
+        }
+      }
+
+      .example-output {
+        .output-label {
+          color: var(--text-primary);
+        }
+
+        .output-content {
+          background-color: #020617;
+        }
+      }
+    }
+
+    .params-list {
+      .param-item {
+        background-color: color-mix(in srgb, #f59e0b 12%, var(--background-light));
+      }
+    }
+  }
+}
+
 /* Responsive adjustments for mobile and tablet */
 @media (max-width: 768px) {
   .command-page-container {
@@ -288,15 +525,6 @@
         @apply text-base;
       }
     }
-
-    .usage-box {
-      @apply p-4;
-
-      .usage-label {
-        @apply text-base;
-      }
-    }
-
     .navigation-section {
       @apply flex-col gap-2 mt-8;
 

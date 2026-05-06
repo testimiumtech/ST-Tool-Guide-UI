@@ -1,408 +1,313 @@
-const XLSX = require('xlsx');
+/* eslint-disable no-console */
 const fs = require('fs');
 const path = require('path');
+const XLSX = require('xlsx');
 
-// ══════════════════════════════════════════════════════════════
-//  Excel → JSON Converter  (v5 — Parent-Child Ex # Support)
-//
-//  Excel structure (v5):
-//    • One row per EXAMPLE (not per command)
-//    • "Ex #" uses parent-child format: 1.1, 1.2, 4.3 …
-//      Left of dot = Command Order, Right = Example index
-//    • Command-level fields appear only on the FIRST example row
-//    • Order + Command ID are repeated on every row for linking
-//
-//  Grouping logic:
-//    Rows are grouped by the parent number in "Ex #".
-//    Ex # "4.5" → parent Order = 4 → added under command #4.
-//    No need for Command ID on every row.
-//    First row with command fields (Syntax/Description) → command-level data.
-//    Every row in the group → one example entry.
-// ══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------------------
+// Paths
+// ---------------------------------------------------------------------------
+const ROOT = path.resolve(__dirname);
+const DATA_DIR = path.join(ROOT, 'public', 'data');
+const COMMANDS_JSON = path.join(DATA_DIR, 'commands.json');
+const COMMANDS_XLSX = path.join(DATA_DIR, 'commands.xlsx');
 
-// Path to XLSX file
-const xlsxPath = path.join(__dirname, 'public', 'data', 'commands.xlsx');
+// ---------------------------------------------------------------------------
+// CLI helpers
+// ---------------------------------------------------------------------------
+function readFlag(args, names) {
+  const aliases = Array.isArray(names) ? names : [names];
+  const index = args.findIndex((arg) => aliases.includes(arg));
+  if (index < 0) return null;
+  const next = args[index + 1];
+  return next && !next.startsWith('-') ? next : null;
+}
 
-// Read workbook and resolve source sheet
-const wb = XLSX.readFile(xlsxPath);
-const preferredSheetName = 'All Commands';
-const availableSheetNames = wb.SheetNames || [];
+// ---------------------------------------------------------------------------
+// JSON helpers
+// ---------------------------------------------------------------------------
+function writeJson(filePath, val) {
+  fs.writeFileSync(filePath, JSON.stringify(val, null, 2), 'utf8');
+}
 
-let sourceSheetName = preferredSheetName;
-let ws = wb.Sheets[sourceSheetName];
+// ---------------------------------------------------------------------------
+// Workbook helpers
+// ---------------------------------------------------------------------------
+function readSheet(workbook, sheetName) {
+  const sheet = workbook.Sheets[sheetName];
+  if (!sheet) return [];
+  return XLSX.utils.sheet_to_json(sheet, { defval: '' });
+}
 
-if (!ws) {
-  if (availableSheetNames.length === 0) {
-    console.error('❌ No worksheets found in XLSX file');
+function requireSheets(workbook, sheetNames) {
+  const missing = sheetNames.filter((n) => !workbook.Sheets[n]);
+  if (missing.length > 0) {
+    throw new Error(
+      `Missing required sheet(s): ${missing.join(', ')}. Available: ${workbook.SheetNames.join(', ') || '(none)'}`
+    );
+  }
+}
+
+
+const args = process.argv.slice(2);
+const fileArg = readFlag(args, ['--file', '-f']);
+const outArg = readFlag(args, ['--out', '-o']);
+
+const xlsxPath = fileArg ? path.resolve(process.cwd(), fileArg) : COMMANDS_XLSX;
+const jsonPath = outArg ? path.resolve(process.cwd(), outArg) : COMMANDS_JSON;
+
+const REQUIRED_SHEETS = ['Commands', 'Input Fields', 'Assert Fields', 'Examples'];
+
+function main() {
+  const workbook = XLSX.readFile(xlsxPath);
+  requireSheets(workbook, REQUIRED_SHEETS);
+
+  const commandRows = readSheet(workbook, 'Commands');
+  const inputFieldRows = readSheet(workbook, 'Input Fields');
+  const assertFieldRows = readSheet(workbook, 'Assert Fields');
+  const exampleRows = readSheet(workbook, 'Examples');
+
+  const inputsByCommand = groupBy(inputFieldRows, 'command_id');
+  const assertsByCommand = groupBy(assertFieldRows, 'command_id');
+  const examplesByCommand = groupBy(exampleRows, 'command_id');
+
+  const commands = commandRows
+    .filter((row) => value(row.command_id))
+    .map((row) => buildCommand(row, inputsByCommand, assertsByCommand, examplesByCommand))
+    .sort((a, b) => a.order - b.order);
+
+  const duplicateIds = findDuplicates(commands.map((command) => command.command_id));
+  if (duplicateIds.length > 0) {
+    console.error(`Duplicate command_id value(s): ${duplicateIds.join(', ')}`);
     process.exit(1);
   }
 
-  sourceSheetName = availableSheetNames[0];
-  ws = wb.Sheets[sourceSheetName];
-  console.warn(
-    `⚠️ Preferred sheet "${preferredSheetName}" not found. Using "${sourceSheetName}" instead.`
-  );
-}
-
-if (!ws) {
-  console.error(
-    `❌ Unable to read worksheet. Available sheets: ${availableSheetNames.join(', ') || '(none)'}`
-  );
-  process.exit(1);
-}
-
-// Convert sheet to JSON array of rows (skip hint row automatically — empty "Command ID" rows are filtered)
-const rawData = XLSX.utils.sheet_to_json(ws);
-
-// ── Column name constants (match Excel header exactly) ──
-const COL = {
-  ORDER:          'Order',
-  COMMAND_ID:     'Command ID',
-  TITLE:          'Title',
-  CATEGORY:       'Category',
-  STATUS:         'Status',
-  SYNTAX:         'Syntax',
-  DESCRIPTION:    'Description',
-  PURPOSE:        'Purpose',
-  WHEN_TO_USE:    'When to Use',
-  USE_CASES:      'Use Cases',
-  OPTIONS_COUNT:  'Options Count',
-  OPTIONS:        'Options',
-  EX_NUM:         'Ex #',
-  SCENARIO:       'Scenario (What is happening?)',
-  PROBLEM:        'Problem (Why is this command needed?)',
-  GOAL:           'Goal (What should the command do?)',
-  EXAMPLE_CMD:    'Example Command',
-  EXAMPLE_DESC:   'Example Description',
-  INPUT_PARAM:    'Input Param',
-  ASSERT_PARAMS:  'Assert Params',
-  INPUT_SCHEMA:   'Input Param Schema',
-  ASSERT_SCHEMA:  'Assert Param Schema',
-  COMP_MODES:     'Comparison Modes',
-  EXPECTED_OUT:   'Expected Output',
-  DETAILED_USAGE: 'Detailed Usage',
-  KEYWORDS:       'Keywords',
-  RELATED_CMDS:   'Related Commands',
-  IS_NEW:         'Is New',
-  LAST_UPDATED:   'Last Updated',
-};
-
-// ══════════════════════════════════════════════════════════════
-//  Step 1: Identify command rows (first example = X.1)
-//          Build a lookup:  Order number → command-level data
-//
-//  A row is a "command row" when Ex # = "X.1" AND it has
-//  command-level fields (Syntax, Description, etc.).
-//  All other rows are pure example rows.
-// ══════════════════════════════════════════════════════════════
-const commandMap = new Map();   // Order (number) → { cmdData, exampleRows[] }
-
-for (const row of rawData) {
-  const exRaw = (row[COL.EX_NUM] || '').toString().trim();
-  if (!exRaw || !exRaw.includes('.')) continue;  // skip hint row, header echo, empty
-
-  const dotIdx      = exRaw.indexOf('.');
-  const parentOrder = Number(exRaw.substring(0, dotIdx));
-  if (!Number.isFinite(parentOrder) || parentOrder <= 0) continue;
-
-  // ── First encounter of this Order? Register the command ──
-  if (!commandMap.has(parentOrder)) {
-    // Pull command-level fields from whatever row has them
-    // (normally the X.1 row, but we'll also accept them from any row in the group)
-    commandMap.set(parentOrder, { cmdData: null, exampleRows: [] });
-  }
-
-  const entry = commandMap.get(parentOrder);
-
-  // If this row carries command-level data (Syntax or Description present), capture it
-  const hasCmdFields = row[COL.SYNTAX] || row[COL.DESCRIPTION];
-  if (!entry.cmdData && hasCmdFields) {
-    entry.cmdData = row;
-  }
-
-  entry.exampleRows.push(row);
-}
-
-// ══════════════════════════════════════════════════════════════
-//  Step 2: Build structured command objects with nested examples
-//          Ex # "4.5" → parentOrder = 4 → goes under command #4
-// ══════════════════════════════════════════════════════════════
-const commands = [];
-let totalExamples = 0;
-
-for (const [order, { cmdData, exampleRows }] of commandMap) {
-  // Use cmdData (first row with command fields), or fall back to first example row
-  const first = cmdData || exampleRows[0];
-
-  // ── Build examples array from ALL rows whose Ex # starts with this Order ──
-  const examples = exampleRows.map((row) => {
-    const exNum = (row[COL.EX_NUM] || '').toString().trim();
-
-    const example = {
-      example_id: exNum, // e.g. "1.1", "4.5"
-      problem_statement: {
-        scenario: row[COL.SCENARIO] || '',
-        problem:  row[COL.PROBLEM] || '',
-        goal:     row[COL.GOAL] || '',
-      },
-      command:     row[COL.EXAMPLE_CMD] || '',
-      description: row[COL.EXAMPLE_DESC] || '',
-    };
-
-    // Optional per-example fields (only if present)
-    const inputParam = parseJsonField(row[COL.INPUT_PARAM]);
-    if (inputParam) example.input_param = inputParam;
-
-    const assertParams = parseJsonField(row[COL.ASSERT_PARAMS]);
-    if (assertParams) example.assert_params = assertParams;
-
-    return example;
-  }).filter(ex => ex.command || ex.description || ex.problem_statement.scenario);
-
-  // Sort examples by their child index (the part after the dot)
-  examples.sort((a, b) => {
-    const aChild = Number(a.example_id.split('.')[1]) || 0;
-    const bChild = Number(b.example_id.split('.')[1]) || 0;
-    return aChild - bChild;
-  });
-
-  totalExamples += examples.length;
-
-  // ── Build command object ──
-  const command = {
-    order,
-    command_id: (first[COL.COMMAND_ID] || '').toString().trim(),
-    title:      first[COL.TITLE] || '',
-    category:   first[COL.CATEGORY] || 'Other',
-    status:     first[COL.STATUS] || '',
-    syntax:     first[COL.SYNTAX] || '',
-
-    description: first[COL.DESCRIPTION] || '',
-    purpose:     first[COL.PURPOSE] || '',
-    when_to_use: first[COL.WHEN_TO_USE] || '',
-    use_cases:   first[COL.USE_CASES] || '',
-
-    options_count: toNumber(first[COL.OPTIONS_COUNT]),
-    options:       parseOptions(first[COL.OPTIONS]),
-
-    // ── Examples linked by parent-child Ex # ──
-    examples,
-
-    // ── Schemas & output (command-level, from first row) ──
-    input_param_schema:  parseJsonField(first[COL.INPUT_SCHEMA]),
-    assert_param_schema: parseJsonField(first[COL.ASSERT_SCHEMA]),
-    comparison_modes:    parseJsonField(first[COL.COMP_MODES]),
-    expected_output:     parseJsonField(first[COL.EXPECTED_OUT]),
-    detailed_usage:      parseDetailedUsage(first[COL.DETAILED_USAGE]),
-
-    keywords: first[COL.KEYWORDS]
-      ? first[COL.KEYWORDS].toString().split(',').map(k => k.trim()).filter(Boolean)
-      : [],
-    related_commands: first[COL.RELATED_CMDS]
-      ? first[COL.RELATED_CMDS].toString().split(',').map(c => c.trim()).filter(Boolean)
-      : [],
-
-    is_new:       parseBool(first[COL.IS_NEW]),
-    last_updated: parseDate(first[COL.LAST_UPDATED]),
+  const totalExamples = commands.reduce((sum, command) => sum + command.examples.length, 0);
+  const output = {
+    metadata: {
+      version: 'v6-normalized-sheets',
+      generated: new Date().toISOString(),
+      total_commands: commands.length,
+      total_examples: totalExamples,
+      source_workbook: path.basename(xlsxPath),
+      source_sheets: REQUIRED_SHEETS,
+      structure: 'normalized-sheets',
+    },
+    commands,
   };
 
-  commands.push(command);
+  writeJson(jsonPath, output);
+
+  console.log(
+    `Converted ${commands.length} commands (${totalExamples} examples) from normalized XLSX sheets`
+  );
+  console.log(`Workbook: ${xlsxPath}`);
+  console.log(`JSON: ${jsonPath}`);
 }
 
-// Sort commands by Order
-commands.sort((a, b) => a.order - b.order);
+function buildCommand(row, inputsByCommand, assertsByCommand, examplesByCommand) {
+  const commandId = value(row.command_id);
+  const options = (inputsByCommand.get(commandId) || [])
+    .sort((a, b) => toNumber(a.field_order) - toNumber(b.field_order))
+    .map((field) => ({
+      label: value(field.field_name),
+      desc: value(field.description),
+      cmd: value(field.field_name),
+      required: normalizeYesNo(field.required),
+      json_example: parseJsonField(field.input_json_object),
+    }))
+    .filter((field) => field.label);
 
-// ══════════════════════════════════════════════════════════════
-//  Step 3: Validate parent-child integrity
-//          Ex # "X.Y" → X must match the command's Order
-// ══════════════════════════════════════════════════════════════
-let validationErrors = 0;
+  const assertParamSchema = buildAssertParamSchema(assertsByCommand.get(commandId) || []);
+  const examples = (examplesByCommand.get(commandId) || [])
+    .sort((a, b) => toNumber(a.example_order) - toNumber(b.example_order))
+    .map((example, index) => buildExample(commandId, example, index))
+    .filter((example) => example.command || example.description || hasProblemStatement(example));
 
-for (const cmd of commands) {
-  for (const ex of cmd.examples) {
-    const parts = ex.example_id.split('.');
-    const parentOrder = Number(parts[0]);
+  return {
+    order: toNumber(row.order),
+    command_id: commandId,
+    title: value(row.title),
+    category: value(row.category) || 'Other',
+    status: value(row.status),
+    syntax: joinSyntax(row),
+    description: value(row.description),
+    purpose: value(row.purpose),
+    when_to_use: value(row.when_to_use),
+    use_cases: value(row.use_case),
+    options_count: options.length,
+    options,
+    examples,
+    input_param_schema: null,
+    assert_param_schema: assertParamSchema,
+    assert_params: schemaToParamItems(assertParamSchema),
+    comparison_modes: null,
+    expected_output: null,
+    detailed_usage: buildDetailedUsage(options),
+    keywords: splitCsv(row.keywords),
+    related_commands: splitCsv(row.related_commands),
+    is_new: parseBool(row.is_new),
+    last_updated: parseDate(row.last_updated),
+  };
+}
 
-    if (parentOrder !== cmd.order) {
-      console.error(
-        `❌ INTEGRITY ERROR: Ex # "${ex.example_id}" has parent ${parentOrder} but belongs to command "${cmd.command_id}" (Order ${cmd.order})`
-      );
-      validationErrors++;
-    }
+function buildExample(commandId, exampleRow, index) {
+  const exampleId = value(exampleRow.example_id) || `${commandId}-${index + 1}`;
+  const description = value(exampleRow.description);
+  const inputParam = parseJsonField(exampleRow.input_param);
+  const assertParams = parseJsonField(exampleRow.assert_params);
+
+  return {
+    example_id: exampleId,
+    problem_statement: {
+      scenario: value(exampleRow.scenario),
+      problem: value(exampleRow.problem),
+      goal: value(exampleRow.goal),
+    },
+    command: value(exampleRow.test_step_text),
+    description,
+    output: value(exampleRow.expected_output),
+    ...(inputParam ? { input_param: inputParam } : {}),
+    ...(assertParams ? { assert_params: assertParams } : {}),
+  };
+}
+
+function buildDetailedUsage(options) {
+  const usageItems = options
+    .map((option) => ({
+      label: option.label,
+      desc: option.desc,
+      cmd: option.cmd,
+    }))
+    .filter((item) => item.label || item.desc || item.cmd);
+
+  return usageItems.length > 0 ? usageItems : null;
+}
+
+function schemaToParamItems(schema) {
+  if (!Array.isArray(schema)) {
+    return [];
   }
 
-  // Check for duplicate example IDs within a command
-  const exIds = cmd.examples.map(e => e.example_id);
-  const dupes = exIds.filter((id, i) => exIds.indexOf(id) !== i);
-  if (dupes.length > 0) {
-    console.error(
-      `❌ DUPLICATE Ex #: Command "${cmd.command_id}" has duplicate example IDs: ${dupes.join(', ')}`
-    );
-    validationErrors++;
-  }
+  return schema.map((item) => ({
+    label: item.label || '',
+    desc: item.description || '',
+    example: buildParamExample(item.data),
+    json_example: item.json_object || null,
+  }));
 }
 
-if (validationErrors > 0) {
-  console.error(`\n⛔ ${validationErrors} validation error(s) found. Fix the Excel file before using the JSON output.`);
-} else {
-  console.log(`✅ Validation passed: all Ex # values match their parent command Order`);
+function buildParamExample(data) {
+  if (!data) return null;
+  return typeof data === 'string' ? { jsonKey: data } : data;
 }
 
-// ══════════════════════════════════════════════════════════════
-//  Helpers
-// ══════════════════════════════════════════════════════════════
+function buildAssertParamSchema(rows) {
+  const sortedRows = rows
+    .filter((row) => value(row.field_name))
+    .sort((a, b) => toNumber(a.field_order) - toNumber(b.field_order));
 
-function toNumber(val) {
-  const n = Number(val);
-  return Number.isFinite(n) ? n : 0;
-}
-
-function parseBool(val) {
-  if (val === true || val === false) return val;
-  const s = (val || '').toString().trim().toUpperCase();
-  return s === 'TRUE' || s === 'YES' || s === '1';
-}
-
-function parseDate(dateVal) {
-  if (!dateVal) return new Date().toISOString().split('T')[0];
-  if (typeof dateVal === 'number') {
-    const date = XLSX.SSF.parse_date_code(dateVal);
-    if (date) {
-      return new Date(Date.UTC(date.y, date.m - 1, date.d)).toISOString().split('T')[0];
-    }
-    return new Date().toISOString().split('T')[0];
-  }
-  const parsed = new Date(dateVal);
-  return isNaN(parsed) ? new Date().toISOString().split('T')[0] : parsed.toISOString().split('T')[0];
-}
-
-function parseDetailedUsage(detailedUsageStr) {
-  if (!detailedUsageStr || detailedUsageStr.toString().trim() === '') {
-    return { label: '', desc: '', cmd: '' };
+  if (sortedRows.length === 0) {
+    return null;
   }
 
-  const raw = detailedUsageStr.toString().trim();
-
-  try {
-    const parsed = JSON.parse(raw);
-    // Could be object or array
-    if (Array.isArray(parsed)) return parsed;
-    return {
-      label: parsed.label || '',
-      desc:  parsed.desc || '',
-      cmd:   parsed.cmd || ''
-    };
-  } catch {
-    const recovered = {
-      label: extractLooseObjectValue(raw, 'label'),
-      desc:  extractLooseObjectValue(raw, 'desc'),
-      cmd:   extractLooseObjectValue(raw, 'cmd')
-    };
-
-    if (recovered.label || recovered.desc || recovered.cmd) {
-      return recovered;
-    }
-
-    console.warn(`⚠️ Failed to parse Detailed Usage: ${raw.substring(0, 80)}…`);
-    return { label: '', desc: '', cmd: '' };
-  }
+  return sortedRows.map((row) => ({
+    label: value(row.field_name),
+    description: value(row.description),
+    data: null,
+    json_object: parseJsonField(row.input_json_object),
+    required: normalizeYesNo(row.required),
+  }));
 }
 
-function extractLooseObjectValue(text, key) {
-  const keyToken = `"${key}"`;
-  const keyIndex = text.indexOf(keyToken);
-  if (keyIndex === -1) return '';
-
-  const colonIndex = text.indexOf(':', keyIndex + keyToken.length);
-  if (colonIndex === -1) return '';
-
-  let i = colonIndex + 1;
-  while (i < text.length && /\s/.test(text[i])) i += 1;
-  if (text[i] !== '"') return '';
-
-  i += 1;
-  let value = '';
-
-  while (i < text.length) {
-    const ch = text[i];
-
-    if (ch === '\\' && i + 1 < text.length) {
-      value += text[i + 1];
-      i += 2;
+function groupBy(rows, key) {
+  const grouped = new Map();
+  for (const row of rows) {
+    const groupKey = value(row[key]);
+    if (!groupKey) {
       continue;
     }
 
-    if (ch === '"') {
-      let j = i + 1;
-      while (j < text.length && /\s/.test(text[j])) j += 1;
-      if (j >= text.length || text[j] === ',' || text[j] === '}') {
-        break;
-      }
-      value += '"';
-      i += 1;
-      continue;
+    if (!grouped.has(groupKey)) {
+      grouped.set(groupKey, []);
     }
-
-    value += ch;
-    i += 1;
+    grouped.get(groupKey).push(row);
   }
-
-  return value.trim();
+  return grouped;
 }
 
-function parseOptions(optionsStr) {
-  if (!optionsStr || optionsStr.toString().trim() === '') return [];
+function joinSyntax(row) {
+  return [row.syntax_1, row.syntax_2, row.syntax_3, row.syntax_4]
+    .map(value)
+    .filter(Boolean)
+    .join('\n');
+}
+
+function splitCsv(text) {
+  return value(text)
+    .split(',')
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+function parseJsonField(rawValue) {
+  const text = value(rawValue);
+  if (!text) {
+    return null;
+  }
+
   try {
-    const parsed = JSON.parse(optionsStr.toString());
-    if (Array.isArray(parsed)) {
-      return parsed.map(opt => ({
-        label:         opt.label || '',
-        desc:          opt.desc || '',
-        cmd:           opt.cmd || '',
-        usage_example: opt.usage_example || ''
-      })).filter(o => o.label);
-    }
-    // Single object (some commands store options as one object)
-    if (parsed && typeof parsed === 'object') {
-      return [parsed];
-    }
-    return [];
+    return JSON.parse(text);
   } catch {
-    console.warn(`⚠️ Failed to parse Options JSON`);
-    return [];
+    return text;
   }
 }
 
-function parseJsonField(fieldStr) {
-  if (!fieldStr || fieldStr.toString().trim() === '') return null;
-  try {
-    return JSON.parse(fieldStr.toString());
-  } catch {
-    // Return raw string if not valid JSON
-    return fieldStr.toString().trim() || null;
-  }
+function normalizeYesNo(rawValue) {
+  const text = value(rawValue).toLowerCase();
+  if (['yes', 'true', '1', 'required'].includes(text)) return 'Yes';
+  if (['no', 'false', '0', 'optional'].includes(text)) return 'No';
+  return value(rawValue) || 'No';
 }
 
-// ══════════════════════════════════════════════════════════════
-//  Write output JSON
-// ══════════════════════════════════════════════════════════════
-const output = {
-  metadata: {
-    version: 'v5',
-    generated: new Date().toISOString(),
-    total_commands: commands.length,
-    total_examples: totalExamples,
-    source_sheet: sourceSheetName,
-    ex_num_format: 'Order.ExampleIndex (e.g. 1.1, 4.3 — left of dot = command Order, right = example index)'
-  },
-  commands
-};
+function parseBool(rawValue) {
+  const text = value(rawValue).toLowerCase();
+  return ['yes', 'true', '1', 'new'].includes(text);
+}
 
-const jsonPath = path.join(__dirname, 'public', 'data', 'commands_version.json');
-fs.writeFileSync(jsonPath, JSON.stringify(output, null, 2), 'utf8');
+function parseDate(rawValue) {
+  if (!rawValue) return new Date().toISOString().split('T')[0];
 
-console.log(`✅ Converted ${commands.length} commands (${totalExamples} examples) from XLSX to JSON`);
-console.log(`📄 Source sheet: ${sourceSheetName}`);
-console.log(`📁 File saved: ${jsonPath}`);
-console.log(`📊 File size: ${(fs.statSync(jsonPath).size / 1024).toFixed(2)} KB`);
-console.log(`🔗 Ex # format: Order.Index (parent-child linking)`);
+  if (typeof rawValue === 'number') {
+    const parsed = XLSX.SSF.parse_date_code(rawValue);
+    if (parsed) {
+      return new Date(Date.UTC(parsed.y, parsed.m - 1, parsed.d)).toISOString().split('T')[0];
+    }
+  }
+
+  const date = new Date(rawValue);
+  return Number.isNaN(date.getTime()) ? value(rawValue) : date.toISOString().split('T')[0];
+}
+
+function toNumber(rawValue) {
+  const number = Number(rawValue);
+  return Number.isFinite(number) ? number : 0;
+}
+
+function value(rawValue) {
+  if (rawValue == null) return '';
+  return String(rawValue).trim();
+}
+
+function hasProblemStatement(example) {
+  return Boolean(
+    example.problem_statement.scenario ||
+      example.problem_statement.problem ||
+      example.problem_statement.goal
+  );
+}
+
+function findDuplicates(items) {
+  return items.filter((item, index) => item && items.indexOf(item) !== index);
+}
+
+main();

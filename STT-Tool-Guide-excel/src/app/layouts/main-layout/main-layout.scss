@@ -1,6 +1,6 @@
 .main-layout {
   @apply flex h-[calc(100vh-64px)] gap-0;
-  background-color: var(--background);
+  background: transparent;
   transition: background-color 0.3s ease;
 
   /* Left sidebar - fixed width, scrollable independently */
@@ -11,6 +11,13 @@
   /* Center content - flex and scrollable */
   main {
     @apply flex-1 overflow-y-auto overflow-x-hidden;
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--background-elevated) 72%, transparent),
+        transparent 28rem
+      );
+    scroll-behavior: smooth;
   }
 
   /* Right TOC - fixed width, scrollable independently */
@@ -20,14 +27,12 @@
 
   /* Hide sidebar and TOC on mobile, show on larger screens */
   @media (max-width: 1024px) {
-    /* On tablet: hide right TOC */
     app-table-of-contents {
       @apply hidden;
     }
   }
 
   @media (max-width: 768px) {
-    /* On mobile: hide left sidebar and right TOC */
     app-sidebar-nav {
       @apply hidden;
     }

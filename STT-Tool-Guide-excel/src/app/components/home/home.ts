@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive';
@@ -34,9 +34,9 @@ export class HomeComponent {
     {
       icon: 'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z',
       title: 'Quick Search',
-      description: 'Find commands quickly using our powerful search feature. Press ⌘K or Ctrl+K to search from anywhere.',
+      description: 'Find commands quickly using the built-in search feature from anywhere in the documentation.',
       link: null,
-      linkText: 'Press ⌘K to Search'
+      linkText: 'Open Search'
     }
   ];
 }

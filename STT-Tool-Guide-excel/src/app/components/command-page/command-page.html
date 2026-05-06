@@ -46,26 +46,19 @@
 
     <!-- Purpose -->
     <app-command-section sectionId="purpose" title="Purpose" iconPath="M13 10V3L4 14h7v7l9-11h-7z">
-      <p class="section-text">{{ command.purpose || '-' }}</p>
-    </app-command-section>
-
-    <!-- Basic Usage -->
-    <app-command-section
-      sectionId="basic-usage"
-      title="Basic Usage"
-      iconPath="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-    >
-      <app-code-block
-        [code]="command.syntax || ''"
-        language="command"
-      />
+      <ng-container *ngIf="splitLines(command.purpose) as purposeLines">
+        <p *ngIf="purposeLines.length <= 1" class="section-text">{{ command.purpose || '-' }}</p>
+        <ul *ngIf="purposeLines.length > 1" class="example-description-list">
+          <li *ngFor="let line of purposeLines; trackBy: trackByDescriptionLine">{{ line }}</li>
+        </ul>
+      </ng-container>
     </app-command-section>
 
     <!-- Options Table -->
     <app-command-section
       *ngIf="(command.options.length || 0) > 0"
       sectionId="options"
-      title="Options & Flags"
+      title="Input Fields"
       iconPath="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
     >
       <app-command-options-table [options]="command.options || []" />
@@ -74,17 +67,24 @@
     <!-- Use Cases -->
     <app-command-section
       sectionId="use-cases"
-      title="Use Cases"
+      title="Use Case"
       iconPath="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
     >
-      <p class="section-text">{{ command.use_cases || '-' }}</p>
+      <div class="use-case-box">
+        <ng-container *ngIf="splitLines(command.use_cases) as useCaseLines">
+          <p *ngIf="useCaseLines.length <= 1" class="section-text">{{ command.use_cases || '-' }}</p>
+          <ul *ngIf="useCaseLines.length > 1" class="example-description-list">
+            <li *ngFor="let line of useCaseLines; trackBy: trackByDescriptionLine">{{ line }}</li>
+          </ul>
+        </ng-container>
+      </div>
     </app-command-section>
 
     <!-- Example -->
     <app-command-section
       *ngIf="command.examples && command.examples.length > 0"
       sectionId="examples"
-      title="Examples"
+      title="Example"
       iconPath="M12 6.253v13m0-13C6.5 6.253 2 10.998 2 17s4.5 10.747 10 10.747c5.5 0 10-4.998 10-10.747S17.5 6.253 12 6.253z"
     >
       <div class="examples-list">
@@ -103,6 +103,7 @@
             </div>
           <ng-container *ngIf="splitLines(ex.command) as commandLines">
             <div *ngIf="commandLines.length > 0" class="example-command">
+              <h4 class="example-subtitle">Test step text</h4>
               <app-code-block
                 *ngFor="let cmdLine of commandLines; trackBy: trackByCommandLine"
                 [code]="cmdLine"
@@ -112,11 +113,36 @@
           </ng-container>
 
           <ng-container *ngIf="splitLines(ex.description) as descriptionLines">
+            <h4 *ngIf="descriptionLines.length > 0" class="example-subtitle">Step-by-step explanation</h4>
             <p *ngIf="descriptionLines.length === 1" class="example-description">{{ descriptionLines[0] }}</p>
             <ul *ngIf="descriptionLines.length > 1" class="example-description-list">
               <li *ngFor="let descLine of descriptionLines; trackBy: trackByDescriptionLine">{{ descLine }}</li>
             </ul>
           </ng-container>
+
+          <!-- Input Param JSON -->
+          <div *ngIf="ex.input_param" class="example-param-json">
+            <div class="example-param-json-header example-param-json-header--input">
+              <svg class="example-param-json-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+              Input Param JSON
+            </div>
+            <app-code-block [code]="formatJson($any(ex.input_param))" language="json" />
+          </div>
+
+          <!-- Assert Param JSON -->
+          <div *ngIf="ex.assert_params" class="example-param-json">
+            <div class="example-param-json-header example-param-json-header--assert">
+              <svg class="example-param-json-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Assert Param JSON
+            </div>
+            <app-code-block [code]="formatJson($any(ex.assert_params))" language="json" />
+          </div>
 
           <ng-container *ngIf="splitLines(ex.output) as outputLines">
             <div *ngIf="outputLines.length > 0" class="example-output">
@@ -145,7 +171,12 @@
       title="When to Use"
       iconPath="M8 16l2.879-2.879m0 0a3 3 0 104.243-4.243m-4.243 4.243L5.5 19.5M19.5 4.5a3 3 0 00-4.243 0m4.243 0L19.5 4.5m0 0a3 3 0 10-4.243 4.243m4.243-4.243l2.879 2.879"
     >
-      <p class="section-text">{{ command.when_to_use || '-' }}</p>
+      <ng-container *ngIf="splitLines(command.when_to_use) as whenLines">
+        <p *ngIf="whenLines.length <= 1" class="section-text">{{ command.when_to_use || '-' }}</p>
+        <ul *ngIf="whenLines.length > 1" class="example-description-list">
+          <li *ngFor="let line of whenLines; trackBy: trackByDescriptionLine">{{ line }}</li>
+        </ul>
+      </ng-container>
     </app-command-section>
 
     <!-- Input Params -->
@@ -164,6 +195,16 @@
           <p *ngIf="param.desc" class="param-desc">{{ param.desc }}</p>
           <div *ngIf="param.example" class="param-example">
             <app-code-block [code]="formatJson(param.example)" language="json" />
+          </div>
+          <div *ngIf="param.json_example" class="param-json-structure">
+            <div class="param-json-label">
+              <svg class="param-json-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+              </svg>
+              JSON Parameter Structure
+            </div>
+            <app-code-block [code]="formatJson($any(param.json_example))" language="json" />
           </div>
         </div>
       </div>
@@ -185,6 +226,16 @@
           <p *ngIf="param.desc" class="param-desc">{{ param.desc }}</p>
           <div *ngIf="param.example" class="param-example">
             <app-code-block [code]="formatJson(param.example)" language="json" />
+          </div>
+          <div *ngIf="param.json_example" class="param-json-structure">
+            <div class="param-json-label">
+              <svg class="param-json-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+              </svg>
+              JSON Parameter Structure
+            </div>
+            <app-code-block [code]="formatJson($any(param.json_example))" language="json" />
           </div>
         </div>
       </div>

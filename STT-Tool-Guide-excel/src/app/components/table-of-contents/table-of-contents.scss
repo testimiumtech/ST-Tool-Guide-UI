@@ -1,27 +1,30 @@
 .toc-container {
-  @apply w-64 border-l hidden lg:flex lg:flex-col overflow-y-auto flex-shrink-0 h-full;
-  background: var(--background);
+  @apply hidden h-full w-64 flex-shrink-0 overflow-y-auto border-l lg:flex lg:flex-col;
+  background: color-mix(in srgb, var(--background-elevated) 84%, transparent);
   border-color: var(--border-color);
+  backdrop-filter: blur(18px);
 
   .toc-header {
-    @apply sticky top-0 px-6 py-6 border-b z-20 flex-shrink-0;
-    background: var(--background);
+    @apply sticky top-0 z-20 flex-shrink-0 border-b px-6 py-6;
+    background: color-mix(in srgb, var(--background-overlay) 92%, transparent);
     border-color: var(--border-color);
 
     .toc-title {
-      @apply text-sm font-semibold text-gray-900 dark:text-white;
+      @apply text-sm font-semibold;
+      color: var(--text-primary);
     }
 
     .toc-subtitle {
-      @apply text-xs text-gray-500 dark:text-gray-400 ml-2;
+      @apply ml-2 text-xs;
+      color: var(--text-muted);
     }
   }
 
   .toc-content {
-    @apply p-6 flex-1;
+    @apply flex-1 p-6;
 
     .toc-empty {
-      @apply text-center py-8 text-gray-400 dark:text-gray-600;
+      @apply py-8 text-center text-gray-400 dark:text-gray-600;
 
       p {
         @apply text-sm;
@@ -36,23 +39,29 @@
       }
 
       .toc-link {
-        @apply block text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:font-medium py-1.5 px-2 rounded-md;
-        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        @apply block rounded-lg px-2 py-1.5 hover:font-medium;
+        color: var(--text-secondary);
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 
         &:hover {
-          @apply bg-gray-100 dark:bg-slate-800/50;
+          background-color: var(--background-muted);
+          color: var(--text-primary);
           transform: translateX(3px);
         }
 
         &.active {
-          @apply text-blue-600 dark:text-indigo-400 font-semibold bg-blue-50 dark:bg-indigo-900/20 border-l-2 border-blue-600 dark:border-indigo-500 pl-1;
+          @apply font-semibold;
+          color: var(--primary-color);
+          background: var(--gradient-soft);
+          border: 1px solid color-mix(in srgb, var(--primary-color) 24%, var(--border-color));
           transform: translateX(3px);
+          transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
+      }
     }
   }
 }
 
-/* Responsive adjustments */
 @media (max-width: 1280px) {
   .toc-container {
     @apply w-56;
@@ -63,5 +72,4 @@
   .toc-container {
     @apply hidden;
   }
-}
 }

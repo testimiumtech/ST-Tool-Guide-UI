@@ -3,9 +3,9 @@
     <caption class="sr-only">Command options and usage examples</caption>
     <thead>
       <tr class="options-table-head-row">
-        <th scope="col" class="options-table-head-cell">Flag/Option</th>
-        <th scope="col" class="options-table-head-cell">Description</th>
-        <th scope="col" class="options-table-head-cell">Usage Example</th>
+        <th scope="col" class="options-table-head-cell">Field/Option</th>
+        <th scope="col" class="options-table-head-cell options-table-required-head">Required</th>
+        <th scope="col" class="options-table-head-cell">Description/Guidance</th>
       </tr>
     </thead>
     <tbody>
@@ -16,11 +16,74 @@
         <td class="options-table-cell options-table-flag">
           {{ option.label || $any(option).option || '-' }}
         </td>
-        <td class="options-table-cell options-table-description">
-          {{ option.desc || $any(option).description || '-' }}
+        <td class="options-table-cell options-table-required-cell">
+          <span
+            class="required-badge"
+            [class.optional]="(option.label || $any(option).option || '').toLowerCase().includes('optional')"
+          >
+            {{ (option.label || $any(option).option || '').toLowerCase().includes('optional') ? 'No' : 'Yes' }}
+          </span>
         </td>
-        <td class="options-table-cell options-table-example-cell">
-          <span class="options-table-example">{{ option.usage_example || option.cmd || '-' }}</span>
+        <td class="options-table-cell options-table-description">
+          <div class="options-desc">
+            {{ option.desc || $any(option).description || '-' }}
+          </div>
+
+          <div *ngIf="option.usage_example && !(option.examples && option.examples.length > 0)" class="option-usage-example">
+            <div class="option-usage-label">Example</div>
+            <app-code-block [code]="option.usage_example" language="command" />
+          </div>
+
+          <div *ngIf="option.examples && option.examples.length > 0" class="option-examples">
+            <div class="option-examples-header">Examples</div>
+
+            <div
+              *ngFor="let ex of option.examples; trackBy: trackByOptionExample"
+              class="option-example"
+            >
+              <div *ngIf="ex.scenario" class="option-example-scenario">
+                {{ ex.scenario }}
+              </div>
+
+              <ng-container *ngIf="splitLines(ex.command) as cmdLines">
+                <app-code-block
+                  *ngFor="let cmdLine of cmdLines"
+                  [code]="cmdLine"
+                  language="command"
+                />
+              </ng-container>
+
+              <div *ngIf="ex.description" class="option-example-desc">{{ ex.description }}</div>
+
+              <div *ngIf="ex.output" class="option-example-output">
+                <div class="option-example-output-label">Expected Output</div>
+                <div class="option-example-output-body">
+                  <div
+                    *ngFor="let line of splitLines(ex.output)"
+                    class="option-example-output-line"
+                    [ngClass]="{
+                      'pass-line': line.startsWith('PASS:'),
+                      'fail-line': line.startsWith('FAIL:')
+                    }"
+                  >
+                    {{ line }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- JSON Parameter Structure -->
+          <div *ngIf="option.json_example" class="option-json-structure">
+            <div class="option-json-label">
+              <svg class="option-json-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+              </svg>
+              JSON Parameter Structure
+            </div>
+            <app-code-block [code]="formatJson($any(option.json_example))" language="json" />
+          </div>
         </td>
       </tr>
     </tbody>

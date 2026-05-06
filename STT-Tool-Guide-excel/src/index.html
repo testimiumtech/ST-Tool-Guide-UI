@@ -6,10 +6,32 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Comprehensive command and API documentation platform">
+  <meta name="theme-color" content="#f8fafc">
   <link rel="icon" type="image/png" sizes="192x192" href="/logo.png">
   <link rel="apple-touch-icon" href="/logo.png">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="shortcut icon" href="/favicon.ico">
+  <script>
+    (function () {
+      try {
+        var storedTheme = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var resolvedTheme = storedTheme === 'light' || storedTheme === 'dark'
+          ? storedTheme
+          : (prefersDark ? 'dark' : 'light');
+
+        document.documentElement.classList.toggle('dark', resolvedTheme === 'dark');
+        document.documentElement.style.colorScheme = resolvedTheme;
+
+        var themeMeta = document.querySelector('meta[name="theme-color"]');
+        if (themeMeta) {
+          themeMeta.setAttribute('content', resolvedTheme === 'dark' ? '#08111f' : '#f8fafc');
+        }
+      } catch (error) {
+        console.warn('Theme bootstrap skipped.', error);
+      }
+    })();
+  </script>
 </head>
 <body>
   <app-root></app-root>

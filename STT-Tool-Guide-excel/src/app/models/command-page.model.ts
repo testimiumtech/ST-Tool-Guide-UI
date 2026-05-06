@@ -5,6 +5,15 @@ export interface OptionItem {
   description?: string;
   cmd?: string;
   usage_example?: string;
+  json_example?: Record<string, unknown> | null;
+  examples?: OptionExample[];
+}
+
+export interface OptionExample {
+  scenario?: string;
+  command: string;
+  description?: string;
+  output?: string;
 }
 
 export interface DetailedUsage {
@@ -23,7 +32,7 @@ export interface ExampleItem {
   example_id?: string;
   command: string;
   description: string;
-  output: string;
+  output?: string;
   problem_statement?: ProblemStatement;
   input_param?: Record<string, unknown> | Array<Record<string, unknown>>;
   assert_params?: Record<string, unknown>;
@@ -39,6 +48,7 @@ export interface ParamItem {
   label: string;
   desc: string;
   example: Record<string, unknown> | null;
+  json_example?: Record<string, unknown> | null;
 }
 
 export interface SchemaItem {

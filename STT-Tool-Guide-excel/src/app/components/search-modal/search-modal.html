@@ -1,7 +1,7 @@
 <div
   *ngIf="isOpen()"
   class="search-modal-overlay"
-  (click)="closeModal.emit()"
+  (click)="handleClose()"
 >
   <div class="search-modal-content" (click)="$event.stopPropagation()">
     <!-- Header -->
@@ -13,13 +13,13 @@
     <!-- Search Input -->
     <div class="modal-search">
       <input
+        #searchInput
         type="text"
         [value]="searchQuery()"
         (input)="onSearchInput($event)"
         placeholder="Type to search..."
         class="search-input"
         aria-label="Search commands"
-        autofocus
       />
     </div>
 
@@ -54,10 +54,10 @@
     <!-- Footer -->
     <div class="modal-footer">
       <button
-        (click)="closeModal.emit()"
+        (click)="handleClose()"
         class="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
       >
-        Close (ESC)
+      Close
       </button>
     </div>
   </div>

@@ -1,4 +1,4 @@
-import { Injectable, signal, effect } from '@angular/core';
+import { Injectable, effect, signal } from '@angular/core';
 
 export type ThemeMode = 'light' | 'dark';
 
@@ -6,36 +6,41 @@ export type ThemeMode = 'light' | 'dark';
   providedIn: 'root'
 })
 export class ThemeService {
+  private readonly mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
   private readonly themeSignal = signal<ThemeMode>(this.getInitialTheme());
   readonly theme = this.themeSignal.asReadonly();
 
   constructor() {
-    // Effect to apply theme changes to DOM
+    this.mediaQuery.addEventListener('change', (event) => {
+      if (!this.hasStoredTheme()) {
+        this.themeSignal.set(event.matches ? 'dark' : 'light');
+      }
+    });
+
     effect(() => {
       const theme = this.theme();
-      if (theme === 'dark') {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
-      // Persist to localStorage
+      const themeColor = theme === 'dark' ? '#08111f' : '#f8fafc';
+
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+      document.documentElement.style.colorScheme = theme;
+      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', themeColor);
+
       localStorage.setItem('theme', theme);
     });
   }
 
   private getInitialTheme(): ThemeMode {
-    // Check localStorage first
     const stored = localStorage.getItem('theme');
     if (stored === 'light' || stored === 'dark') {
       return stored;
     }
 
-    // Check system preference
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
-    }
+    return this.mediaQuery.matches ? 'dark' : 'light';
+  }
 
-    return 'light';
+  private hasStoredTheme(): boolean {
+    const stored = localStorage.getItem('theme');
+    return stored === 'light' || stored === 'dark';
   }
 
   toggleTheme(): void {

@@ -1,39 +1,43 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, of } from 'rxjs';
+import { Observable, catchError, map, of, shareReplay } from 'rxjs';
 import { CommandPage } from '../models/command-page.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
+  private commandsCache$?: Observable<{ commands: CommandPage[] }>;
+
   constructor(private http: HttpClient) {}
 
   getCommands(): Observable<{ commands: CommandPage[] }> {
-    // Load from JSON file (reliable and fast)
-    // JSON is the primary source, generated from XLSX
-    return this.http.get<{ commands: CommandPage[] }>('/data/commands.json').pipe(
+    if (!this.commandsCache$) {
+      this.commandsCache$ = this.loadCommandsJson().pipe(shareReplay(1));
+    }
+
+    return this.commandsCache$;
+  }
+
+  getCommandById(id: string): Observable<CommandPage | undefined> {
+    return this.getCommands().pipe(
+      map((data) => data.commands.find((cmd) => cmd.command_id === id)),
       catchError((error) => {
-        console.error('Failed to load commands from JSON:', error);
-        return of({ commands: [] });
+        console.error('Error loading command:', error);
+        return of(undefined);
       })
     );
   }
 
-  getCommandById(id: string): Observable<CommandPage | undefined> {
-    return new Observable((observer) => {
-      this.getCommands().subscribe({
-        next: (data) => {
-          const command = data.commands.find((cmd) => cmd.command_id === id);
-          observer.next(command);
-          observer.complete();
-        },
-        error: (error) => {
-          console.error('Error loading command:', error);
-          observer.next(undefined);
-          observer.complete();
-        }
-      });
-    });
+  private loadCommandsJson(): Observable<{ commands: CommandPage[] }> {
+    return this.http.get<{ commands: CommandPage[] }>('/data/commands.json').pipe(
+      map((data) => ({
+        commands: [...(data.commands || [])].sort((a, b) => a.order - b.order)
+      })),
+      catchError((error) => {
+        console.error('Failed to load commands.json:', error);
+        return of({ commands: [] });
+      })
+    );
   }
 }
