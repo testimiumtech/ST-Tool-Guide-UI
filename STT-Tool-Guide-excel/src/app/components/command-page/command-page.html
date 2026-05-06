@@ -103,7 +103,10 @@
             </div>
           <ng-container *ngIf="splitLines(ex.command) as commandLines">
             <div *ngIf="commandLines.length > 0" class="example-command">
-              <h4 class="example-subtitle">Test step text</h4>
+              <h4 class="example-subtitle"
+                [attr.id]="'example-' + (i + 1) + '-command'"
+                [attr.data-toc-label]="'Example ' + (i + 1) + ' · Test step text'"
+              >Test step text</h4>
               <app-code-block
                 *ngFor="let cmdLine of commandLines; trackBy: trackByCommandLine"
                 [code]="cmdLine"
@@ -113,7 +116,10 @@
           </ng-container>
 
           <ng-container *ngIf="splitLines(ex.description) as descriptionLines">
-            <h4 *ngIf="descriptionLines.length > 0" class="example-subtitle">Step-by-step explanation</h4>
+            <h4 *ngIf="descriptionLines.length > 0" class="example-subtitle"
+              [attr.id]="'example-' + (i + 1) + '-description'"
+              [attr.data-toc-label]="'Example ' + (i + 1) + ' · Step-by-step explanation'"
+            >Step-by-step explanation</h4>
             <p *ngIf="descriptionLines.length === 1" class="example-description">{{ descriptionLines[0] }}</p>
             <ul *ngIf="descriptionLines.length > 1" class="example-description-list">
               <li *ngFor="let descLine of descriptionLines; trackBy: trackByDescriptionLine">{{ descLine }}</li>

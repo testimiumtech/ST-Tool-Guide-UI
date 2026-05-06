@@ -80,9 +80,10 @@ export class TocSyncService {
         }
 
         const level = parseInt(heading.tagName[1], 10);
+        const label = (heading.dataset['tocLabel'] || heading.textContent || '').trim();
 
         return {
-          label: heading.textContent || '',
+          label,
           id: heading.id,
           level: level - 1, // h2 = level 1, h3 = level 2, etc.
         };

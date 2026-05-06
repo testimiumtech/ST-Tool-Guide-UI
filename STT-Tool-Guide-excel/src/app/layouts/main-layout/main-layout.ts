@@ -40,11 +40,14 @@ export class MainLayoutComponent {
   searchModalOpen = signal(false);
   commands = signal<CommandPage[]>([]);
   mainScrollElement = signal<HTMLElement | null>(null);
+  isHomePage = signal(true);
   private readonly destroyRef = inject(DestroyRef);
   private readonly router = inject(Router);
   @ViewChild('mainScrollContainerRef') private mainScrollContainerRef?: ElementRef<HTMLElement>;
 
   constructor(private apiService: ApiService) {
+    this.isHomePage.set(this.router.url === '/');
+
     this.apiService.getCommands()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data) => {
@@ -56,7 +59,8 @@ export class MainLayoutComponent {
         filter((event): event is NavigationEnd => event instanceof NavigationEnd),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe(() => {
+      .subscribe((event: NavigationEnd) => {
+        this.isHomePage.set(event.urlAfterRedirects === '/');
         this.mainScrollElement()?.scrollTo({ top: 0, behavior: 'auto' });
       });
   }

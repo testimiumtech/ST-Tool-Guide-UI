@@ -54,13 +54,15 @@
           background-color 0.2s ease,
           border-color 0.2s ease,
           color 0.2s ease,
-          transform 0.2s ease;
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
 
         &:hover {
           background-color: var(--background-light);
-          border-color: color-mix(in srgb, var(--primary-color) 18%, var(--border-color));
+          border-color: color-mix(in srgb, var(--primary-color) 40%, var(--border-color));
           color: var(--text-primary);
           transform: translateY(-1px);
+          box-shadow: 0 4px 16px color-mix(in srgb, var(--primary-color) 12%, transparent);
         }
 
         .keyboard-hint {
@@ -68,6 +70,39 @@
           background-color: var(--background-light);
           border-color: var(--border-color);
           color: var(--text-muted);
+        }
+      }
+
+      // Home page variant — centered, wider, more prominent
+      &.search-section--home {
+        @apply justify-center mx-8;
+
+        .search-bar--home {
+          @apply max-w-xl rounded-full px-5 py-2.5 text-sm font-medium;
+          border-width: 1.5px;
+          border-color: color-mix(in srgb, var(--primary-color) 30%, var(--border-color));
+          background-color: color-mix(in srgb, var(--background-elevated) 95%, var(--primary-color));
+          box-shadow:
+            0 2px 12px color-mix(in srgb, var(--primary-color) 10%, transparent),
+            var(--shadow-sm);
+
+          span:first-of-type {
+            @apply flex-1 text-left;
+          }
+
+          .home-search-hint {
+            @apply ml-auto rounded-full border px-2.5 py-0.5 text-xs font-mono;
+            background-color: var(--background-muted);
+            border-color: var(--border-color);
+            color: var(--text-muted);
+          }
+
+          &:hover {
+            border-color: color-mix(in srgb, var(--primary-color) 60%, var(--border-color));
+            box-shadow:
+              0 4px 20px color-mix(in srgb, var(--primary-color) 18%, transparent),
+              var(--shadow-md);
+          }
         }
       }
     }

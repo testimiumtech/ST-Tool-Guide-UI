@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, signal, HostListener, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, signal, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ThemeService } from '../../services/theme.service';
@@ -11,6 +11,7 @@ import { ThemeService } from '../../services/theme.service';
   styleUrl: './header.scss',
 })
 export class HeaderComponent {
+  @Input() isHomePage = false;
   @Output() searchOpen = new EventEmitter<void>();
   @ViewChild('settingsDropdown') settingsDropdown!: ElementRef;
   settingsOpen = signal(false);
